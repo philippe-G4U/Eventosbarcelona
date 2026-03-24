@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Unete al talento — Eventos Barcelona</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --accent: #E87461;
-      --accent-light: #fdf0ee;
+      --accent: #cc3366;
+      --accent-light: #fdf0f4;
       --dark: #1a1a1a;
       --text: #333;
       --gray: #666;
@@ -22,31 +22,89 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--light-gray);
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      background: var(--white);
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
     }
 
     h1, h2, h3 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-weight: 400;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
     }
 
     .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 80px;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
+      padding: 16px 80px;
+      background: var(--dark);
     }
 
-    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo img { height: 36px; width: auto; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-btn {
+      padding: 8px 20px;
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .nav-flags {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-flags img {
+      width: 24px;
+      height: 16px;
+      object-fit: cover;
+      border-radius: 2px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .nav-flags img:hover,
+    .nav-flags img.active { opacity: 1; }
+
+    .nav-hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+    }
 
     .demo-banner {
-      background: var(--dark);
+      background: var(--accent);
       color: #fff;
       text-align: center;
       padding: 10px 24px;
@@ -178,7 +236,7 @@
       padding: 14px 16px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 15px;
       color: var(--text);
       transition: border-color 0.2s;
@@ -241,6 +299,49 @@
       font-size: 11px;
       color: var(--gray);
       margin-top: 4px;
+    }
+
+    /* SUBCATEGORY CHIPS */
+    .subcategory-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .option-card.selected .subcategory-panel {
+      max-height: 200px;
+    }
+
+    .subcategory-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 10px;
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sub-chip {
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sub-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .sub-chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     /* FILE UPLOAD */
@@ -389,7 +490,7 @@
       padding: 14px 36px;
       background: var(--dark);
       color: #fff;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 14px;
       font-weight: 600;
       border: none;
@@ -404,7 +505,7 @@
       padding: 14px 24px;
       background: none;
       color: var(--gray);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 14px;
       font-weight: 500;
       border: none;
@@ -418,7 +519,7 @@
       padding: 16px 48px;
       background: var(--accent);
       color: #fff;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 15px;
       font-weight: 600;
       border: none;
@@ -427,7 +528,7 @@
       transition: background 0.3s;
     }
 
-    .btn-submit:hover { background: #d4604f; }
+    .btn-submit:hover { background: #aa2855; }
 
     /* SUCCESS */
     .success-screen {
@@ -459,12 +560,32 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      .nav { padding: 16px 24px; }
-      .form-card { padding: 32px 24px; }
+      .nav { padding: 14px 20px; }
+      .nav-logo img { height: 28px; }
+      .nav-btn { display: none; }
+      .nav-flags img { width: 20px; height: 14px; }
+      .form-container { margin: 32px auto; padding: 0 16px; }
+      .form-card { padding: 28px 20px; }
       .form-row { grid-template-columns: 1fr; }
-      .option-grid { grid-template-columns: repeat(2, 1fr); }
+      .option-grid { grid-template-columns: 1fr 1fr; }
+      .price-grid { grid-template-columns: 1fr 1fr; }
+      .form-header h1 { font-size: 26px; }
+      .form-header p { font-size: 14px; }
+      .step-title { font-size: 20px; }
+      .form-actions { gap: 12px; }
+      .btn-next, .btn-submit { padding: 14px 28px; width: 100%; }
+      .btn-back { padding: 14px 16px; }
+      .progress-line { width: 24px; }
+      .demo-banner { font-size: 11px; padding: 8px 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .option-grid { grid-template-columns: 1fr; }
       .price-grid { grid-template-columns: 1fr; }
-      .form-header h1 { font-size: 28px; }
+      .form-actions { flex-direction: column-reverse; gap: 8px; }
+      .btn-next, .btn-submit, .btn-back { width: 100%; text-align: center; }
+      .nav-flags { gap: 8px; }
+      .nav-right { gap: 14px; }
     }
   </style>
 </head>
@@ -476,7 +597,19 @@
 
   <div class="nav">
     <div class="nav-logo">
-      <img src="https://www.eventosbarcelona.com/wp-content/uploads/2025/01/eventos-barcelona-logo-new.svg" alt="Eventos Barcelona">
+      <img src="https://www.eventosbarcelona.com/wp-content/uploads/2025/03/logo-slogan-negativo.svg" alt="Eventos Barcelona">
+    </div>
+    <div class="nav-right">
+      <a href="https://www.eventosbarcelona.com/contacto/" class="nav-btn">Contacta</a>
+      <div class="nav-flags">
+        <img src="https://www.eventosbarcelona.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.svg" alt="English">
+        <img src="https://www.eventosbarcelona.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/es.svg" alt="Español" class="active">
+      </div>
+      <div class="nav-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 
@@ -530,7 +663,21 @@
           </div>
           <div class="form-group">
             <label>Telefono</label>
-            <input type="tel" placeholder="+34 600 000 000">
+            <div style="display: flex; gap: 8px;">
+              <select style="width: 100px; flex-shrink: 0; padding: 14px 8px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 15px; color: var(--text); background: var(--white); cursor: pointer;">
+                <option value="+34" selected>&#127466;&#127480; +34</option>
+                <option value="+33">&#127467;&#127479; +33</option>
+                <option value="+44">&#127468;&#127463; +44</option>
+                <option value="+49">&#127465;&#127466; +49</option>
+                <option value="+39">&#127470;&#127481; +39</option>
+                <option value="+351">&#127477;&#127481; +351</option>
+                <option value="+31">&#127475;&#127473; +31</option>
+                <option value="+32">&#127463;&#127466; +32</option>
+                <option value="+41">&#127464;&#127469; +41</option>
+                <option value="+1">&#127482;&#127480; +1</option>
+              </select>
+              <input type="tel" placeholder="600 000 000" style="flex: 1;">
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -553,32 +700,79 @@
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#128131;</span>
             <span class="option-label">Danza</span>
-            <span class="option-desc">Flamenco, salsa, ballet, hip-hop, cabaret, LED...</span>
+            <span class="option-desc">Selecciona tus estilos</span>
+            <div class="subcategory-panel">
+              <div class="subcategory-chips">
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Flamenco</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Salsa</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Ballet</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Hip-hop</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Cabaret</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">LED dancers</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Bollywood</span>
+              </div>
+            </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#127928;</span>
             <span class="option-label">Musica</span>
-            <span class="option-desc">Live band, DJ, percusion, violin, canto...</span>
+            <span class="option-desc">Selecciona tus estilos</span>
+            <div class="subcategory-panel">
+              <div class="subcategory-chips">
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Live band</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">DJ</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Percusion</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Violin electrico</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Canto</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Arpa laser</span>
+              </div>
+            </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#127914;</span>
             <span class="option-label">Circo</span>
-            <span class="option-desc">Acrobacias, malabares, zancos, aerial...</span>
+            <span class="option-desc">Selecciona tus estilos</span>
+            <div class="subcategory-panel">
+              <div class="subcategory-chips">
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Acrobacias</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Malabares</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Zancos</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Danza aerea</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Hula hoop</span>
+              </div>
+            </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#10024;</span>
             <span class="option-label">Shows especiales</span>
-            <span class="option-desc">Mapping, laser, hologramas, sand art...</span>
+            <span class="option-desc">Selecciona tus estilos</span>
+            <div class="subcategory-panel">
+              <div class="subcategory-chips">
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Video mapping</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Hologramas</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Laser</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Light painting</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Sand art</span>
+              </div>
+            </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#127908;</span>
             <span class="option-label">Animacion</span>
-            <span class="option-desc">Caricaturista, mago, humorista, MC...</span>
+            <span class="option-desc">Selecciona tus estilos</span>
+            <div class="subcategory-panel">
+              <div class="subcategory-chips">
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Caricaturista</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Mago</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Humorista</span>
+                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">MC / Presentador</span>
+              </div>
+            </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#127917;</span>
             <span class="option-label">Otro</span>
-            <span class="option-desc">Cualquier otra disciplina artistica</span>
+            <span class="option-desc">Cualquier otra disciplina</span>
           </div>
         </div>
 
@@ -741,6 +935,13 @@
 
     function toggleOption(el) {
       el.classList.toggle('selected');
+      if (!el.classList.contains('selected')) {
+        el.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('active'));
+      }
+    }
+
+    function toggleChip(el) {
+      el.classList.toggle('active');
     }
 
     const CLOUD_NAME = 'de9gs7bty';
