@@ -598,13 +598,14 @@
         <h2 class="step-title">Tu portfolio</h2>
         <p class="step-subtitle">Sube fotos en alta calidad y comparte links de video. Las fotos deben ser sin marca de agua ni logotipos.</p>
 
-        <div class="upload-area" id="photo-upload">
+        <div class="upload-area" id="photo-upload" onclick="document.getElementById('file-input').click()">
           <span class="upload-icon">&#128247;</span>
           <div class="upload-title">Sube tus fotos</div>
           <div class="upload-desc">Minimo 2 fotos en alta calidad, sin marca de agua. JPG o PNG, max. 10MB por foto.</div>
-          <input type="file" multiple accept="image/*" onchange="handleUpload(this, 'photo-upload', 'photo-list')">
+          <input type="file" id="file-input" multiple accept="image/*" onchange="uploadToCloudinary(this.files)" style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;cursor:pointer;">
         </div>
         <div class="file-list" id="photo-list"></div>
+        <div id="upload-status" style="font-size: 13px; color: var(--gray); margin-bottom: 16px;"></div>
 
         <div class="form-group">
           <label>Link de video (YouTube, Vimeo)</label>
@@ -742,17 +743,53 @@
       el.classList.toggle('selected');
     }
 
-    function handleUpload(input, areaId, listId) {
-      const area = document.getElementById(areaId);
-      const list = document.getElementById(listId);
-      const files = input.files;
+    const CLOUD_NAME = 'de9gs7bty';
+    const UPLOAD_PRESET = 'artistas_unsigned';
+    const uploadedUrls = [];
 
-      if (files.length > 0) {
-        area.classList.add('has-files');
-        list.innerHTML = '';
-        for (let f of files) {
-          list.innerHTML += `<div class="file-item"><span class="file-icon">&#10003;</span> ${f.name}</div>`;
+    async function uploadToCloudinary(files) {
+      const area = document.getElementById('photo-upload');
+      const list = document.getElementById('photo-list');
+      const status = document.getElementById('upload-status');
+
+      list.innerHTML = '';
+      status.textContent = 'Subiendo fotos...';
+
+      for (const file of files) {
+        if (file.size > 10 * 1024 * 1024) {
+          list.innerHTML += `<div class="file-item" style="color:#c0392b;"><span>✕</span> ${file.name} — demasiado grande (max 10MB)</div>`;
+          continue;
         }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', UPLOAD_PRESET);
+
+        try {
+          const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+
+          if (data.secure_url) {
+            uploadedUrls.push(data.secure_url);
+            list.innerHTML += `<div class="file-item"><span class="file-icon">&#10003;</span> ${file.name} — subida correctamente</div>`;
+          } else {
+            list.innerHTML += `<div class="file-item" style="color:#c0392b;"><span>✕</span> ${file.name} — error al subir</div>`;
+          }
+        } catch (err) {
+          list.innerHTML += `<div class="file-item" style="color:#c0392b;"><span>✕</span> ${file.name} — error de conexion</div>`;
+        }
+      }
+
+      if (uploadedUrls.length > 0) {
+        area.classList.add('has-files');
+        status.textContent = `${uploadedUrls.length} foto(s) subida(s) correctamente`;
+        status.style.color = '#2ecc71';
+      } else {
+        status.textContent = 'No se pudieron subir las fotos. Intentalo de nuevo.';
+        status.style.color = '#c0392b';
       }
     }
 
