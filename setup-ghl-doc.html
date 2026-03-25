@@ -400,14 +400,16 @@
       <tr><th>Campo</th><th>Tipo</th><th>Opciones / Notas</th></tr>
     </thead>
     <tbody>
-      <tr><td>Tipo de evento</td><td>Dropdown</td><td>Cena de gala · Cocktail / Welcome drink · Lanzamiento de producto · Convencion / Congreso · Entrega de premios · Family Day corporativo · Fiesta tematica · Otro</td></tr>
+      <tr><td>Tipo de evento</td><td>Dropdown</td><td>Cena de gala · Cocktail / Welcome drink · Lanzamiento de producto · Convencion / Congreso · Entrega de premios · Family Day corporativo · Fiesta tematica · Fiesta de empresa · Otro</td></tr>
       <tr><td>Formato de show</td><td>Dropdown</td><td>Show de escenario · Ambient / entre mesas · Ambos</td></tr>
-      <tr><td>Categorias artisticas</td><td>Multi-select</td><td>Danza · Musica · Circo · Shows especiales</td></tr>
+      <tr><td>Categorias artisticas</td><td>Multi-select</td><td>Danza · Musica · Circo · WOW Effect</td></tr>
+      <tr><td>Subcategorias artisticas</td><td>Multi-select</td><td><strong>Danza:</strong> Contemporanea, Clasica, Cabaret, Flamenco, Anos 20, Hip-hop, Salsa, Tematica · <strong>Musica:</strong> Live bands, Clasica, Solistas, Cantantes, Jazz, Swing, DJ, Flamenco, Salsa, Rumba, Percusionistas · <strong>Circo:</strong> Malabares LED, Equilibrista, Acrobatas, Aereos, Zancudos, Fuego, Personajes singulares · <strong>WOW Effect:</strong> Bailarines LED, Video mapping, Light shows, Laser, Inmersivos, Percusionistas LED, A medida/Custom</td></tr>
+      <tr><td>Necesita produccion tecnica</td><td>Checkbox</td><td>Upselling: sonido, iluminacion, escenarios, pantallas LED</td></tr>
       <tr><td>Fecha del evento</td><td>Date</td><td>—</td></tr>
       <tr><td>Numero de asistentes</td><td>Number</td><td>—</td></tr>
       <tr><td>Ubicacion / Hotel</td><td>Text</td><td>Ej: Hotel W, Barcelona</td></tr>
       <tr><td>Ciudad</td><td>Text</td><td>—</td></tr>
-      <tr><td>Presupuesto aproximado</td><td>Dropdown</td><td>&lt; 3.000€ · 3.000 - 6.000€ · 6.000 - 12.000€ · &gt; 12.000€</td></tr>
+      <tr><td>Presupuesto aproximado</td><td>Dropdown</td><td>&lt; 5.000€ · 5.000 - 10.000€ · 10.000 - 25.000€ · &gt; 25.000€</td></tr>
       <tr><td>Idioma del cliente</td><td>Dropdown</td><td>Espanol · Ingles</td></tr>
       <tr><td>Como nos conocio</td><td>Dropdown</td><td>Busqueda en Google · Recomendacion · Redes sociales · Evento anterior · Otro</td></tr>
     </tbody>
@@ -438,10 +440,13 @@
     </thead>
     <tbody>
       <tr><td>Tipo de contacto</td><td>Dropdown</td><td>Cliente · Artista</td></tr>
-      <tr><td>Disciplina artistica</td><td>Multi-select</td><td>Danza · Musica · Circo · Shows especiales · Animacion · Otro</td></tr>
+      <tr><td>Disciplina artistica</td><td>Multi-select</td><td>Danza · Musica · Circo · WOW Effect · Otro</td></tr>
+      <tr><td>Subcategorias artisticas</td><td>Multi-select</td><td>Mismas subcategorias que en clientes (ver seccion 3)</td></tr>
+      <tr><td>Formato del show</td><td>Dropdown</td><td>Show de escenario · Itinerante</td></tr>
       <tr><td>Nombre artistico</td><td>Text</td><td>—</td></tr>
       <tr><td>Nombre de compania</td><td>Text</td><td>Si aplica</td></tr>
       <tr><td>Bio del show</td><td>Text (long)</td><td>Descripcion breve, max 100 palabras</td></tr>
+      <tr><td>Que hace unico tu show</td><td>Multi-select</td><td>Impacto visual · Interaccion con publico · Estetica / Vestuario · Innovacion tecnologica · Narrativa / Concepto · Otro</td></tr>
       <tr><td>Link video 1</td><td>Text (URL)</td><td>YouTube / Vimeo</td></tr>
       <tr><td>Link video 2</td><td>Text (URL)</td><td>Opcional</td></tr>
       <tr><td>Link web / RRSS</td><td>Text (URL)</td><td>Instagram, web personal, etc.</td></tr>
@@ -450,7 +455,9 @@
       <tr><td>Num. artistas en show</td><td>Number</td><td>—</td></tr>
       <tr><td>Duracion del show</td><td>Dropdown</td><td>15-20 min · 30 min · 45 min · 1 hora · +1 hora · Flexible</td></tr>
       <tr><td>Fotos (URLs)</td><td>Text (long)</td><td>Links a Cloudinary o Google Drive</td></tr>
-      <tr><td>Acepto politica de imagen</td><td>Checkbox</td><td>Autorizacion de uso sin marca de agua</td></tr>
+      <tr><td>Shows adicionales</td><td>Text (long)</td><td>Datos de shows extra (nombre, descripcion, video) — artistas con varios espectaculos</td></tr>
+      <tr><td>Acepto politica de privacidad</td><td>Checkbox</td><td>Proteccion de datos (no bloquea envio)</td></tr>
+      <tr><td>Acepto visibilidad web/RRSS</td><td>Checkbox</td><td>Autoriza a EB a subir material a web y redes para mejorar visibilidad del show</td></tr>
     </tbody>
   </table>
 
@@ -466,7 +473,8 @@
     <span class="tag tag-event">evento:convencion</span>
     <span class="tag tag-event">evento:premios</span>
     <span class="tag tag-event">evento:familyday</span>
-    <span class="tag tag-event">evento:fiesta</span>
+    <span class="tag tag-event">evento:fiesta-tematica</span>
+    <span class="tag tag-event">evento:fiesta-empresa</span>
     <span class="tag tag-event">evento:otro</span>
   </div>
 
@@ -475,21 +483,27 @@
     <span class="tag tag-cat">cat:danza</span>
     <span class="tag tag-cat">cat:musica</span>
     <span class="tag tag-cat">cat:circo</span>
-    <span class="tag tag-cat">cat:shows-especiales</span>
+    <span class="tag tag-cat">cat:wow-effect</span>
   </div>
 
   <h4>Formato de show</h4>
   <div class="tag-grid">
     <span class="tag tag-format">formato:escenario</span>
     <span class="tag tag-format">formato:ambient</span>
+    <span class="tag tag-format">formato:itinerante</span>
   </div>
 
   <h4>Presupuesto</h4>
   <div class="tag-grid">
-    <span class="tag tag-budget">budget:bajo</span>
-    <span class="tag tag-budget">budget:medio</span>
-    <span class="tag tag-budget">budget:alto</span>
-    <span class="tag tag-budget">budget:premium</span>
+    <span class="tag tag-budget">budget:&lt;5k</span>
+    <span class="tag tag-budget">budget:5-10k</span>
+    <span class="tag tag-budget">budget:10-25k</span>
+    <span class="tag tag-budget">budget:25k+</span>
+  </div>
+
+  <h4>Produccion tecnica</h4>
+  <div class="tag-grid">
+    <span class="tag tag-format">produccion:solicitada</span>
   </div>
 
   <h4>Origen del lead</h4>
@@ -668,10 +682,10 @@
     </thead>
     <tbody>
       <tr><td>1. Datos de contacto</td><td>Nombre, empresa, email, telefono</td></tr>
-      <tr><td>2. Tipo de evento</td><td>Selector visual: gala, cocktail, lanzamiento, convencion, premios, family day, fiesta, otro</td></tr>
-      <tr><td>3. Tipo de show</td><td>Formato (escenario vs ambient) + categorias (danza, musica, circo, shows especiales) + opcion "no estoy seguro"</td></tr>
-      <tr><td>4. Detalles</td><td>Fecha, num. asistentes, ubicacion, presupuesto aproximado</td></tr>
-      <tr><td>5. Comentarios</td><td>Texto libre + como nos conocio</td></tr>
+      <tr><td>2. Tipo de evento</td><td>Selector visual: gala, cocktail, lanzamiento, convencion, premios, family day, fiesta tematica, fiesta de empresa, otro</td></tr>
+      <tr><td>3. Tipo de show</td><td>Formato (escenario vs ambient) + categorias con subcategorias desplegables (Danza, Musica, Circo, WOW Effect) + opcion "no estoy seguro" + upselling produccion tecnica</td></tr>
+      <tr><td>4. Detalles</td><td>Fecha, num. asistentes, ubicacion, presupuesto (&lt;5k, 5-10k, 10-25k, 25k+)</td></tr>
+      <tr><td>5. Comentarios</td><td>Texto libre + como nos conocio + checkbox proteccion de datos</td></tr>
     </tbody>
   </table>
 
@@ -682,10 +696,10 @@
       <tr><th>Paso</th><th>Campos</th></tr>
     </thead>
     <tbody>
-      <tr><td>1. Datos de contacto</td><td>Nombre / nombre artistico, compania, email, telefono, ciudad</td></tr>
-      <tr><td>2. Disciplina</td><td>Categorias (multi-select) + bio del show (100 palabras)</td></tr>
-      <tr><td>3. Portfolio</td><td>Fotos (upload, sin marca de agua), links video, web/RRSS, rider tecnico</td></tr>
-      <tr><td>4. Precios</td><td>Rango de cache, num. artistas, duracion, comentarios + aceptacion politica privacidad/imagen</td></tr>
+      <tr><td>1. Datos de contacto</td><td>Nombre / nombre artistico, compania, email, telefono (+34 con selector pais), ciudad</td></tr>
+      <tr><td>2. Disciplina</td><td>Categorias con subcategorias desplegables (Danza, Musica, Circo, WOW Effect, Otro) + formato (escenario vs itinerante) + bio del show + "¿Que hace unico tu show?" (6 opciones)</td></tr>
+      <tr><td>3. Portfolio</td><td>Fotos (upload Cloudinary, sin marca de agua), links video, web/RRSS, rider tecnico + "¿Tienes otro show? Anadelo" (formularios dinamicos)</td></tr>
+      <tr><td>4. Precios</td><td>Rango de cache, num. artistas, duracion, comentarios + checkbox privacidad (no bloquea) + checkbox visibilidad web/RRSS</td></tr>
     </tbody>
   </table>
 
