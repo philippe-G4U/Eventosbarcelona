@@ -1,0 +1,2729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title id="pageTitle">Propuesta — Eventos Barcelona</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    /* =============================================
+       CSS VARIABLES — Category themes override these
+       ============================================= */
+    :root {
+      --accent: #E87461;
+      --accent-hover: #d4604f;
+      --dark: #1a1a1a;
+      --text: #333;
+      --gray: #666;
+      --light-gray: #f9f9f9;
+      --border: #e5e5e5;
+      --white: #fff;
+      --hero-bg: var(--dark);
+    }
+
+    /* Category themes */
+    body.theme-danza {
+      --accent: #C75B7A;
+      --accent-hover: #b04a69;
+    }
+    body.theme-musica {
+      --accent: #5B8AC7;
+      --accent-hover: #4a79b6;
+    }
+    body.theme-circo {
+      --accent: #E8A461;
+      --accent-hover: #d4904f;
+    }
+    body.theme-shows {
+      --accent: #E87461;
+      --accent-hover: #d4604f;
+    }
+    body.theme-wow {
+      --accent: #8B5BC7;
+      --accent-hover: #7a4ab6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+    }
+
+    /* === NAV === */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 80px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .nav-logo img { height: 48px; width: auto; }
+
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+
+    .btn-contact {
+      display: inline-block;
+      padding: 10px 28px;
+      border: 1.5px solid #fff;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: all 0.3s;
+    }
+
+    .btn-contact:hover { background: #fff; color: var(--dark); }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      background: var(--hero-bg);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-image {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 7vw, 90px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      font-family: 'DM Serif Display', Georgia, serif;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      max-width: 640px;
+      line-height: 1.7;
+      color: #ccc;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-detail {
+      font-size: 14px;
+      margin-top: 16px;
+      color: #999;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === CONCEPT === */
+    .concept-section {
+      padding: 100px 80px;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .concept-section h2 {
+      font-size: 38px;
+      color: var(--dark);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .concept-section p {
+      font-size: 16px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    /* === SHOW BLOCKS === */
+    .block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+    }
+
+    .block--reversed { direction: rtl; }
+    .block--reversed > * { direction: ltr; }
+
+    .block-image {
+      background-size: cover;
+      background-position: center;
+      min-height: 400px;
+    }
+
+    .block-content {
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .block-content h2 {
+      font-size: 34px;
+      color: var(--dark);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .block-content p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .block-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .block-remove {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .block-remove:hover { background: #e74c3c; }
+    .block.admin-mode { position: relative; }
+    .block.admin-mode .block-remove { display: flex; }
+
+    /* Editable text in admin mode */
+    .editable-text {
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+      border-radius: 4px;
+    }
+    .editable-text:hover {
+      background: rgba(232,116,97,0.08);
+      outline: 1px dashed var(--accent);
+      outline-offset: 4px;
+    }
+    .editable-text:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      background: rgba(232,116,97,0.05);
+    }
+
+    /* Add show button */
+    .add-show-block {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin: 32px auto;
+      max-width: 600px;
+    }
+    .add-show-block:hover {
+      border-color: var(--accent);
+      background: rgba(232,116,97,0.04);
+    }
+    .add-show-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .add-show-block h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .add-show-block p {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    /* Show picker overlay */
+    .picker-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+    .picker-overlay.open { display: flex; }
+    .picker-container {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-header h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+    }
+    .picker-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray);
+      padding: 4px 8px;
+    }
+    .picker-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 16px 24px 0;
+      flex-wrap: wrap;
+    }
+    .picker-tab {
+      padding: 6px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      background: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--gray);
+      transition: all 0.2s;
+    }
+    .picker-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .picker-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      padding: 16px 24px 24px;
+      overflow-y: auto;
+    }
+    .picker-card {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .picker-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .picker-card.already-added { opacity: 0.4; pointer-events: none; }
+    .picker-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+    .picker-card-body {
+      padding: 10px 12px;
+    }
+    .picker-card-body small {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+    }
+    .picker-card-body h4 {
+      font-size: 0.85rem;
+      color: var(--dark);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .block-price {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 28px;
+      color: var(--dark);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .block-price small {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--gray);
+      font-weight: 400;
+    }
+
+    .block-price.editable {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .block-price.editable:hover {
+      color: var(--accent);
+    }
+
+    .block-price.editable::after {
+      content: '\\270E';
+      font-size: 16px;
+      margin-left: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .block-price.editable:hover::after {
+      opacity: 1;
+    }
+
+    .price-input {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 28px;
+      color: var(--dark);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 4px 8px;
+      width: 140px;
+      outline: none;
+      background: var(--light-gray);
+    }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 10px 28px;
+      background: var(--dark);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: background 0.3s;
+    }
+
+    .btn-dark:hover { background: #333; }
+
+    /* === CTA BANNER (mid-page) === */
+    .cta-banner {
+      padding: 100px 80px;
+      background: var(--dark);
+    }
+
+    .cta-banner-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-banner-inner h2 {
+      font-size: 32px;
+      line-height: 1.4;
+      margin-bottom: 28px;
+    }
+
+    .btn-outline-white {
+      display: inline-block;
+      padding: 12px 36px;
+      border: 1.5px solid #fff;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: all 0.3s;
+    }
+
+    .btn-outline-white:hover { background: #fff; color: var(--dark); }
+
+    /* === UPSELL === */
+    .upsell-section {
+      padding: 100px 80px;
+      background: var(--white);
+    }
+
+    .upsell-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .upsell-content h2 {
+      font-size: 38px;
+      color: var(--dark);
+      margin-bottom: 20px;
+      line-height: 1.15;
+    }
+
+    .upsell-content p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .upsell-image {
+      position: relative;
+      min-height: 420px;
+      border-radius: 16px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .upsell-items {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .upsell-item {
+      font-size: 13px;
+      color: var(--text);
+      padding: 8px 18px;
+      background: var(--light-gray);
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* === SUMMARY === */
+    .summary-section {
+      padding: 100px 80px;
+      background: var(--light-gray);
+    }
+
+    .summary-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--gray);
+    }
+
+    .summary-row span:last-child {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 28px 0 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      font-family: 'DM Serif Display', Georgia, serif;
+    }
+
+    .summary-note {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 28px;
+      line-height: 1.7;
+    }
+
+    /* === MARGIN CONTROL === */
+    .margin-control {
+      display: none;
+      margin-top: 24px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .margin-control.visible { display: block; }
+
+    .margin-control label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .margin-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .margin-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .margin-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .margin-value {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 24px;
+      color: var(--dark);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .margin-hint {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 8px;
+    }
+
+    /* === STATS === */
+    .stats-section {
+      padding: 80px;
+      text-align: center;
+    }
+
+    .stats-title {
+      font-size: 28px;
+      color: var(--dark);
+      margin-bottom: 48px;
+      font-family: 'DM Serif Display', Georgia, serif;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 72px;
+      font-weight: 400;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    /* === CONDITIONS === */
+    .conditions-section {
+      padding: 80px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .conditions-section ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 24px;
+    }
+
+    .conditions-section li {
+      font-size: 14px;
+      color: var(--gray);
+      padding: 8px 0 8px 20px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .conditions-section li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 15px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    /* === ABOUT === */
+    .about-section {
+      padding: 100px 80px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about-section h2 {
+      font-size: 32px;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+
+    .about-section h2 .highlight { color: var(--accent); }
+
+    /* === CTA FINAL === */
+    .cta-section {
+      text-align: center;
+      padding: 100px 80px;
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-size: 42px;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      font-size: 17px;
+      color: #999;
+      margin-bottom: 36px;
+    }
+
+    .btn-accent {
+      display: inline-block;
+      padding: 16px 48px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 24px;
+      transition: background 0.3s;
+    }
+
+    .btn-accent:hover { background: var(--accent-hover); }
+
+    /* === FOOTER === */
+    .footer {
+      padding: 60px 80px;
+      background: var(--light-gray);
+    }
+
+    .footer-team {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .footer-team h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .footer-roles {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-role strong {
+      display: block;
+      font-size: 15px;
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .footer-role span {
+      font-size: 12px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-contact {
+      text-align: center;
+      font-size: 14px;
+      color: var(--gray);
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-contact a { color: var(--accent); text-decoration: none; }
+
+    /* === BUILDER MODE === */
+    .builder-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      font-family: 'Inter', sans-serif;
+    }
+    .builder-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .builder-header img {
+      height: 48px;
+      margin-bottom: 16px;
+    }
+    .builder-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .builder-header p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    /* Client form */
+    .builder-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+    .builder-form h3 {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: var(--dark);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input, .form-group select {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--accent);
+    }
+    .form-group.full { grid-column: 1 / -1; }
+
+    /* Category tabs */
+    .builder-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .builder-tab {
+      padding: 10px 20px;
+      border: 2px solid var(--border);
+      border-radius: 100px;
+      background: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--gray);
+    }
+    .builder-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .builder-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Show grid */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .builder-card {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: var(--white);
+      position: relative;
+    }
+    .builder-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .builder-card.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,116,97,0.2); }
+    .builder-card.selected::after {
+      content: '\2713';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      z-index: 2;
+    }
+    .builder-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+    .builder-card-body {
+      padding: 16px;
+    }
+    .builder-card-cat {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .builder-card-body h4 {
+      font-size: 0.95rem;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .builder-card-body p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Selected shows sidebar */
+    .builder-selection {
+      position: sticky;
+      bottom: 0;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 32px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 200;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+    }
+    .builder-selection.visible { display: flex; }
+    .builder-selection-info {
+      font-size: 0.9rem;
+    }
+    .builder-selection-info strong {
+      font-size: 1.1rem;
+    }
+    .builder-selection-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      max-width: 60%;
+    }
+    .builder-chip {
+      background: rgba(255,255,255,0.15);
+      padding: 6px 12px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .builder-chip-remove {
+      cursor: pointer;
+      opacity: 0.6;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .builder-chip-remove:hover { opacity: 1; }
+    .btn-generate {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-generate:hover { background: var(--accent-hover); }
+
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .builder-selection { flex-direction: column; gap: 12px; padding: 16px; }
+      .builder-selection-chips { max-width: 100%; }
+    }
+
+    /* === ADMIN BAR === */
+    .admin-bar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 14px 32px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .admin-bar.visible { display: flex; }
+
+    .admin-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .admin-bar-left .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f39c12;
+    }
+
+    .admin-bar-left .status-dot.approved { background: #2ecc71; }
+    .admin-bar-left .status-dot.sent { background: #3498db; }
+
+    .admin-bar-info { font-weight: 600; }
+
+    .admin-bar-info span {
+      font-weight: 400;
+      color: #aaa;
+      margin-left: 8px;
+      font-size: 13px;
+    }
+
+    .admin-bar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-admin {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-approve {
+      background: #2ecc71;
+      color: #fff;
+    }
+
+    .btn-approve:hover { background: #27ae60; }
+
+    .btn-modify {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .btn-modify:hover { background: rgba(255,255,255,0.2); }
+
+    .btn-pdf {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .btn-pdf:hover { background: rgba(255,255,255,0.2); }
+
+    .btn-prices {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .btn-prices:hover { background: rgba(255,255,255,0.2); }
+
+    /* === CHAT PANEL === */
+    .chat-overlay {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 400px;
+      max-height: 520px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      z-index: 300;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .chat-overlay.open { display: flex; }
+
+    .chat-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header-title { font-size: 14px; font-weight: 600; }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 350px;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .chat-msg.bot {
+      background: var(--light-gray);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-msg.user {
+      background: #1a1a2e;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .chat-input:focus { border-color: var(--accent); }
+
+    .chat-send {
+      padding: 10px 18px;
+      background: #1a1a2e;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* === TOAST === */
+    .toast {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      z-index: 400;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success { background: #2ecc71; }
+    .toast.error { background: #e74c3c; }
+
+    /* === APPROVED OVERLAY === */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 350;
+    }
+
+    .modal-overlay.show { display: block; }
+
+    .modal-content {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 60px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+      z-index: 400;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      max-width: 440px;
+    }
+
+    .modal-content.show { display: block; }
+
+    .modal-content .check { font-size: 48px; margin-bottom: 16px; }
+    .modal-content h3 { font-size: 22px; color: var(--dark); margin-bottom: 8px; }
+    .modal-content p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .modal-actions button {
+      padding: 12px 28px;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-confirm {
+      background: #2ecc71;
+      color: #fff;
+    }
+
+    .btn-cancel {
+      background: var(--light-gray);
+      color: var(--text);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .block { grid-template-columns: 1fr; }
+      .block--reversed { direction: ltr; }
+      .block-image { min-height: 280px; }
+      .block-content { padding: 32px 24px; }
+      .hero { padding: 60px 24px; }
+      .nav { padding: 20px 24px; }
+      .concept-section { padding: 60px 24px; }
+      .upsell-section { padding: 60px 24px; }
+      .upsell-grid { grid-template-columns: 1fr; }
+      .summary-section { padding: 60px 24px; }
+      .conditions-section { padding: 40px 24px; }
+      .cta-section { padding: 60px 24px; }
+      .cta-banner { padding: 40px 24px; }
+      .footer { padding: 40px 24px; }
+      .footer-roles { flex-direction: column; gap: 16px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .stat-number { font-size: 48px; }
+      .about-section { padding: 60px 24px; }
+      .about-section h2 { font-size: 24px; }
+      .admin-bar { flex-direction: column; gap: 10px; padding: 12px 16px; }
+      .chat-overlay { width: calc(100% - 32px); right: 16px; bottom: 16px; }
+    }
+
+    /* === PDF EXPORT STYLES === */
+    @media print {
+      .admin-bar, .chat-overlay, .toast, .modal-overlay, .modal-content { display: none !important; }
+      .hero { min-height: auto; padding: 60px 40px; }
+      .block { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div class="toast" id="toast"></div>
+
+  <!-- BUILDER MODE -->
+  <div id="builderMode" style="display:none;">
+    <div class="builder-container">
+      <div class="builder-header">
+        <img src="https://www.eventosbarcelona.com/wp-content/uploads/2025/03/logo-slogan-negativo.svg" alt="EB" style="filter: brightness(0);">
+        <h1>Constructor de Propuestas</h1>
+        <p>Selecciona los shows para armar una propuesta personalizada</p>
+      </div>
+
+      <!-- Client & Event form -->
+      <div class="builder-form">
+        <h3>Datos del cliente y evento</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre del cliente</label>
+            <input type="text" id="bClientName" placeholder="Carlos Martinez">
+          </div>
+          <div class="form-group">
+            <label>Empresa</label>
+            <input type="text" id="bCompany" placeholder="Zurich Seguros">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="bEmail" placeholder="carlos@empresa.com">
+          </div>
+          <div class="form-group">
+            <label>Telefono</label>
+            <input type="tel" id="bPhone" placeholder="+34 612 345 678">
+          </div>
+          <div class="form-group">
+            <label>Nombre del evento</label>
+            <input type="text" id="bEventName" placeholder="Cena de Gala Anual">
+          </div>
+          <div class="form-group">
+            <label>Tipo de evento</label>
+            <select id="bEventType">
+              <option value="Cena de gala">Cena de gala</option>
+              <option value="Fiesta corporativa">Fiesta corporativa</option>
+              <option value="Lanzamiento de producto">Lanzamiento de producto</option>
+              <option value="Congreso">Congreso</option>
+              <option value="Festival">Festival</option>
+              <option value="Boda">Boda</option>
+              <option value="Fiesta privada">Fiesta privada</option>
+              <option value="Team building">Team building</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="text" id="bDate" placeholder="15 abril 2026">
+          </div>
+          <div class="form-group">
+            <label>Invitados</label>
+            <input type="number" id="bGuests" placeholder="250">
+          </div>
+          <div class="form-group">
+            <label>Ubicacion</label>
+            <input type="text" id="bLocation" placeholder="Hotel W Barcelona">
+          </div>
+          <div class="form-group">
+            <label>Categoria principal</label>
+            <select id="bCategory">
+              <option value="shows">Mix de shows</option>
+              <option value="danza">Danza</option>
+              <option value="musica">Musica</option>
+              <option value="circo">Circo</option>
+              <option value="wow">WOW Effect</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Concepto artistico (titulo)</label>
+            <input type="text" id="bConceptTitle" placeholder="Noche de Estrellas">
+          </div>
+          <div class="form-group full">
+            <label>Concepto artistico (descripcion)</label>
+            <input type="text" id="bConceptText" placeholder="Una seleccion de espectaculos disenada para...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Category tabs -->
+      <div class="builder-tabs" id="builderTabs">
+        <button class="builder-tab active" data-cat="all" onclick="filterBuilderCat('all')">Todos (68)</button>
+        <button class="builder-tab" data-cat="danza" onclick="filterBuilderCat('danza')">Danza (17)</button>
+        <button class="builder-tab" data-cat="musica" onclick="filterBuilderCat('musica')">Musica (19)</button>
+        <button class="builder-tab" data-cat="circo" onclick="filterBuilderCat('circo')">Circo (15)</button>
+        <button class="builder-tab" data-cat="wow" onclick="filterBuilderCat('wow')">WOW Effect (17)</button>
+      </div>
+
+      <!-- Show cards grid -->
+      <div class="builder-grid" id="builderGrid"></div>
+    </div>
+
+    <!-- Sticky selection bar -->
+    <div class="builder-selection" id="builderSelection">
+      <div class="builder-selection-info">
+        <strong id="builderCount">0</strong> shows seleccionados
+      </div>
+      <div class="builder-selection-chips" id="builderChips"></div>
+      <button class="btn-generate" onclick="generateProposal()">Generar Propuesta</button>
+    </div>
+  </div>
+
+  <!-- ADMIN BAR -->
+  <div class="admin-bar" id="adminBar">
+    <div class="admin-bar-left">
+      <div class="status-dot" id="statusDot"></div>
+      <div class="admin-bar-info">
+        <span id="adminStatus">REVISION</span>
+        <span id="adminMeta"></span>
+      </div>
+    </div>
+    <div class="admin-bar-right">
+      <button class="btn-admin btn-prices" onclick="togglePriceEdit()">Editar precios</button>
+      <button class="btn-admin btn-pdf" onclick="exportPDF()">Exportar PDF</button>
+      <button class="btn-admin btn-modify" onclick="openChat()">Modificar</button>
+      <button class="btn-admin btn-approve" onclick="showApproveModal()">Aprobar y enviar</button>
+    </div>
+  </div>
+
+  <!-- CHAT PANEL -->
+  <div class="chat-overlay" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-title">Modificar propuesta</div>
+      <button class="chat-close" onclick="closeChat()">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">Que quieres cambiar de esta propuesta?</div>
+    </div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Ej: Quita el violin y pon los Alien Businessmen..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+      <button class="chat-send" onclick="sendChatMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <!-- SHOW PICKER -->
+  <div class="picker-overlay" id="pickerOverlay">
+    <div class="picker-container">
+      <div class="picker-header">
+        <h3>Agregar show a la propuesta</h3>
+        <button class="picker-close" onclick="closePicker()">&times;</button>
+      </div>
+      <div class="picker-tabs" id="pickerTabs"></div>
+      <div class="picker-grid" id="pickerGrid"></div>
+    </div>
+  </div>
+
+  <!-- APPROVE MODAL -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal-content" id="approveModal">
+    <div class="check">&#9989;</div>
+    <h3>Aprobar propuesta</h3>
+    <p id="approveModalText">Se enviara la propuesta al cliente con el presupuesto actual.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmApproval()">Confirmar envio</button>
+    </div>
+  </div>
+
+  <!-- PROPOSAL CONTENT (dynamically rendered) -->
+  <div id="proposalContent"></div>
+
+  <!-- ============================================= -->
+  <!-- SHOW CATALOG — all available shows -->
+  <!-- ============================================= -->
+  <script>
+    // =============================================
+    // SHOW CATALOG
+    // Each show has: id, name, category, subcategory,
+    // description, basePrice, priceNote, duration,
+    // performers, videoUrl, imageUrl
+    // =============================================
+    const SHOW_CATALOG = {
+      'shadows-of-the-future': { name: 'Shadows of the Future', category: 'danza', subcategory: 'Tematica', description: 'Espectaculo de danza inmersivo inspirado en Blade Runner y Cyberpunk. Ideal para fiestas tematicas futuristas.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/bhuB9pCOY20', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/Captura-de-Pantalla-2025-04-06-a-las-11.40.23.png' },
+      'pulsar-dancers': { name: 'Pulsar Dancers', category: 'danza', subcategory: 'Tematica', description: 'Fiesta tematica futurista con decoracion LED, shows inmersivos y tecnologia.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/oW5HMLnjs7Q', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05295-scaled.jpg' },
+      'silk-road-burlesque': { name: 'Silk Road Burlesque', category: 'danza', subcategory: 'Cabaret', description: 'Espectaculo exclusivo de burlesque inspirado en la Ruta de la Seda. Show elegante y sofisticado.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/y17SOCgwDPA', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05418-scaled.jpg' },
+      'street-dancers': { name: 'EB Street Dancers', category: 'danza', subcategory: 'Hip-hop', description: 'Espectaculo de danza urbana. Hip hop, breakdance y estilo callejero.', basePrice: 2750, priceNote: '5 bailarines', videoUrl: 'https://www.youtube.com/embed/sbINqr02Ibw', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/05/DSC05268-scaled.jpg' },
+      'show-danza-funky': { name: 'Show Danza Funky', category: 'danza', subcategory: 'Contemporanea', description: 'Espectaculo de danza funky de produccion propia de Eventos Barcelona. Animacion unica para cenas y galas.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/CT8t09heriA', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/05/Captura-de-Pantalla-2025-04-03-a-las-9.53.19.png' },
+      'olympian-odyssey': { name: 'Olympian Odyssey', category: 'danza', subcategory: 'Tematica', description: 'Espectaculo de danza inspirado en diosas griegas. Ideal para eventos corporativos, galas y fiestas tematicas.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/Rs6pBJilVCY', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/05/Captura-de-Pantalla-2025-04-06-a-las-11.10.14.png' },
+      'ballet-clasica': { name: 'Bailarinas de Ballet y Danza Clasica', category: 'danza', subcategory: 'Clasica', description: 'Bailarinas de ballet y danza clasica para eventos. Elegancia y profesionalidad.', basePrice: 1800, priceNote: '4 bailarinas', videoUrl: 'https://www.youtube.com/embed/-fsRcbpBeZg', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/IMG_9815-copia.jpg' },
+      'pole-dance': { name: 'Espectaculos de Pole Dance', category: 'danza', subcategory: 'Contemporanea', description: 'Shows de Pole Dance para eventos. Actuacion llena de fuerza, acrobacia y arte.', basePrice: 750, priceNote: '1 artista + barra', videoUrl: 'https://www.youtube.com/embed/ye0XqX5ucV0', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/pexels-pixabay-163497.jpg' },
+      'hiphop-breakdance': { name: 'Bailarines de Hip-hop & Breakdance', category: 'danza', subcategory: 'Hip-hop', description: 'Bailarines profesionales de Hip-hop y Breakdance para dar energia a tus eventos.', basePrice: 1750, priceNote: '350€/artista (5 bailarines)', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/show-hiphop.jpg' },
+      'bollywood': { name: 'Show de Bollywood', category: 'danza', subcategory: 'Tematica', description: 'Espectaculo de Bollywood con danza hindu para eventos corporativos y fiestas tematicas.', basePrice: 2500, priceNote: '5 bailarinas', videoUrl: 'https://www.youtube.com/embed/IUU0n2_kAik', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/Bollywood-show.jpg' },
+      'flamenco-danza': { name: 'Espectaculos de Flamenco', category: 'danza', subcategory: 'Flamenco', description: 'Bailarines de flamenco profesionales para eventos. Pasion y arte en cada actuacion.', basePrice: 3500, priceNote: '4 musicos + 3 bailaoras', videoUrl: 'https://www.youtube.com/embed/4DNFFXRKK9E', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/bailarines-de-flamenco-recortada-scaled.jpg' },
+      'cabaret-burlesque': { name: 'Show de Cabaret y Burlesque', category: 'danza', subcategory: 'Cabaret', description: 'Espectaculo de cabaret y burlesque para eventos corporativos y fiestas privadas.', basePrice: 2750, priceNote: '5 bailarinas', videoUrl: 'https://www.youtube.com/embed/z8PMPmo1vcU', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/PHOTO-2021-11-16-14-37-04.jpg' },
+      'danza-aerea': { name: 'Danza Aerea', category: 'danza', subcategory: 'Contemporanea', description: 'Espectaculo de danza aerea para eventos. Acrobacia y elegancia en las alturas.', basePrice: 1200, priceNote: '1 artista (sin rigging)', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/danzaaerea.jpg' },
+      'espectaculo-brasileno': { name: 'Espectaculo Brasileno', category: 'danza', subcategory: 'Salsa', description: 'Espectaculo brasileno con samba y ritmos tropicales para eventos y fiestas.', basePrice: 2250, priceNote: '5 bailarinas (+1.400€ con musicos)', videoUrl: 'https://www.youtube.com/embed/9rp8HbCbwdM', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/braziliandancer.jpg' },
+      'hula-hoop-led': { name: 'Show de Hula Hoop LED', category: 'danza', subcategory: 'Contemporanea', description: 'Espectaculo de Hula Hoop LED para eventos. Luz y movimiento combinados.', basePrice: 1600, priceNote: '4 bailarinas (850€ x2)', videoUrl: 'https://www.youtube.com/embed/qAtB95jTmEU', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/image00058-1.jpeg' },
+      'glamm-dancers': { name: 'Bailarinas Glamm Dancers', category: 'danza', subcategory: 'Contemporanea', description: 'Bailarinas Glamm Dancers para eventos de alto nivel. Elegancia y sofisticacion.', basePrice: 3950, priceNote: '4 bailarinas + 1 estilista', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/10/eventos-de-exito-en-barcelona.webp' },
+      'bailarines-salsa': { name: 'Bailarines de Salsa', category: 'danza', subcategory: 'Salsa', description: 'Bailarines de salsa profesionales para animar eventos con ritmo latino.', basePrice: 700, priceNote: 'Por pareja', videoUrl: 'https://www.youtube.com/embed/1HlQaQNyvUA', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/IMG_8446-scaled.jpg' },
+      'grupos-flamenco': { name: 'Grupos de Flamenco', category: 'musica', subcategory: 'Flamenco', description: 'Grupos de Flamenco para eventos y fiestas. Autenticidad y pasion en cada actuacion.', basePrice: 3500, priceNote: '4 musicos + 3 bailaoras', videoUrl: 'https://www.youtube.com/embed/4DNFFXRKK9E', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/09/Sodify_d2_soire_239.jpg' },
+      'arpista-clasica': { name: 'Arpista Clasica', category: 'musica', subcategory: 'Clasica', description: 'Arpista clasica para eventos especiales. Toque elegante y sofisticado.', basePrice: 900, priceNote: 'Solista 80 min', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/7CE2AB6B-C698-4A88-AC33-1EBD8F0B6DE0.jpeg' },
+      'saxofonista-chillout': { name: 'Saxofonista Chill Out', category: 'musica', subcategory: 'Solistas', description: 'Saxofonista chill out para crear un momento unico en tu evento.', basePrice: 550, priceNote: 'Solista 60 min (+495€ equipo sonido)', videoUrl: 'https://www.youtube.com/embed/ywevb_uOC8s', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/rudy-saxo-2.jpg' },
+      'cantante-jazz': { name: 'Cantante Pop, Blues & Jazz', category: 'musica', subcategory: 'Cantantes', description: 'Cantante de pop, jazz y blues para eventos exclusivos.', basePrice: 2200, priceNote: 'Cuarteto (800€ solista / 1.600€ trio)', videoUrl: 'https://www.youtube.com/embed/sH4zGi7mXQ8', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/marina4.jpg' },
+      'trio-violin': { name: 'W&S Trio de Violin', category: 'musica', subcategory: 'Clasica', description: 'Trio musical adaptable desde lo clasico hasta el pop mas actual.', basePrice: 1800, priceNote: 'Trio (2.400€ cuarteto)', videoUrl: 'https://www.youtube.com/embed/t0D35zIefOY', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/trio-violin-e1715366416285.jpg' },
+      'flamenco-instrumental': { name: 'Flamenco Instrumental', category: 'musica', subcategory: 'Flamenco', description: 'Grupo de musica flamenco instrumental para deleitar tu evento.', basePrice: 1800, priceNote: '4 musicos', videoUrl: 'https://www.youtube.com/embed/zGiXtVMEqKU', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/DSC04086aa-1.jpg' },
+      'djs': { name: 'DJ\'s para Eventos', category: 'musica', subcategory: 'DJ', description: 'DJs profesionales para crear una experiencia memorable en tu evento.', basePrice: 650, priceNote: '3h (desde 550€)', videoUrl: 'https://www.youtube.com/embed/1NR8J9LxMN0', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/dj3.jpg' },
+      'orquesta-clasica': { name: 'Orquesta de Musica Clasica', category: 'musica', subcategory: 'Clasica', description: 'Toque clasico y elegante para tu evento con orquesta profesional.', basePrice: 8500, priceNote: '10 musicos + 1 director', videoUrl: 'https://www.youtube.com/embed/-mOgykCNPow', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/C2.jpg' },
+      'bandas-jazz': { name: 'Bandas de Jazz', category: 'musica', subcategory: 'Jazz', description: 'Gran variedad de bandas de Jazz para eventos corporativos y privados.', basePrice: 1500, priceNote: 'Cuarteto (1.100€ trio)', videoUrl: 'https://www.youtube.com/embed/tPhOMu0d7qU', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/GB3.jpg' },
+      'dixieland': { name: 'Banda de Dixieland', category: 'musica', subcategory: 'Jazz', description: 'Banda de Dixieland jazz para eventos. Musica festiva y animada estilo Nueva Orleans.', basePrice: 2200, priceNote: 'Sexteto (1.600€ cuarteto)', videoUrl: 'https://www.youtube.com/embed/JKVCbAqvXkQ', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/RAB_8816.jpg' },
+      'flamenco-chillout': { name: 'Grupo de Flamenco Chill Out', category: 'musica', subcategory: 'Flamenco', description: 'Flamenco chill out para ambientacion elegante en cocktails y cenas.', basePrice: 2500, priceNote: '4 musicos', videoUrl: 'https://www.youtube.com/embed/twxHnhOf5Lo', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/grupoflamenco2.jpg' },
+      'percusionistas-batucadas': { name: 'Percusionistas y Batucadas', category: 'musica', subcategory: 'Percusionistas', description: 'Percusionistas y batucadas para dar energia y ritmo a tus eventos.', basePrice: 1875, priceNote: 'Quinteto (2.500€ sexteto)', videoUrl: 'https://www.youtube.com/embed/lJgRzp3r3Jw', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/percusionistas-eventos-barcelona.jpg' },
+      'cantantes-opera': { name: 'Cantantes de Opera', category: 'musica', subcategory: 'Cantantes', description: 'Cantantes de opera para eventos de alto nivel. Elegancia y potencia vocal.', basePrice: 1960, priceNote: '490€/artista (x4)', videoUrl: 'https://www.youtube.com/embed/ANMACDPBFus', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/cantantes-de-opera-eventos.jpg' },
+      'rumba-catalana': { name: 'Grupo de Rumba Catalana', category: 'musica', subcategory: 'Rumba', description: 'Grupo de Rumba Catalana para eventos en Barcelona. Ritmo y fiesta asegurados.', basePrice: 3500, priceNote: '4 musicos + 3 bailaoras', videoUrl: 'https://www.youtube.com/embed/oGvkqCwJ_RI', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/flamencorumba.jpg' },
+      'bossa-nova': { name: 'Banda de Bossa Nova & Brazilian Jazz', category: 'musica', subcategory: 'Jazz', description: 'Bossa Nova y Brazilian Jazz para ambientacion sofisticada en eventos.', basePrice: 1200, priceNote: 'Trio (1.600€ cuarteto)', videoUrl: 'https://www.youtube.com/embed/w4cEYqY3m9U', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/BN1.jpg' },
+      'pop-rock': { name: 'Grupo de Pop Rock', category: 'musica', subcategory: 'Live bands', description: 'Banda de Pop Rock en vivo para eventos en Barcelona. Energia y diversión.', basePrice: 1500, priceNote: 'Cuarteto (2.200€ quinteto)', videoUrl: 'https://www.youtube.com/embed/Yu6P9Gf0uoE', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/s2-2.jpg' },
+      'soul-bossa-nova': { name: 'Banda de Soul & Bossa Nova', category: 'musica', subcategory: 'Live bands', description: 'Banda de Soul y Bossa Nova para eventos con estilo y groove.', basePrice: 1800, priceNote: 'Trio', videoUrl: 'https://www.youtube.com/embed/0Y3LqqBdlQI', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/bossanovagroup.jpg' },
+      'soul-rb-femenina': { name: 'Banda de Soul y R&B Femenina', category: 'musica', subcategory: 'Live bands', description: 'Banda femenina de Soul y R&B para eventos con potencia y elegancia.', basePrice: 2250, priceNote: 'Trio bases (4.250€ banda completa)', videoUrl: 'https://www.youtube.com/embed/_yjUEMSYrLo', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/S8B0550.jpg' },
+      'jazz-vintage': { name: 'Banda de Jazz Vintage', category: 'musica', subcategory: 'Jazz', description: 'Banda de Jazz Vintage estilo anos 20-30 para eventos tematicos y galas.', basePrice: 1800, priceNote: 'Cuarteto', videoUrl: 'https://www.youtube.com/embed/MiQWRbzDBEo', imageUrl: '' },
+      'malabaristas-zancudos-led': { name: 'Malabaristas y Zancudos LED', category: 'circo', subcategory: 'Malabares LED', description: 'Malabaristas y zancudos LED para eventos corporativos y fiestas.', basePrice: 1600, priceNote: '2 artistas (2.250€ x4)', videoUrl: 'https://www.youtube.com/embed/_W0yM3U21so', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/MG_0093.jpg' },
+      'malabares-fuego': { name: 'Espectaculos Malabares de Fuego', category: 'circo', subcategory: 'Fuego', description: 'Malabaristas profesionales de fuego para eventos corporativos al aire libre.', basePrice: 1650, priceNote: '550€/artista (x3)', videoUrl: 'https://www.youtube.com/embed/M2AgKaNTHic', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/image00022.jpeg' },
+      'personajes-halloween': { name: 'Personajes de Halloween', category: 'circo', subcategory: 'Personajes singulares', description: 'Personajes de Halloween para convertir tu fiesta de empresa en una experiencia escalofriante.', basePrice: 1300, priceNote: '~650€/artista (x2)', videoUrl: 'https://www.youtube.com/embed/tjqTWvT_uic', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/5a4d469c-ff6e-40b1-abb9-3e93cee7fdba.jpg' },
+      'freestylers-futbol': { name: 'Freestylers de Futbol', category: 'circo', subcategory: 'Acrobatas', description: 'Freestylers de futbol y malabaristas del balon para generar impacto en tus invitados.', basePrice: 450, priceNote: '1 artista 2h', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/DSC03382-scaled.jpg' },
+      'personajes-gaudi': { name: 'Personajes Gaudi', category: 'circo', subcategory: 'Personajes singulares', description: 'Artistas inspirados en el estilo de Gaudi. Creatividad, color y esencia del modernismo.', basePrice: 2150, priceNote: '2 artistas + 1 estilista', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/personajes-gaudi.jpg' },
+      'artistas-asiaticos': { name: 'Artistas Asiaticos', category: 'circo', subcategory: 'Personajes singulares', description: 'Espectaculo de artistas asiaticos combinando tradicion, cultura y entretenimiento. Geishas, Kendo, Samurai.', basePrice: 1200, priceNote: '2 geishas + 1 estilista', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/IMG_2890-e1723497773226.jpg' },
+      'siluetista': { name: 'Siluetista', category: 'circo', subcategory: 'Personajes singulares', description: 'Siluetista para eventos. Recuerdos personalizados recortados a mano para tus invitados.', basePrice: 650, priceNote: '2h', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/IB_STAR_BCN_2019_0062_web.jpg' },
+      'zancudos-surrealistas': { name: 'Zancudos Surrealistas', category: 'circo', subcategory: 'Zancudos', description: 'Zancudos surrealistas para recibir invitados y crear impacto visual en eventos.', basePrice: 1100, priceNote: '550€/zancudo (x2)', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/zancudos-stilt-walkers-1-1200x800-1.jpg' },
+      'magos-ilusionistas': { name: 'Magos e Ilusionistas', category: 'circo', subcategory: 'Personajes singulares', description: 'Magos e ilusionistas profesionales para eventos corporativos y fiestas privadas.', basePrice: 475, priceNote: 'Close-up 2h (2.500€ gran formato)', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/RAB_9449.jpg' },
+      'acrobatas-equilibristas': { name: 'Acrobatas y Equilibristas', category: 'circo', subcategory: 'Acrobatas', description: 'Acrobatas y equilibristas profesionales para espectaculos de alto nivel.', basePrice: 1275, priceNote: 'Duo', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/acro-innova-2-1-scaled-e1710348575750.jpg' },
+      'caricaturistas': { name: 'Caricaturistas', category: 'circo', subcategory: 'Personajes singulares', description: 'Caricaturistas para eventos. Recuerdos divertidos y personalizados para tus invitados.', basePrice: 450, priceNote: '2h', videoUrl: 'https://www.youtube.com/embed/skmYFev5ur4', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/caricaturistas-barcelona-4.jpg' },
+      'actores-animadores': { name: 'Actores y Animadores', category: 'circo', subcategory: 'Personajes singulares', description: 'Actores y animadores profesionales para dinamizar eventos corporativos.', basePrice: 550, priceNote: '2h', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/cantantes-de-opera-eventos.jpg' },
+      'body-painter': { name: 'Body Painter', category: 'circo', subcategory: 'Personajes singulares', description: 'Body painter profesional para eventos. Arte corporal en vivo.', basePrice: 2200, priceNote: '3 bailarinas + 1 body painter', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/bodypainting.jpg' },
+      'maestros-ceremonias': { name: 'Maestros de Ceremonias', category: 'circo', subcategory: 'Personajes singulares', description: 'Maestros de ceremonias profesionales para conducir galas y eventos corporativos.', basePrice: 550, priceNote: '2h', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/Maestros-de-ceremonia.jpg' },
+      'personajes-bienvenida': { name: 'Personajes de Bienvenida', category: 'circo', subcategory: 'Personajes singulares', description: 'Personajes de bienvenida para recibir invitados con estilo y originalidad.', basePrice: 790, priceNote: 'Red Carpet Lady', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/lady-alfombra-carpet-2-1-scaled.jpg' },
+      'light-boxes-show': { name: 'Light Boxes Show', category: 'wow', subcategory: 'Light shows', description: 'Espectaculo innovador fusionando arte, tecnologia y marca para eventos corporativos de alto impacto.', basePrice: 4750, priceNote: '+450€ personalizacion logo', videoUrl: 'https://www.youtube.com/embed/3IXWwVLpDIY', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2026/02/1-1-scaled.png' },
+      'fire-painting': { name: 'Fire Painting', category: 'wow', subcategory: 'A medida / Custom', description: 'Show de pintura con fuego. Espectaculo impactante para dejar al publico impresionado.', basePrice: 1950, priceNote: 'Materiales incluidos', videoUrl: '', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/FP2.jpg' },
+      'light-painting': { name: 'Artista Light Painting', category: 'wow', subcategory: 'Light shows', description: 'Artista de Light Painting para ofrecer a tus invitados un recuerdo personalizado.', basePrice: 3950, priceNote: 'Show completo', videoUrl: 'https://www.youtube.com/embed/SYUHsAIp8v8', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/Konica-Minolta-07-1200x800-1.jpg' },
+      'natacion-sincronizada': { name: 'Show Natacion Sincronizada', category: 'wow', subcategory: 'A medida / Custom', description: 'Espectaculo acuatico con danza contemporanea, equilibrio y acrobacia con bailarinas profesionales.', basePrice: 1600, priceNote: '4 bailarinas', videoUrl: 'https://www.youtube.com/embed/tCwFC-KYM3k', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/Synchronizedswimming.jpg' },
+      'violin-laser': { name: 'Show Violin Laser', category: 'wow', subcategory: 'Laser', description: 'Fusion de musica y efectos laser de alto impacto para eventos corporativos.', basePrice: 850, priceNote: 'Show (+1.500€ equipo laser)', videoUrl: 'https://www.youtube.com/embed/2y9Rk-MOgbo', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/laserviolin.jpg' },
+      'artista-arena': { name: 'Artista de Arena', category: 'wow', subcategory: 'A medida / Custom', description: 'Un artista relata tu historia corporativa usando luz y arena. Show personalizado, emotivo y unico.', basePrice: 3950, priceNote: 'Show 10-12 min personalizado', videoUrl: 'https://www.youtube.com/embed/ND6_DhmKGB8', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/sandartist.jpg' },
+      'light-art-show': { name: 'Light Art Show', category: 'wow', subcategory: 'Light shows', description: 'El artista juega con sprays de luces para relatar una historia personalizada.', basePrice: 7950, priceNote: 'Show 10 min + logo (no incl. desplazamiento)', videoUrl: 'https://www.youtube.com/embed/KR8ayg8qo3g', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/lightart.jpg' },
+      'shows-laser': { name: 'Shows Laser', category: 'wow', subcategory: 'Laser', description: 'Espectaculo laser de alto impacto visual para eventos.', basePrice: 6750, priceNote: 'Show 10 min personalizado con equipo', videoUrl: 'https://www.youtube.com/embed/ji9ZPVHo5AE', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/lasershow.jpg' },
+      'bailarines-led': { name: 'Bailarines LED', category: 'wow', subcategory: 'Bailarines LED', description: 'Bailarines LED para eventos. Espectaculo visual de alto impacto con trajes luminosos.', basePrice: 3750, priceNote: '5 bailarines (show coreografiado)', videoUrl: 'https://www.youtube.com/embed/XPlO5VNmDBc', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/led-dancers-eventos-barcelona-2.jpg' },
+      'percusionistas-led': { name: 'Percusionistas LED', category: 'wow', subcategory: 'Percusionistas LED', description: 'Percusionistas LED para eventos. Ritmo y luz combinados en un espectaculo unico.', basePrice: 3950, priceNote: '8 artistas + 1 tecnico', videoUrl: 'https://www.youtube.com/embed/f5JNIvrLZYw', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/leddrummers.jpg' },
+      'arpa-laser': { name: 'Show Arpa Laser', category: 'wow', subcategory: 'Laser', description: 'Show de arpa laser para eventos. Musica y tecnologia en un espectaculo futurista.', basePrice: 2950, priceNote: '+1.500€ extra laser', videoUrl: 'https://www.youtube.com/embed/xHLd9ty-bOQ', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/arpalaser.jpg' },
+      'video-mapping': { name: 'Espectaculo Barcelona Video Mapping', category: 'wow', subcategory: 'Video mapping', description: 'Video mapping para eventos. Proyecciones inmersivas sobre edificios y escenarios.', basePrice: 3950, priceNote: '2 dancers + 1 tecnico AV (no incl. pantalla)', videoUrl: 'https://www.youtube.com/embed/gznFkForu70', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/Barcelona-video-mapping.jpg' },
+      'malabares-led': { name: 'Show Malabares LED', category: 'wow', subcategory: 'Bailarines LED', description: 'Show de malabares LED para eventos. Espectaculo visual nocturno de alto impacto.', basePrice: 1600, priceNote: '2 artistas (2.250€ x4)', videoUrl: 'https://www.youtube.com/embed/SYUHsAIp8v8', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/LJ1.jpg' },
+      '3d-dreams': { name: '3D Dreams: Dance & Video Mapping', category: 'wow', subcategory: 'Video mapping', description: 'Espectaculo que fusiona danza contemporanea con video mapping 3D. Inmersivo y unico.', basePrice: 3450, priceNote: '1 bailarina + 1 tecnico AV (no incl. pantalla)', videoUrl: 'https://www.youtube.com/embed/katRN1j5jl0', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/3DDreams-03-scaled.jpg' },
+      'percusionistas-agua': { name: 'Percusionistas con Agua', category: 'wow', subcategory: 'A medida / Custom', description: 'Percusionistas con agua y proyecciones. Espectaculo sensorial unico.', basePrice: 4750, priceNote: 'Trio + 1 tecnico', videoUrl: 'https://www.youtube.com/embed/1vWPuLgPpOs', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/waterdrummers.jpg' },
+      'flamenco-mapping': { name: 'Flamenco Mapping Show', category: 'wow', subcategory: 'Video mapping', description: 'Fusion de flamenco y video mapping. Tradicion y tecnologia en un espectaculo innovador.', basePrice: 3750, priceNote: '3 bailarinas + 1 tecnico AV (no incl. pantalla)', videoUrl: 'https://www.youtube.com/embed/URgQ5_ME60Q', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/IMG_8489-e1724837362244.jpg' },
+      'holovortex': { name: 'Holovortex: Show Mapping Holografico', category: 'wow', subcategory: 'Video mapping', description: 'Show de mapping holografico. Espectaculo visual futurista con hologramas y proyecciones.', basePrice: 9750, priceNote: 'Sistema holografico completo', videoUrl: 'https://www.youtube.com/embed/wQr9uHDiUws', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/02/mapping-dance-1.jpg' }
+    };
+
+    // =============================================
+    // CATEGORY CONFIG — visual themes per category
+    // =============================================
+    const CATEGORY_CONFIG = {
+      danza: {
+        label: 'Danza',
+        theme: 'theme-danza',
+        heroTitle: 'Danza y<br>Movimiento',
+        heroSub: 'Espectaculos de danza profesional que fusionan elegancia, energia y emocion. Cada show esta disenado para conectar con tu audiencia y transformar tu evento en una experiencia memorable.',
+        conceptTitle: 'El lenguaje del cuerpo',
+        conceptText: 'Una seleccion de espectaculos de danza que combinan tecnica impecable con presencia escenica. Desde la pasion del flamenco hasta la energia del hip-hop, cada show esta coreografiado para complementar tu evento.',
+        ctaTitle: 'Quieres que tus invitados bailen?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05295-scaled.jpg'
+      },
+      musica: {
+        label: 'Musica',
+        theme: 'theme-musica',
+        heroTitle: 'Musica en<br>Vivo',
+        heroSub: 'Artistas y musicos que transforman el ambiente de tu evento con actuaciones en vivo unicas. Desde instrumentistas solistas hasta shows audiovisuales completos.',
+        conceptTitle: 'Sonido que emociona',
+        conceptText: 'Una experiencia sonora disenada para cada momento de tu evento: la bienvenida, la cena, la fiesta. Cada actuacion esta pensada para complementar la atmosfera que quieres crear.',
+        ctaTitle: 'Listo para sentir la musica?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/GB3.jpg'
+      },
+      circo: {
+        label: 'Circo',
+        theme: 'theme-circo',
+        heroTitle: 'Circo y<br>Acrobacia',
+        heroSub: 'Espectaculos de circo contemporaneo que combinan atletismo, arte y tecnologia. Momentos de asombro que tus invitados no olvidaran.',
+        conceptTitle: 'Desafiando la gravedad',
+        conceptText: 'Acrobatas, malabaristas y artistas aereos que crean momentos de tension, belleza y sorpresa. Cada show esta adaptado al espacio y al formato de tu evento.',
+        ctaTitle: 'Preparado para el asombro?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/MG_0093.jpg'
+      },
+      wow: {
+        label: 'WOW Effect',
+        theme: 'theme-wow',
+        heroTitle: 'WOW<br>Effect',
+        heroSub: 'Experiencias visuales y artisticas que desafian lo convencional. Shows que generan el factor sorpresa y crean momentos virales en tu evento.',
+        conceptTitle: 'Lo nunca visto',
+        conceptText: 'Artistas y tecnologias que rompen las reglas del espectaculo tradicional. Desde hologramas hasta pintura con fuego, cada show esta disenado para dejar huella.',
+        ctaTitle: 'Quieres el factor WOW?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/led-dancers-eventos-barcelona-2.jpg'
+      },
+      shows: {
+        label: 'Shows',
+        theme: 'theme-shows',
+        heroTitle: 'Tu Evento,<br>Tu Show',
+        heroSub: 'Una seleccion personalizada de espectaculos de diferentes disciplinas, disenada especificamente para tu evento. Cada show complementa el concepto artistico que hemos creado para ti.',
+        conceptTitle: 'Disenado para ti',
+        conceptText: 'Combinamos las mejores disciplinas artisticas para crear un programa de espectaculos a medida. Cada show esta seleccionado por su complementariedad y su capacidad de emocionar a tu audiencia.',
+        ctaTitle: 'Listos para empezar?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/Captura-de-Pantalla-2025-04-06-a-las-11.40.23.png'
+      }
+    };
+
+    // =============================================
+    // PROPOSAL STATE
+    // =============================================
+    let proposalState = {
+      status: 'revision', // revision | approved | sent
+      isAdmin: false,
+      priceEditMode: false,
+      globalMargin: 0,
+      // These get populated from proposal data
+      client: {},
+      event: {},
+      shows: [],
+      concept: {},
+      category: 'shows'
+    };
+
+    // =============================================
+    // DEMO DATA — simulates what GHL would send
+    // =============================================
+    const DEMO_PROPOSALS = {
+      demo: {
+        client: {
+          name: 'Carlos Martinez',
+          company: 'Zurich Seguros',
+          email: 'carlos@zurich.es',
+          phone: '+34 612 345 678'
+        },
+        event: {
+          name: 'Cena de Gala Zurich',
+          type: 'Cena de gala',
+          date: '15 abril 2026',
+          guests: 250,
+          location: 'Hotel W Barcelona',
+          concept: 'Noche de Estrellas'
+        },
+        category: 'shows',
+        concept: {
+          title: 'Entre las estrellas',
+          text: 'Una seleccion de espectaculos disenada para transportar a tus invitados a un universo galactico. Cada show refuerza el concepto cosmico a traves de la luz, el movimiento y la musica en vivo.'
+        },
+        shows: ['bailarines-led', 'malabaristas-zancudos-led', 'holovortex', 'violin-laser', 'djs'],
+        showContexts: {
+          'bailarines-led': { label: 'Bienvenida desde las estrellas' },
+          'malabaristas-zancudos-led': { label: 'Un viaje a las estrellas' },
+          'holovortex': { label: 'Un encuentro cercano con los visitantes' },
+          'violin-laser': { label: 'Musica desde las estrellas' },
+          'djs': { label: 'Visuales de otro universo' }
+        }
+      },
+      'demo-danza': {
+        client: {
+          name: 'Maria Lopez',
+          company: 'L\'Oreal Spain',
+          email: 'maria.lopez@loreal.com',
+          phone: '+34 699 111 222'
+        },
+        event: {
+          name: 'Lanzamiento Primavera L\'Oreal',
+          type: 'Lanzamiento de producto',
+          date: '20 mayo 2026',
+          guests: 180,
+          location: 'Palau de la Musica',
+          concept: 'Elegancia en Movimiento'
+        },
+        category: 'danza',
+        concept: {
+          title: 'Elegancia en movimiento',
+          text: 'Un programa de danza disenado para realzar la sofisticacion de la marca. Cada actuacion refleja los valores de belleza, elegancia y expresion artistica.'
+        },
+        shows: ['glamm-dancers', 'flamenco-danza', 'cabaret-burlesque', 'bailarines-led'],
+        showContexts: {
+          'glamm-dancers': { label: 'Recepcion glamurosa' },
+          'flamenco-danza': { label: 'La pasion mediterranea' },
+          'cabaret-burlesque': { label: 'Noche de cabaret' },
+          'bailarines-led': { label: 'Gran final luminoso' }
+        }
+      },
+      'demo-musica': {
+        client: {
+          name: 'David Torres',
+          company: 'Spotify',
+          email: 'david.torres@spotify.com',
+          phone: '+34 655 333 444'
+        },
+        event: {
+          name: 'Spotify Wrapped Party',
+          type: 'Fiesta corporativa',
+          date: '5 diciembre 2026',
+          guests: 400,
+          location: 'Razzmatazz',
+          concept: 'Sound & Vision'
+        },
+        category: 'musica',
+        concept: {
+          title: 'Sound & Vision',
+          text: 'Una experiencia sonora y visual total donde cada actuacion esta sincronizada con proyecciones y efectos de luz. Musica en vivo que conecta con la identidad de marca.'
+        },
+        shows: ['trio-violin', 'djs', 'percusionistas-batucadas', 'arpa-laser'],
+        showContexts: {
+          'trio-violin': { label: 'Apertura electronica' },
+          'djs': { label: 'Sesion audiovisual' },
+          'percusionistas-batucadas': { label: 'Impacto ritmico' },
+          'arpa-laser': { label: 'El instrumento del futuro' }
+        }
+      },
+      'demo-circo': {
+        client: {
+          name: 'Anna Berger',
+          company: 'Red Bull',
+          email: 'anna.berger@redbull.com',
+          phone: '+34 677 555 666'
+        },
+        event: {
+          name: 'Red Bull Night Festival',
+          type: 'Festival',
+          date: '12 julio 2026',
+          guests: 500,
+          location: 'Parc del Forum',
+          concept: 'Beyond Limits'
+        },
+        category: 'circo',
+        concept: {
+          title: 'Beyond Limits',
+          text: 'Espectaculos que desafian los limites humanos, combinando atletismo extremo con tecnologia y arte. Cada actuacion esta disenada para elevar la adrenalina y crear momentos inolvidables.'
+        },
+        shows: ['malabaristas-zancudos-led', 'danza-aerea', 'acrobatas-equilibristas'],
+        showContexts: {
+          'malabaristas-zancudos-led': { label: 'Precision luminosa' },
+          'danza-aerea': { label: 'Volando sin alas' },
+          'acrobatas-equilibristas': { label: 'Orbitas de luz' }
+        }
+      },
+      'demo-wow': {
+        client: {
+          name: 'Peter Schmidt',
+          company: 'Tesla',
+          email: 'peter.schmidt@tesla.com',
+          phone: '+34 688 777 888'
+        },
+        event: {
+          name: 'Tesla Cybertruck Launch',
+          type: 'Lanzamiento de producto',
+          date: '8 septiembre 2026',
+          guests: 300,
+          location: 'Fira Barcelona',
+          concept: 'Future is Now'
+        },
+        category: 'wow',
+        concept: {
+          title: 'Future is Now',
+          text: 'Tecnologia y arte se fusionan para crear una experiencia que parece sacada del futuro. Cada show utiliza tecnologia de vanguardia para generar momentos de asombro colectivo.'
+        },
+        shows: ['holovortex', 'shows-laser', 'artista-arena', 'video-mapping'],
+        showContexts: {
+          'holovortex': { label: 'Portal al futuro' },
+          'shows-laser': { label: 'Energia pura' },
+          'artista-arena': { label: 'La historia en arena' },
+          'video-mapping': { label: 'Visitantes del futuro' }
+        }
+      }
+    };
+
+    // =============================================
+    // INIT
+    // =============================================
+    function init() {
+      const params = new URLSearchParams(window.location.search);
+      const proposalId = params.get('id') || 'demo';
+      const isAdmin = params.get('admin') === '1';
+
+      // Try demo data first, then load from API
+      const demoData = DEMO_PROPOSALS[proposalId];
+      if (demoData) {
+        loadProposal(demoData, isAdmin);
+      } else {
+        // Load from Supabase API
+        loadProposalFromAPI(proposalId, isAdmin);
+      }
+    }
+
+    async function loadProposalFromAPI(id, isAdmin) {
+      document.getElementById('proposalContent').innerHTML = '<div style="padding:100px;text-align:center;"><h2>Cargando propuesta...</h2></div>';
+
+      try {
+        const res = await fetch(`/api/get-proposal?id=${encodeURIComponent(id)}`);
+        const result = await res.json();
+
+        if (!result.success || !result.proposal) {
+          document.getElementById('proposalContent').innerHTML = '<div style="padding:100px;text-align:center;"><h2>Propuesta no encontrada</h2><p>ID: ' + id + '</p></div>';
+          return;
+        }
+
+        const p = result.proposal;
+        proposalState.proposalId = p.id;
+        proposalState.status = p.status || 'revision';
+
+        // Rebuild shows from saved data (array of {id, currentPrice, contextLabel})
+        const showsData = {
+          client: p.client,
+          event: p.event,
+          category: p.category,
+          concept: p.concept,
+          shows: p.shows.map(s => s.id || s),
+          showContexts: {}
+        };
+        p.shows.forEach(s => {
+          if (s.id && s.contextLabel) {
+            showsData.showContexts[s.id] = { label: s.contextLabel };
+          }
+        });
+
+        proposalState.globalMargin = p.globalMargin || 0;
+        loadProposal(showsData, isAdmin);
+
+        // Restore custom prices if saved
+        p.shows.forEach((s, i) => {
+          if (s.currentPrice && proposalState.shows[i]) {
+            proposalState.shows[i].currentPrice = s.currentPrice;
+          }
+        });
+        renderProposal();
+        if (isAdmin) {
+          document.getElementById('adminBar').classList.add('visible');
+          updateAdminBar();
+        }
+
+      } catch (err) {
+        document.getElementById('proposalContent').innerHTML = '<div style="padding:100px;text-align:center;"><h2>Error al cargar propuesta</h2><p>' + err.message + '</p></div>';
+      }
+    }
+
+    function loadProposal(data, isAdmin) {
+      proposalState.client = data.client;
+      proposalState.event = data.event;
+      proposalState.category = data.category;
+      proposalState.concept = data.concept;
+      proposalState.isAdmin = isAdmin;
+      proposalState.shows = data.shows.map(id => {
+        const show = SHOW_CATALOG[id];
+        if (!show) return null;
+        return {
+          ...show,
+          id: id,
+          currentPrice: show.basePrice,
+          contextLabel: (data.showContexts && data.showContexts[id]) ? data.showContexts[id].label : show.subcategory
+        };
+      }).filter(Boolean);
+
+      const catConfig = CATEGORY_CONFIG[data.category] || CATEGORY_CONFIG.shows;
+      document.body.className = catConfig.theme;
+      document.getElementById('pageTitle').textContent = data.event.name + ' — Eventos Barcelona';
+
+      renderProposal();
+
+      if (isAdmin) {
+        document.getElementById('adminBar').classList.add('visible');
+        updateAdminBar();
+      }
+    }
+
+    // =============================================
+    // RENDER PROPOSAL
+    // =============================================
+    function renderProposal() {
+      const { client, event, shows, concept, category } = proposalState;
+      const catConfig = CATEGORY_CONFIG[category] || CATEGORY_CONFIG.shows;
+      const isAdmin = proposalState.isAdmin;
+
+      // Build show blocks HTML
+      let showBlocksHTML = '';
+      shows.forEach((show, i) => {
+        const reversed = i % 2 !== 0;
+        const priceWithMargin = getAdjustedPrice(show.currentPrice);
+        const priceFormatted = formatPrice(priceWithMargin);
+
+        showBlocksHTML += `
+          <div class="block ${reversed ? 'block--reversed' : ''} ${isAdmin ? 'admin-mode' : ''}" data-show="${show.id}" data-index="${i}">
+            ${isAdmin ? `<button class="block-remove" onclick="removeShow(${i})" title="Eliminar show">&times;</button>` : ''}
+            <div class="block-image" style="background-image: url('${show.imageUrl}')"></div>
+            <div class="block-content">
+              <div class="section-label ${isAdmin ? 'editable-text' : ''}" ${isAdmin ? 'contenteditable="true"' : ''}>${show.contextLabel}</div>
+              <h2 ${isAdmin ? 'class="editable-text" contenteditable="true"' : ''}>${show.name}</h2>
+              <p ${isAdmin ? 'class="editable-text" contenteditable="true"' : ''}>${show.description}</p>
+              <div class="block-footer">
+                <div class="block-price ${isAdmin ? 'editable' : ''}" data-price="${priceWithMargin}" data-index="${i}" ${isAdmin ? 'onclick="startPriceEdit(this, ' + i + ')"' : ''}>
+                  ${priceFormatted}&euro;<small>${show.priceNote}</small>
+                </div>
+                ${show.videoUrl ? `<a href="${show.videoUrl.replace('/embed/', '/watch?v=')}" target="_blank" class="btn-dark">Ver video</a>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // Build summary rows
+      let summaryHTML = '';
+      let total = 0;
+      shows.forEach(show => {
+        const price = getAdjustedPrice(show.currentPrice);
+        total += price;
+        summaryHTML += `
+          <div class="summary-row" data-summary="${show.id}">
+            <span>${show.name} (${show.priceNote})</span>
+            <span>${formatPrice(price)}&euro;</span>
+          </div>
+        `;
+      });
+
+      // WhatsApp CTA URL
+      const waText = encodeURIComponent(
+        `Hola, me gustaria confirmar la propuesta para ${event.name} del ${event.date}. Total: ${formatPrice(total)}\u20AC`
+      );
+      const waUrl = `https://wa.me/34653979329?text=${waText}`;
+
+      // Full HTML
+      const html = `
+        <!-- HERO -->
+        <div class="hero">
+          <div class="hero-bg-image" style="background-image: url('${(shows[0] && shows[0].imageUrl) || catConfig.defaultImage}')"></div>
+          <div class="nav">
+            <div class="nav-logo">
+              <img src="https://www.eventosbarcelona.com/wp-content/uploads/2025/03/logo-slogan-negativo.svg" alt="Eventos Barcelona">
+            </div>
+            <div class="nav-right">
+              <a href="formulario-inteligente.html" class="btn-contact">Solicita presupuesto</a>
+            </div>
+          </div>
+          <h1 ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="event.name"' : ''}>${event.name.replace(' — ', '<br>')}</h1>
+          <p class="hero-sub ${isAdmin ? 'editable-text' : ''}" ${isAdmin ? 'contenteditable="true" data-field="heroSub"' : ''}>${catConfig.heroSub}</p>
+          <p class="hero-detail">${event.date} &middot; ${event.type}</p>
+        </div>
+
+        <!-- CONCEPTO -->
+        <div class="concept-section">
+          <div class="section-label">Concepto artistico</div>
+          <h2 ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="concept.title"' : ''}>${concept.title}</h2>
+          <p ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="concept.text"' : ''}>${concept.text}</p>
+        </div>
+
+        <!-- SHOW BLOCKS -->
+        ${showBlocksHTML}
+
+        ${isAdmin ? `
+        <div class="add-show-block" onclick="openPicker()">
+          <div class="add-show-icon">+</div>
+          <h3>Agregar show</h3>
+          <p>Selecciona un show del catalogo para agregarlo a la propuesta</p>
+        </div>
+        ` : ''}
+
+        <!-- STATS -->
+        <div class="stats-section">
+          <div class="stats-title">Algunos datos interesantes que queremos compartir contigo.</div>
+          <div class="stats-grid">
+            <div><div class="stat-number">15</div><div class="stat-label">Anos de experiencia</div></div>
+            <div><div class="stat-number">300</div><div class="stat-label">Espectaculos</div></div>
+            <div><div class="stat-number">500</div><div class="stat-label">Artistas</div></div>
+            <div><div class="stat-number">1,000</div><div class="stat-label">Eventos</div></div>
+          </div>
+        </div>
+
+        <!-- RESUMEN PRESUPUESTO -->
+        <div class="summary-section">
+          <div class="summary-inner">
+            <div class="section-label">Resumen del presupuesto</div>
+            <div style="margin-top: 24px;" id="summaryRows">
+              ${summaryHTML}
+              <div class="summary-total" id="summaryTotal">
+                <span>Total</span>
+                <span>${formatPrice(total)}&euro;</span>
+              </div>
+            </div>
+            <div class="summary-note">
+              * IVA del 21% no incluido. Equipo tecnico (sonido, iluminacion, AV) presupuestado aparte.<br>
+              Todos los paquetes incluyen vestuario, maquillaje y transporte dentro de Barcelona.
+            </div>
+
+            <!-- MARGIN CONTROL (admin only) -->
+            ${isAdmin ? `
+            <div class="margin-control ${proposalState.priceEditMode ? 'visible' : ''}" id="marginControl">
+              <label>Margen global aplicado</label>
+              <div class="margin-slider-row">
+                <input type="range" class="margin-slider" id="marginSlider" min="-20" max="50" value="${proposalState.globalMargin}" oninput="updateGlobalMargin(this.value)">
+                <div class="margin-value" id="marginValue">${proposalState.globalMargin}%</div>
+              </div>
+              <div class="margin-hint">Ajusta el margen sobre los precios base. El cliente vera los precios finales.</div>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="about-section">
+          <h2>Gracias a los <span class="highlight">15 anos de experiencia</span> en el sector de la organizacion de eventos, hemos evolucionado para encontrar el <span class="highlight">equilibrio perfecto entre produccion artistica y tecnica</span>, con el proposito de emocionar e impresionar con un unico objetivo, <span class="highlight">crear momentos memorables.</span></h2>
+        </div>
+
+        <!-- CONDICIONES -->
+        <div class="conditions-section">
+          <div class="section-label">Condiciones generales</div>
+          <ul>
+            <li>Pre-reserva valida durante 5 dias, tras los cuales la reserva podra ser liberada</li>
+            <li>No incluido: equipo de sonido e iluminacion, sistemas AV, elementos de branding, diseno grafico</li>
+            <li>El cliente debe proporcionar comida y agua para todo el equipo artistico, tecnico y de coordinacion</li>
+            <li>IVA del 21% no incluido</li>
+            <li>Cancelacion: 50% de cargo en la ultima semana, 100% en las ultimas 48 horas</li>
+            <li>Pago: 100% a la aceptacion salvo acuerdo previo con Eventos Barcelona</li>
+          </ul>
+        </div>
+
+        <!-- CTA FINAL -->
+        <div class="cta-section">
+          <h2>${catConfig.ctaTitle}</h2>
+          <p>Acepta esta propuesta o cuentanos que necesitas para tu evento</p>
+          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="${waUrl}" target="_blank" class="btn-accent">Aceptar por WhatsApp</a>
+            <a href="formulario-inteligente.html" class="btn-accent" style="background: transparent; border: 1.5px solid #fff;">Solicitar otro presupuesto</a>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+          <div class="footer-team">
+            <h4>Tu equipo de gestion de eventos</h4>
+            <div class="footer-roles">
+              <div class="footer-role"><strong>Xavier Rojas Pascual</strong><span>Director de Eventos y Co-Fundador</span></div>
+              <div class="footer-role"><strong>Isabelle Bonneau</strong><span>Event Manager</span></div>
+              <div class="footer-role"><strong>Naiara Ruiz</strong><span>Event Manager</span></div>
+            </div>
+          </div>
+          <div class="footer-contact">
+            <a href="mailto:info@eventosbarcelona.com">info@eventosbarcelona.com</a> &middot;
+            <a href="https://wa.me/34653979329">+34 653 979 329</a> &middot;
+            <a href="https://www.eventosbarcelona.com">eventosbarcelona.com</a>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('proposalContent').innerHTML = html;
+    }
+
+    // =============================================
+    // PRICE HELPERS
+    // =============================================
+    function formatPrice(num) {
+      return num.toLocaleString('es-ES');
+    }
+
+    function getAdjustedPrice(basePrice) {
+      return Math.round(basePrice * (1 + proposalState.globalMargin / 100));
+    }
+
+    // =============================================
+    // PRICE EDITING
+    // =============================================
+    // =============================================
+    // SHOW PICKER — add shows in admin mode
+    // =============================================
+    let pickerFilter = 'all';
+
+    function openPicker() {
+      pickerFilter = 'all';
+      renderPickerTabs();
+      renderPickerGrid();
+      document.getElementById('pickerOverlay').classList.add('open');
+    }
+
+    function closePicker() {
+      document.getElementById('pickerOverlay').classList.remove('open');
+    }
+
+    function renderPickerTabs() {
+      const catLabels = { all: 'Todos', danza: 'Danza', musica: 'Musica', circo: 'Circo', wow: 'WOW' };
+      const tabs = document.getElementById('pickerTabs');
+      tabs.innerHTML = Object.entries(catLabels).map(([key, label]) =>
+        `<button class="picker-tab ${pickerFilter === key ? 'active' : ''}" onclick="filterPicker('${key}')">${label}</button>`
+      ).join('');
+    }
+
+    function filterPicker(cat) {
+      pickerFilter = cat;
+      renderPickerTabs();
+      renderPickerGrid();
+    }
+
+    function renderPickerGrid() {
+      const grid = document.getElementById('pickerGrid');
+      const currentIds = proposalState.shows.map(s => s.id);
+      const catLabels = { danza: 'Danza', musica: 'Musica', circo: 'Circo', wow: 'WOW' };
+
+      let html = '';
+      Object.entries(SHOW_CATALOG).forEach(([id, show]) => {
+        if (pickerFilter !== 'all' && show.category !== pickerFilter) return;
+        const already = currentIds.includes(id);
+        html += `
+          <div class="picker-card ${already ? 'already-added' : ''}" onclick="${already ? '' : 'addShowFromPicker(\'' + id + '\')'}">
+            <img src="${show.imageUrl || 'https://via.placeholder.com/400x200?text=Sin+imagen'}" alt="${show.name}" loading="lazy">
+            <div class="picker-card-body">
+              <small>${catLabels[show.category] || show.category} · ${show.subcategory}</small>
+              <h4>${show.name}${already ? ' (agregado)' : ''}</h4>
+            </div>
+          </div>
+        `;
+      });
+      grid.innerHTML = html;
+    }
+
+    function addShowFromPicker(id) {
+      const show = SHOW_CATALOG[id];
+      if (!show) return;
+
+      proposalState.shows.push({
+        ...show,
+        id: id,
+        currentPrice: show.basePrice,
+        contextLabel: show.subcategory
+      });
+
+      closePicker();
+      renderProposal();
+      if (proposalState.isAdmin) {
+        document.getElementById('adminBar').classList.add('visible');
+        updateAdminBar();
+      }
+      showToast('Agregado: ' + show.name, 'success');
+
+      // Scroll to the new block
+      setTimeout(() => {
+        const blocks = document.querySelectorAll('.block');
+        const last = blocks[blocks.length - 1];
+        if (last) last.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function removeShow(index) {
+      const show = proposalState.shows[index];
+      if (!show) return;
+      proposalState.shows.splice(index, 1);
+      renderProposal();
+      if (proposalState.isAdmin) {
+        document.getElementById('adminBar').classList.add('visible');
+        updateAdminBar();
+      }
+      showToast('Eliminado: ' + show.name);
+    }
+
+    function togglePriceEdit() {
+      proposalState.priceEditMode = !proposalState.priceEditMode;
+      const marginControl = document.getElementById('marginControl');
+      if (marginControl) {
+        marginControl.classList.toggle('visible', proposalState.priceEditMode);
+      }
+
+      // Toggle editable class on prices
+      document.querySelectorAll('.block-price').forEach(el => {
+        el.classList.toggle('editable', proposalState.priceEditMode);
+      });
+
+      showToast(proposalState.priceEditMode ? 'Modo edicion de precios activado' : 'Modo edicion desactivado');
+    }
+
+    function startPriceEdit(el, index) {
+      if (!proposalState.isAdmin) return;
+
+      const show = proposalState.shows[index];
+      const currentPrice = getAdjustedPrice(show.currentPrice);
+
+      // Replace with input
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'price-input';
+      input.value = currentPrice;
+      input.setAttribute('data-index', index);
+
+      input.addEventListener('blur', function() { finishPriceEdit(this, index); });
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') this.blur();
+      });
+
+      el.innerHTML = '';
+      el.appendChild(input);
+      el.appendChild(document.createElement('small'));
+      el.querySelector('small').textContent = show.priceNote;
+      input.focus();
+      input.select();
+    }
+
+    function finishPriceEdit(input, index) {
+      const newPrice = parseInt(input.value) || proposalState.shows[index].currentPrice;
+      // Reverse the margin to store the base price
+      proposalState.shows[index].currentPrice = Math.round(newPrice / (1 + proposalState.globalMargin / 100));
+      renderProposal();
+      showToast('Precio actualizado: ' + formatPrice(newPrice) + '\u20AC');
+    }
+
+    function updateGlobalMargin(value) {
+      proposalState.globalMargin = parseInt(value);
+      document.getElementById('marginValue').textContent = value + '%';
+      renderProposal();
+      // Re-show margin control after re-render
+      const marginControl = document.getElementById('marginControl');
+      if (marginControl) {
+        marginControl.classList.add('visible');
+        document.getElementById('marginSlider').value = value;
+      }
+    }
+
+    // =============================================
+    // ADMIN BAR
+    // =============================================
+    function updateAdminBar() {
+      const dot = document.getElementById('statusDot');
+      const status = document.getElementById('adminStatus');
+      const meta = document.getElementById('adminMeta');
+
+      const { client, event } = proposalState;
+
+      switch (proposalState.status) {
+        case 'revision':
+          dot.className = 'status-dot';
+          status.textContent = 'REVISION';
+          break;
+        case 'approved':
+          dot.className = 'status-dot approved';
+          status.textContent = 'APROBADA';
+          break;
+        case 'sent':
+          dot.className = 'status-dot sent';
+          status.textContent = 'ENVIADA';
+          break;
+      }
+
+      meta.textContent = `${client.company} \u2014 ${event.type} \u2014 ${event.date}`;
+    }
+
+    // =============================================
+    // APPROVE FLOW
+    // =============================================
+    function showApproveModal() {
+      const total = proposalState.shows.reduce((sum, s) => sum + getAdjustedPrice(s.currentPrice), 0);
+      document.getElementById('approveModalText').textContent =
+        `Se enviara la propuesta a ${proposalState.client.email} con un presupuesto de ${formatPrice(total)}\u20AC (+ IVA).`;
+      document.getElementById('modalOverlay').classList.add('show');
+      document.getElementById('approveModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      document.getElementById('approveModal').classList.remove('show');
+    }
+
+    async function confirmApproval() {
+      closeModal();
+      proposalState.status = 'approved';
+      updateAdminBar();
+      showToast('Guardando propuesta...', '');
+
+      // Build proposal payload
+      const payload = {
+        id: proposalState.proposalId || null,
+        status: 'approved',
+        client: proposalState.client,
+        event: proposalState.event,
+        category: proposalState.category,
+        concept: proposalState.concept,
+        shows: proposalState.shows.map(s => ({
+          id: s.id,
+          currentPrice: s.currentPrice,
+          contextLabel: s.contextLabel
+        })),
+        globalMargin: proposalState.globalMargin
+      };
+
+      try {
+        const res = await fetch('/api/save-proposal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+
+        if (result.success && result.id) {
+          proposalState.proposalId = result.id;
+          const clientUrl = `${window.location.origin}/propuesta.html?id=${result.id}`;
+
+          // Show URL to copy
+          showToast('Propuesta aprobada! Link copiado al portapapeles', 'success');
+          try { await navigator.clipboard.writeText(clientUrl); } catch(e) {}
+
+          // Show link in modal
+          const modalText = document.getElementById('approveModalText');
+          if (modalText) {
+            modalText.innerHTML = `
+              <strong>Propuesta aprobada</strong><br><br>
+              Link para el cliente:<br>
+              <a href="${clientUrl}" target="_blank" style="color: var(--accent); word-break: break-all;">${clientUrl}</a><br><br>
+              <small>El link se ha copiado al portapapeles. Envialo por email o WhatsApp al cliente.</small>
+            `;
+          }
+          document.getElementById('modalOverlay').classList.add('show');
+          document.getElementById('approveModal').classList.add('show');
+        } else {
+          throw new Error(result.error || 'Error al guardar');
+        }
+      } catch (err) {
+        console.error('Save error:', err);
+        showToast('Propuesta aprobada (guardado offline — API no disponible)', 'success');
+      }
+    }
+
+    // =============================================
+    // CHAT
+    // =============================================
+    function openChat() {
+      document.getElementById('chatPanel').classList.add('open');
+    }
+
+    function closeChat() {
+      document.getElementById('chatPanel').classList.remove('open');
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const messages = document.getElementById('chatMessages');
+
+      // User message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.textContent = msg;
+      messages.appendChild(userDiv);
+
+      input.value = '';
+
+      // Bot response (simulated — in production this calls AI API)
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg bot';
+        botDiv.textContent = 'Entendido. Voy a actualizar la propuesta con esos cambios. Dame un momento...';
+        messages.appendChild(botDiv);
+        messages.scrollTop = messages.scrollHeight;
+      }, 800);
+    }
+
+    // =============================================
+    // PDF EXPORT
+    // =============================================
+    function exportPDF() {
+      showToast('Generando PDF...');
+
+      const element = document.getElementById('proposalContent');
+      const { event } = proposalState;
+
+      const opt = {
+        margin: 0,
+        filename: `propuesta-${event.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.pdf`,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        showToast('PDF descargado', 'success');
+      });
+    }
+
+    // =============================================
+    // TOAST
+    // =============================================
+    function showToast(message, type) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show' + (type ? ' ' + type : '');
+      setTimeout(() => { toast.className = 'toast'; }, 3000);
+    }
+
+    // =============================================
+    // AUTO MODE — auto-generate from form data
+    // =============================================
+    function initAuto() {
+      const params = new URLSearchParams(window.location.search);
+      let formData;
+      try {
+        formData = JSON.parse(decodeURIComponent(atob(params.get('data'))));
+      } catch (e) {
+        document.getElementById('proposalContent').innerHTML = '<div style="padding:100px;text-align:center;"><h2>Error al cargar datos del formulario</h2></div>';
+        return;
+      }
+
+      // Map form categories to catalog categories
+      const catMap = { 'Danza': 'danza', 'Musica': 'musica', 'Circo': 'circo', 'WOW Effect': 'wow' };
+      const selectedCats = (formData.categorias || []).map(c => catMap[c]).filter(Boolean);
+      const selectedSubs = (formData.subcategorias || []).map(s => s.toLowerCase());
+
+      // Match shows: pick best show per subcategory to avoid duplicates
+      const matched = [];
+      const matchedIds = new Set();
+      const usedSubcategories = new Set();
+
+      // Priority 1: one show per matching subcategory (prefer ones with video)
+      const candidates = [];
+      Object.entries(SHOW_CATALOG).forEach(([id, show]) => {
+        if (!selectedCats.includes(show.category)) return;
+        const subLower = show.subcategory.toLowerCase();
+        if (selectedSubs.some(s => subLower.includes(s) || s.includes(subLower))) {
+          candidates.push({ id, show, score: show.videoUrl ? 1 : 0 });
+        }
+      });
+      // Sort by score (video first), then pick one per subcategory
+      candidates.sort((a, b) => b.score - a.score);
+      candidates.forEach(({ id, show }) => {
+        const subKey = show.category + ':' + show.subcategory.toLowerCase();
+        if (usedSubcategories.has(subKey)) return;
+        usedSubcategories.add(subKey);
+        matched.push(id);
+        matchedIds.add(id);
+      });
+
+      // Priority 2: if few matches, add one per remaining subcategory from selected categories
+      if (matched.length < 3) {
+        Object.entries(SHOW_CATALOG).forEach(([id, show]) => {
+          if (matchedIds.has(id)) return;
+          if (!selectedCats.includes(show.category)) return;
+          const subKey = show.category + ':' + show.subcategory.toLowerCase();
+          if (usedSubcategories.has(subKey)) return;
+          usedSubcategories.add(subKey);
+          matched.push(id);
+          matchedIds.add(id);
+        });
+      }
+
+      // If no categories selected ("no estoy seguro"), pick a mix
+      if (matched.length === 0) {
+        const picks = ['shadows-of-the-future', 'glamm-dancers', 'bandas-jazz', 'malabaristas-zancudos-led', 'bailarines-led'];
+        picks.forEach(id => { if (SHOW_CATALOG[id]) matched.push(id); });
+      }
+
+      // Determine primary category
+      let primaryCat = 'shows';
+      if (selectedCats.length === 1) primaryCat = selectedCats[0];
+      else if (selectedCats.length > 1) primaryCat = 'shows';
+
+      const catConfig = CATEGORY_CONFIG[primaryCat] || CATEGORY_CONFIG.shows;
+
+      // Build proposal data
+      const eventTypeMap = {
+        'Cena de gala': 'Cena de gala',
+        'Cocktail / Welcome drink': 'Cocktail',
+        'Lanzamiento de producto': 'Lanzamiento',
+        'Convencion / Congreso': 'Congreso',
+        'Entrega de premios': 'Entrega de premios',
+        'Family Day corporativo': 'Family Day',
+        'Fiesta tematica': 'Fiesta tematica',
+        'Fiesta de empresa': 'Fiesta corporativa'
+      };
+
+      proposalState.client = {
+        name: formData.nombre || 'Cliente',
+        company: formData.empresa || '',
+        email: formData.email || '',
+        phone: formData.telefono || ''
+      };
+      proposalState.event = {
+        name: `${formData.tipoEvento || 'Evento'} — ${formData.empresa || formData.nombre || 'Cliente'}`,
+        type: eventTypeMap[formData.tipoEvento] || formData.tipoEvento || 'Evento',
+        date: formData.fechaEvento || 'Por confirmar',
+        guests: parseInt(formData.numAsistentes) || 0,
+        location: formData.ubicacion || 'Por confirmar'
+      };
+      proposalState.category = primaryCat;
+      proposalState.concept = {
+        title: catConfig.conceptTitle,
+        text: catConfig.conceptText
+      };
+      proposalState.isAdmin = true;
+      proposalState.shows = matched.map(id => ({
+        ...SHOW_CATALOG[id],
+        id: id,
+        currentPrice: SHOW_CATALOG[id].basePrice,
+        contextLabel: SHOW_CATALOG[id].subcategory
+      }));
+
+      document.body.className = catConfig.theme;
+      document.getElementById('pageTitle').textContent = proposalState.event.name + ' — Eventos Barcelona';
+
+      renderProposal();
+
+      document.getElementById('adminBar').classList.add('visible');
+      updateAdminBar();
+
+      // Show info toast
+      showToast(`Propuesta auto-generada: ${matched.length} shows de ${selectedCats.length || 'todas las'} categorias`, 'success');
+    }
+
+    // =============================================
+    // BUILDER MODE
+    // =============================================
+    let builderSelectedShows = [];
+    let builderCurrentFilter = 'all';
+
+    function initBuilder() {
+      document.getElementById('builderMode').style.display = 'block';
+      document.getElementById('proposalContent').style.display = 'none';
+      renderBuilderGrid();
+    }
+
+    function renderBuilderGrid() {
+      const grid = document.getElementById('builderGrid');
+      const catLabels = { danza: 'Danza', musica: 'Musica', circo: 'Circo', wow: 'WOW Effect' };
+      let html = '';
+
+      Object.entries(SHOW_CATALOG).forEach(([id, show]) => {
+        if (builderCurrentFilter !== 'all' && show.category !== builderCurrentFilter) return;
+        const selected = builderSelectedShows.includes(id);
+        html += `
+          <div class="builder-card ${selected ? 'selected' : ''}" data-id="${id}" onclick="toggleBuilderShow('${id}')">
+            <img class="builder-card-img" src="${show.imageUrl || 'https://via.placeholder.com/400x200?text=Sin+imagen'}" alt="${show.name}" loading="lazy">
+            <div class="builder-card-body">
+              <div class="builder-card-cat">${catLabels[show.category] || show.category} · ${show.subcategory}</div>
+              <h4>${show.name}</h4>
+              <p>${show.description}</p>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function toggleBuilderShow(id) {
+      const idx = builderSelectedShows.indexOf(id);
+      if (idx > -1) {
+        builderSelectedShows.splice(idx, 1);
+      } else {
+        builderSelectedShows.push(id);
+      }
+      updateBuilderSelection();
+      renderBuilderGrid();
+    }
+
+    function removeBuilderShow(id) {
+      builderSelectedShows = builderSelectedShows.filter(s => s !== id);
+      updateBuilderSelection();
+      renderBuilderGrid();
+    }
+
+    function updateBuilderSelection() {
+      const bar = document.getElementById('builderSelection');
+      const count = document.getElementById('builderCount');
+      const chips = document.getElementById('builderChips');
+
+      count.textContent = builderSelectedShows.length;
+
+      if (builderSelectedShows.length > 0) {
+        bar.classList.add('visible');
+        chips.innerHTML = builderSelectedShows.map(id => {
+          const show = SHOW_CATALOG[id];
+          return `<span class="builder-chip">${show.name}<span class="builder-chip-remove" onclick="event.stopPropagation();removeBuilderShow('${id}')">&times;</span></span>`;
+        }).join('');
+      } else {
+        bar.classList.remove('visible');
+        chips.innerHTML = '';
+      }
+    }
+
+    function filterBuilderCat(cat) {
+      builderCurrentFilter = cat;
+      document.querySelectorAll('.builder-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.cat === cat);
+      });
+      renderBuilderGrid();
+    }
+
+    function generateProposal() {
+      if (builderSelectedShows.length === 0) {
+        alert('Selecciona al menos un show');
+        return;
+      }
+
+      const category = document.getElementById('bCategory').value;
+
+      // Build proposal data from form
+      const data = {
+        client: {
+          name: document.getElementById('bClientName').value || 'Cliente',
+          company: document.getElementById('bCompany').value || 'Empresa',
+          email: document.getElementById('bEmail').value || 'email@empresa.com',
+          phone: document.getElementById('bPhone').value || ''
+        },
+        event: {
+          name: document.getElementById('bEventName').value || 'Evento',
+          type: document.getElementById('bEventType').value,
+          date: document.getElementById('bDate').value || 'Fecha por confirmar',
+          guests: parseInt(document.getElementById('bGuests').value) || 0,
+          location: document.getElementById('bLocation').value || 'Por confirmar',
+          concept: document.getElementById('bConceptTitle').value || ''
+        },
+        category: category,
+        concept: {
+          title: document.getElementById('bConceptTitle').value || CATEGORY_CONFIG[category].conceptTitle,
+          text: document.getElementById('bConceptText').value || CATEGORY_CONFIG[category].conceptText
+        },
+        shows: builderSelectedShows,
+        showContexts: {}
+      };
+
+      // Auto-generate context labels from subcategories
+      builderSelectedShows.forEach(id => {
+        data.showContexts[id] = { label: SHOW_CATALOG[id].subcategory };
+      });
+
+      // Hide builder, show proposal
+      document.getElementById('builderMode').style.display = 'none';
+      document.getElementById('proposalContent').style.display = 'block';
+
+      // Set state and render
+      proposalState.client = data.client;
+      proposalState.event = data.event;
+      proposalState.category = data.category;
+      proposalState.concept = data.concept;
+      proposalState.isAdmin = true;
+      proposalState.shows = data.shows.map(id => ({
+        ...SHOW_CATALOG[id],
+        id: id,
+        currentPrice: SHOW_CATALOG[id].basePrice,
+        contextLabel: (data.showContexts[id]) ? data.showContexts[id].label : SHOW_CATALOG[id].subcategory
+      }));
+
+      const catConfig = CATEGORY_CONFIG[data.category] || CATEGORY_CONFIG.shows;
+      document.body.className = catConfig.theme;
+      document.getElementById('pageTitle').textContent = data.event.name + ' — Eventos Barcelona';
+
+      renderProposal();
+
+      document.getElementById('adminBar').classList.add('visible');
+      updateAdminBar();
+
+      window.scrollTo(0, 0);
+      showToast('Propuesta generada con ' + builderSelectedShows.length + ' shows', 'success');
+    }
+
+    // =============================================
+    // BOOT
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      if (mode === 'builder') {
+        initBuilder();
+      } else if (mode === 'auto') {
+        initAuto();
+      } else {
+        init();
+      }
+    });
+  </script>
+
+</body>
+</html>

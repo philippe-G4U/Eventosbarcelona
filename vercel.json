@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/formulario-cliente", "destination": "/formulario-inteligente.html" },
+    { "source": "/formulario-artista", "destination": "/formulario-artistas.html" },
+    { "source": "/propuesta/:path*", "destination": "/propuesta.html" },
+    { "source": "/catalogo", "destination": "/propuesta-catalogo.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+      ]
+    }
+  ]
+}

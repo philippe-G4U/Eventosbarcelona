@@ -1,2 +1,15 @@
 .vercel
 .env
+.env*.local
+.DS_Store
+
+# Data files (migrations, CSVs, exports)
+data/
+*.csv
+*.vcf
+
+# Sensitive
+scripts/service-account-key.json
+
+# Local/temp
+Presentaciones viejas/

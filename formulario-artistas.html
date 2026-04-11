@@ -558,6 +558,18 @@
       line-height: 1.7;
     }
 
+    .input-error {
+      border-color: #c0392b !important;
+      background: #fdf0f0 !important;
+    }
+
+    .field-error {
+      color: #c0392b;
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav { padding: 14px 20px; }
@@ -611,13 +623,13 @@
 
   <div class="form-container">
 
-    <div class="form-header">
-      <h1>Unete a nuestro talento</h1>
-      <p>Buscamos artistas y companias para eventos corporativos en Barcelona. Completa el formulario y nuestro equipo revisara tu perfil.</p>
+    <div class="form-header" id="form-header">
+      <h1>Forma parte de Eventos Barcelona</h1>
+      <p>Conectamos el mejor talento y los mejores proveedores con eventos corporativos unicos en Barcelona. ¿Quien eres?</p>
     </div>
 
     <!-- PROGRESS BAR -->
-    <div class="progress-bar">
+    <div class="progress-bar" id="progress-bar" style="display:none;">
       <div class="progress-step">
         <div class="progress-dot active" id="dot-1">1</div>
       </div>
@@ -637,8 +649,24 @@
 
     <div class="form-card">
 
-      <!-- PASO 1: Datos del artista -->
-      <div class="step active" id="step-1">
+      <!-- PASO 0: Selector artista / proveedor -->
+      <div class="step active" id="step-0">
+        <div class="option-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="option-card" onclick="selectProfile('artista')" style="padding: 40px 24px; text-align: center;">
+            <span class="option-icon" style="font-size: 48px;">&#127917;</span>
+            <span class="option-label" style="font-size: 20px; margin-top: 8px;">Soy Artista</span>
+            <span class="option-desc" style="font-size: 13px; line-height: 1.5; margin-top: 8px;">Bailarin, musico, artista de circo, performer... Quiero mostrar mi show al mundo de los eventos corporativos.</span>
+          </div>
+          <div class="option-card" onclick="selectProfile('proveedor')" style="padding: 40px 24px; text-align: center;">
+            <span class="option-icon" style="font-size: 48px;">&#128736;</span>
+            <span class="option-label" style="font-size: 20px; margin-top: 8px;">Soy Proveedor</span>
+            <span class="option-desc" style="font-size: 13px; line-height: 1.5; margin-top: 8px;">Sonido, iluminacion, catering, carpas, tecnologia... Ofrezco servicios tecnicos o logisticos para eventos.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 1: Datos de contacto -->
+      <div class="step" id="step-1">
         <h2 class="step-title">Tus datos de contacto</h2>
         <p class="step-subtitle">Informacion basica para que podamos contactarte.</p>
 
@@ -683,16 +711,17 @@
 
         <div class="form-actions">
           <div></div>
-          <button class="btn-next" onclick="goToStep(2)">Siguiente</button>
+          <button class="btn-next" onclick="validateAndGo(1, 2)">Siguiente</button>
         </div>
       </div>
 
-      <!-- PASO 2: Disciplina y espectaculo -->
+      <!-- PASO 2: Disciplina / Especialidad -->
       <div class="step" id="step-2">
-        <h2 class="step-title">Tu disciplina artistica</h2>
-        <p class="step-subtitle">Selecciona la categoria principal de tu espectaculo. Puedes marcar varias.</p>
+        <h2 class="step-title" id="step2-title">Tu disciplina artistica</h2>
+        <p class="step-subtitle" id="step2-subtitle">Selecciona la categoria principal de tu espectaculo. Puedes marcar varias.</p>
 
-        <div class="option-grid">
+        <!-- Categorías ARTISTA -->
+        <div class="option-grid" id="cats-artista">
           <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#128131;</span>
             <span class="option-label">Danza</span>
@@ -763,94 +792,149 @@
             </div>
           </div>
           <div class="option-card" onclick="toggleOption(this)">
-            <span class="option-icon">&#128736;</span>
-            <span class="option-label">Proveedores</span>
-            <span class="option-desc">Servicios técnicos y logísticos para eventos</span>
-            <div class="subcategory-panel">
-              <div class="subcategory-chips">
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Sonido / AV</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Iluminación</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Carpas / Tarimas / Escenario</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Tecnología</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Catering</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Decoración / Floristería</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Fotografía / Video</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Mobiliario</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Estilismo / Maquillaje</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Venues / Espacios</span>
-                <span class="sub-chip" onclick="event.stopPropagation(); toggleChip(this)">Otro</span>
-              </div>
-            </div>
-          </div>
-          <div class="option-card" onclick="toggleOption(this)">
             <span class="option-icon">&#127917;</span>
             <span class="option-label">Otro</span>
             <span class="option-desc">Cualquier otra disciplina o servicio para eventos</span>
           </div>
         </div>
 
-        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">Formato del show</label>
-        <div class="option-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
-          <div class="option-card" onclick="selectOption(this, 'show-format')" style="padding: 20px 16px;">
-            <span class="option-icon">&#127917;</span>
-            <span class="option-label">Show de escenario</span>
+        <!-- Categorías PROVEEDOR -->
+        <div class="option-grid" id="cats-proveedor" style="display:none;">
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#127908;</span>
+            <span class="option-label">Sonido / AV</span>
+            <span class="option-desc">PA, microfonos, mesas, monitores</span>
           </div>
-          <div class="option-card" onclick="selectOption(this, 'show-format')" style="padding: 20px 16px;">
-            <span class="option-icon">&#128694;</span>
-            <span class="option-label">Itinerante</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#128161;</span>
+            <span class="option-label">Iluminacion</span>
+            <span class="option-desc">Focos, LED, diseno de luz, efectos</span>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>Describe brevemente tu espectaculo (max. 100 palabras)</label>
-          <textarea id="a-bio" placeholder="Ej: Show de percusion con tambores LED de 30 minutos para 3 artistas. Incluye coreografia sincronizada con musica electronica. Ideal para escenario o ambient."></textarea>
-        </div>
-
-        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px;">¿Que hace unico tu show?</label>
-        <div class="option-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#128065;</span>
-            <span class="option-label">Impacto visual</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#127978;</span>
+            <span class="option-label">Carpas / Tarimas / Escenario</span>
+            <span class="option-desc">Estructuras, montajes, escenarios</span>
           </div>
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#129309;</span>
-            <span class="option-label">Interaccion con publico</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#128187;</span>
+            <span class="option-label">Tecnologia</span>
+            <span class="option-desc">Mapping, streaming, pantallas, VR</span>
           </div>
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#128087;</span>
-            <span class="option-label">Estetica / Vestuario</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#127860;</span>
+            <span class="option-label">Catering</span>
+            <span class="option-desc">Comida, bebida, servicio</span>
           </div>
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#128161;</span>
-            <span class="option-label">Innovacion tecnologica</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#127804;</span>
+            <span class="option-label">Decoracion / Floristeria</span>
+            <span class="option-desc">Ambientacion, flores, escenografia</span>
           </div>
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#128214;</span>
-            <span class="option-label">Narrativa / Concepto</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#128248;</span>
+            <span class="option-label">Fotografia / Video</span>
+            <span class="option-desc">Cobertura, edicion, drones</span>
           </div>
-          <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
-            <span class="option-icon" style="font-size: 24px;">&#10024;</span>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#129681;</span>
+            <span class="option-label">Mobiliario</span>
+            <span class="option-desc">Mesas, sillas, barras, lounge</span>
+          </div>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#128132;</span>
+            <span class="option-label">Estilismo / Maquillaje</span>
+            <span class="option-desc">Caracterizacion, vestuario, makeup</span>
+          </div>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#127970;</span>
+            <span class="option-label">Venues / Espacios</span>
+            <span class="option-desc">Locales, fincas, espacios singulares</span>
+          </div>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#128666;</span>
+            <span class="option-label">Transporte / Logistica</span>
+            <span class="option-desc">Traslados, cargas, coordinacion</span>
+          </div>
+          <div class="option-card" onclick="toggleOption(this)">
+            <span class="option-icon">&#10024;</span>
             <span class="option-label">Otro</span>
+            <span class="option-desc">Cualquier otro servicio para eventos</span>
+          </div>
+        </div>
+
+        <!-- Campos solo artista -->
+        <div id="artista-fields">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">Formato del show</label>
+          <div class="option-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
+            <div class="option-card" onclick="selectOption(this, 'show-format')" style="padding: 20px 16px;">
+              <span class="option-icon">&#127917;</span>
+              <span class="option-label">Show de escenario</span>
+            </div>
+            <div class="option-card" onclick="selectOption(this, 'show-format')" style="padding: 20px 16px;">
+              <span class="option-icon">&#128694;</span>
+              <span class="option-label">Itinerante</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Describe brevemente tu espectaculo (max. 100 palabras)</label>
+            <textarea id="a-bio" placeholder="Ej: Show de percusion con tambores LED de 30 minutos para 3 artistas. Incluye coreografia sincronizada con musica electronica. Ideal para escenario o ambient."></textarea>
+          </div>
+
+          <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px;">¿Que hace unico tu show?</label>
+          <div class="option-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#128065;</span>
+              <span class="option-label">Impacto visual</span>
+            </div>
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#129309;</span>
+              <span class="option-label">Interaccion con publico</span>
+            </div>
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#128087;</span>
+              <span class="option-label">Estetica / Vestuario</span>
+            </div>
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#128161;</span>
+              <span class="option-label">Innovacion tecnologica</span>
+            </div>
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#128214;</span>
+              <span class="option-label">Narrativa / Concepto</span>
+            </div>
+            <div class="option-card" onclick="toggleOption(this)" style="padding: 14px 10px;">
+              <span class="option-icon" style="font-size: 24px;">&#10024;</span>
+              <span class="option-label">Otro</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos solo proveedor -->
+        <div id="proveedor-fields" style="display:none;">
+          <div class="form-group">
+            <label>Describe tus servicios (max. 100 palabras)</label>
+            <textarea id="a-bio-prov" placeholder="Ej: Alquiler e instalacion de equipos de sonido profesional para eventos de hasta 2000 personas. Incluye tecnico de sonido, PA Line Array y microfonía inalambrica."></textarea>
           </div>
         </div>
 
         <div class="form-actions">
           <button class="btn-back" onclick="goToStep(1)">Atras</button>
-          <button class="btn-next" onclick="goToStep(3)">Siguiente</button>
+          <button class="btn-next" onclick="validateAndGo(2, 3)">Siguiente</button>
         </div>
       </div>
 
       <!-- PASO 3: Material y portfolio -->
       <div class="step" id="step-3">
-        <h2 class="step-title">Tu portfolio</h2>
-        <p class="step-subtitle">Sube fotos en alta calidad y comparte links de video. Las fotos deben ser sin marca de agua ni logotipos.</p>
+        <h2 class="step-title" id="step3-title">Tu portfolio</h2>
+        <p class="step-subtitle" id="step3-subtitle">Sube fotos en alta calidad y comparte links de video. Las fotos deben ser sin marca de agua ni logotipos.</p>
 
-        <div class="upload-area" id="photo-upload" onclick="document.getElementById('file-input').click()">
+        <div class="upload-area" id="photo-upload" onclick="document.getElementById('file-input').click()" style="position:relative;cursor:pointer;">
           <span class="upload-icon">&#128247;</span>
           <div class="upload-title">Sube tus fotos</div>
           <div class="upload-desc">Minimo 2 fotos en alta calidad, sin marca de agua. JPG o PNG, max. 10MB por foto.</div>
-          <input type="file" id="file-input" multiple accept="image/*" onchange="uploadToCloudinary(this.files)" style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;cursor:pointer;">
         </div>
+        <input type="file" id="file-input" multiple accept="image/*" onchange="uploadToCloudinary(this.files)" style="display:none;">
         <div class="file-list" id="photo-list"></div>
         <div id="upload-status" style="font-size: 13px; color: var(--gray); margin-bottom: 16px;"></div>
 
@@ -870,16 +954,18 @@
         </div>
 
         <div class="form-group">
-          <label>Rider tecnico (opcional)</label>
+          <label id="rider-label">Rider tecnico (opcional)</label>
           <textarea id="a-rider" placeholder="Ej: 4 microfonos inalambricos, mesa de mezclas, espacio minimo 4x4m, toma de corriente 220V..." style="min-height: 80px;"></textarea>
         </div>
 
-        <div style="margin-top: 16px; padding: 20px; background: var(--accent-light); border-radius: 12px; text-align: center; cursor: pointer; border: 2px dashed var(--accent); transition: all 0.2s;" onclick="addAnotherShow()" id="add-show-btn">
-          <div style="font-size: 24px; margin-bottom: 4px;">&#10133;</div>
-          <div style="font-weight: 600; font-size: 14px; color: var(--accent);">¿Tienes otro show? Anadelo aqui</div>
-          <div style="font-size: 12px; color: var(--gray); margin-top: 4px;">Si tienes varios espectaculos diferentes, puedes registrar mas de uno</div>
+        <div id="add-show-section">
+          <div style="margin-top: 16px; padding: 20px; background: var(--accent-light); border-radius: 12px; text-align: center; cursor: pointer; border: 2px dashed var(--accent); transition: all 0.2s;" onclick="addAnotherShow()" id="add-show-btn">
+            <div style="font-size: 24px; margin-bottom: 4px;">&#10133;</div>
+            <div style="font-weight: 600; font-size: 14px; color: var(--accent);">¿Tienes otro show? Anadelo aqui</div>
+            <div style="font-size: 12px; color: var(--gray); margin-top: 4px;">Si tienes varios espectaculos diferentes, puedes registrar mas de uno</div>
+          </div>
+          <div id="extra-shows"></div>
         </div>
-        <div id="extra-shows"></div>
 
         <div class="form-actions">
           <button class="btn-back" onclick="goToStep(2)">Atras</button>
@@ -892,7 +978,7 @@
         <h2 class="step-title">Precios y disponibilidad</h2>
         <p class="step-subtitle">Indicanos tu rango de precios orientativo. Lo revisaremos juntos si hay interes.</p>
 
-        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Rango de cache por actuacion</label>
+        <label id="price-label" style="display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Rango de cache por actuacion</label>
         <div class="price-grid">
           <div class="price-card" onclick="selectOption(this, 'price')">
             <div class="price-amount">&lt; 500&euro;</div>
@@ -914,10 +1000,10 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Numero de artistas en el show</label>
+            <label id="team-label">Numero de artistas en el show</label>
             <input type="number" id="a-num-artistas" placeholder="Ej: 3">
           </div>
-          <div class="form-group">
+          <div class="form-group" id="duracion-group">
             <label>Duracion del show</label>
             <select id="a-duracion">
               <option value="" disabled selected>Selecciona</option>
@@ -966,6 +1052,69 @@
   <script>
     const totalSteps = 4;
     let updateToken = null; // Set when artist arrives via update link
+    let profileType = null; // 'artista' or 'proveedor'
+
+    function selectProfile(type) {
+      profileType = type;
+      const isProveedor = type === 'proveedor';
+
+      // Update header
+      document.querySelector('#form-header h1').textContent = isProveedor
+        ? 'Registra tu empresa de servicios'
+        : 'Muestra tu talento al mundo';
+      document.querySelector('#form-header p').textContent = isProveedor
+        ? 'Conectamos proveedores de confianza con los mejores eventos corporativos de Barcelona. Cuentanos que ofreces.'
+        : 'Buscamos artistas y companias para crear momentos inolvidables en eventos corporativos. Cuentanos sobre tu show.';
+
+      // Show progress bar
+      document.getElementById('progress-bar').style.display = '';
+
+      // Toggle category grids
+      document.getElementById('cats-artista').style.display = isProveedor ? 'none' : '';
+      document.getElementById('cats-proveedor').style.display = isProveedor ? '' : 'none';
+
+      // Toggle artista-only / proveedor-only fields in step 2
+      document.getElementById('artista-fields').style.display = isProveedor ? 'none' : '';
+      document.getElementById('proveedor-fields').style.display = isProveedor ? '' : 'none';
+
+      // Step 2 titles
+      document.getElementById('step2-title').textContent = isProveedor ? 'Tu especialidad' : 'Tu disciplina artistica';
+      document.getElementById('step2-subtitle').textContent = isProveedor
+        ? 'Selecciona los servicios que ofreces. Puedes marcar varios.'
+        : 'Selecciona la categoria principal de tu espectaculo. Puedes marcar varias.';
+
+      // Step 3 titles
+      document.getElementById('step3-title').textContent = isProveedor ? 'Tu material' : 'Tu portfolio';
+      document.getElementById('step3-subtitle').textContent = isProveedor
+        ? 'Sube fotos de tus trabajos y comparte links relevantes.'
+        : 'Sube fotos en alta calidad y comparte links de video. Las fotos deben ser sin marca de agua ni logotipos.';
+
+      // Step 3 fields
+      document.getElementById('rider-label').textContent = isProveedor ? 'Equipamiento propio (opcional)' : 'Rider tecnico (opcional)';
+      document.getElementById('a-rider').placeholder = isProveedor
+        ? 'Ej: PA Line Array hasta 2000 personas, mesa digital, microfonía Shure, camión propio...'
+        : 'Ej: 4 microfonos inalambricos, mesa de mezclas, espacio minimo 4x4m, toma de corriente 220V...';
+      document.getElementById('add-show-section').style.display = isProveedor ? 'none' : '';
+
+      // Step 4 fields
+      document.getElementById('price-label').textContent = isProveedor ? 'Rango de precios por servicio' : 'Rango de cache por actuacion';
+      document.getElementById('team-label').textContent = isProveedor ? 'Personas en el equipo' : 'Numero de artistas en el show';
+      document.getElementById('duracion-group').style.display = isProveedor ? 'none' : '';
+
+      // Submit button
+      document.querySelector('.btn-submit').textContent = isProveedor ? 'Enviar mi ficha' : 'Enviar mi perfil';
+
+      // Step 1 labels
+      document.querySelector('#step-1 .step-title').textContent = 'Tus datos de contacto';
+      const nombreLabel = document.querySelector('label[for="a-nombre"]') || document.getElementById('a-nombre').closest('.form-group').querySelector('label');
+      if (nombreLabel) nombreLabel.textContent = isProveedor ? 'Nombre de contacto' : 'Nombre completo / Nombre artistico';
+      document.getElementById('a-nombre').placeholder = isProveedor ? 'Ej: Juan Garcia' : 'Ej: Maria Lopez / Flamenko Fusion';
+      const companiaLabel = document.getElementById('a-compania').closest('.form-group').querySelector('label');
+      if (companiaLabel) companiaLabel.textContent = isProveedor ? 'Nombre de la empresa' : 'Nombre de la compania (si aplica)';
+      document.getElementById('a-compania').placeholder = isProveedor ? 'Ej: StereoRent BCN SL' : 'Ej: Circo Brillante SL';
+
+      goToStep(1);
+    }
 
     // Check for ?token= param to load existing artist data
     (async function checkUpdateMode() {
@@ -1078,6 +1227,54 @@
         console.error('Error loading artist data:', err);
       }
     })();
+
+    function validateAndGo(from, to) {
+      // Clear previous errors
+      document.querySelectorAll('.field-error').forEach(el => el.remove());
+      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+      const errors = [];
+
+      if (from === 1) {
+        const nombre = document.getElementById('a-nombre');
+        const email = document.getElementById('a-email');
+        const phone = document.getElementById('a-phone');
+
+        if (!nombre.value.trim()) errors.push({ el: nombre, msg: 'El nombre es obligatorio' });
+        if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+          errors.push({ el: email, msg: 'Introduce un email valido' });
+        }
+        if (!phone.value.trim()) errors.push({ el: phone, msg: 'El telefono es obligatorio' });
+      }
+
+      if (from === 2) {
+        const gridId = profileType === 'proveedor' ? '#cats-proveedor' : '#cats-artista';
+        const selected = document.querySelectorAll(`${gridId} .option-card.selected`);
+        if (selected.length === 0) {
+          const grid = document.querySelector(gridId);
+          const msg = document.createElement('div');
+          msg.className = 'field-error';
+          msg.textContent = profileType === 'proveedor' ? 'Selecciona al menos un servicio' : 'Selecciona al menos una categoria';
+          grid.parentElement.insertBefore(msg, grid.nextSibling);
+          errors.push({});
+        }
+      }
+
+      if (errors.length > 0) {
+        errors.forEach(err => {
+          if (err.el) {
+            err.el.classList.add('input-error');
+            const msg = document.createElement('div');
+            msg.className = 'field-error';
+            msg.textContent = err.msg;
+            err.el.closest('.form-group, div').appendChild(msg);
+          }
+        });
+        return;
+      }
+
+      goToStep(to);
+    }
 
     function goToStep(n) {
       document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -1203,26 +1400,36 @@
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      // Collect disciplines and subcategories from step 2
+      // Collect disciplines/services and subcategories from step 2
+      const isProveedor = profileType === 'proveedor';
+      const activeGrid = isProveedor ? '#cats-proveedor' : '#cats-artista';
       const disciplinas = [];
       const subcategorias = [];
-      document.querySelectorAll('#step-2 .option-grid:first-of-type .option-card.selected').forEach(card => {
+      document.querySelectorAll(`${activeGrid} .option-card.selected`).forEach(card => {
         const label = card.querySelector('.option-label')?.textContent;
         if (label) disciplinas.push(label);
         card.querySelectorAll('.sub-chip.active').forEach(chip => {
           subcategorias.push(chip.textContent);
         });
       });
+      // For proveedor, add 'Proveedores' as wrapper discipline for API tag mapping
+      if (isProveedor && !disciplinas.includes('Proveedores')) {
+        disciplinas.unshift('Proveedores');
+      }
 
-      // Show format (escenario / itinerante)
-      const formatoShow = document.querySelector('#step-2 .option-grid:nth-of-type(2) .option-card.selected .option-label')?.textContent || '';
+      // Show format (escenario / itinerante) — only for artistas
+      const formatoShow = !isProveedor
+        ? (document.querySelector('#artista-fields .option-grid .option-card.selected .option-label')?.textContent || '')
+        : '';
 
-      // What makes show unique
+      // What makes show unique — only for artistas
       const showUnico = [];
-      document.querySelectorAll('#step-2 .option-grid:last-of-type .option-card.selected').forEach(card => {
-        const label = card.querySelector('.option-label')?.textContent;
-        if (label) showUnico.push(label);
-      });
+      if (!isProveedor) {
+        document.querySelectorAll('#artista-fields .option-grid:last-of-type .option-card.selected').forEach(card => {
+          const label = card.querySelector('.option-label')?.textContent;
+          if (label) showUnico.push(label);
+        });
+      }
 
       // Price range
       const rangoCache = document.querySelector('.price-card.selected .price-amount')?.textContent || '';
@@ -1251,7 +1458,10 @@
         disciplinas,
         subcategorias,
         formatoShow,
-        bioShow: document.getElementById('a-bio')?.value || '',
+        profileType: profileType || 'artista',
+        bioShow: isProveedor
+          ? (document.getElementById('a-bio-prov')?.value || '')
+          : (document.getElementById('a-bio')?.value || ''),
         showUnico,
         video1: document.getElementById('a-video1')?.value || '',
         video2: document.getElementById('a-video2')?.value || '',

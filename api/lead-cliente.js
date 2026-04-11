@@ -11,6 +11,9 @@ export default async function handler(req, res) {
   const LOC = process.env.GHL_LOCATION_ID;
   const PIPELINE = process.env.GHL_PIPELINE_CLIENTES;
   const STAGE = process.env.GHL_STAGE_NEW_LEAD;
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+  const SITE_URL = process.env.SITE_URL || 'https://eventos-barcelona.vercel.app';
   const HEADERS = {
     'Authorization': `Bearer ${TOKEN}`,
     'Version': '2021-07-28',
@@ -96,9 +99,60 @@ export default async function handler(req, res) {
         { key: 'presupuesto_aproximado', field_value: data.presupuesto || '' },
         { key: 'necesita_produccion', field_value: data.necesitaProduccion ? 'Si' : 'No' },
         { key: 'como_nos_conocio', field_value: data.comoNosConocio || '' },
-        { key: 'comentarios_cliente', field_value: data.comentarios || '' }
+        { key: 'comentarios_cliente', field_value: data.comentarios || '' },
+        { key: 'url_propuesta', field_value: '' }
       ]
     };
+
+    // Save proposal to Supabase and get URL
+    let proposalId = null;
+    let proposalUrl = '';
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      try {
+        // Build proposal data with auto-matched shows encoded
+        const proposalData = btoa(encodeURIComponent(JSON.stringify(data)));
+        const adminUrl = `${SITE_URL}/propuesta.html?mode=auto&data=${proposalData}`;
+
+        // Save to Supabase
+        const proposalRow = {
+          status: 'revision',
+          client_name: data.nombre || '',
+          client_company: data.empresa || '',
+          client_email: data.email || '',
+          client_phone: data.telefono || '',
+          event_name: `${data.tipoEvento || 'Evento'} — ${data.empresa || data.nombre || 'Cliente'}`,
+          event_type: data.tipoEvento || '',
+          event_date: data.fechaEvento || '',
+          event_guests: parseInt(data.numAsistentes) || 0,
+          event_location: data.ubicacion || '',
+          category: 'shows',
+          concept_title: '',
+          concept_text: '',
+          shows: JSON.stringify([])
+        };
+
+        const spRes = await fetch(`${SUPABASE_URL}/rest/v1/proposals`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(proposalRow)
+        });
+        const spData = await spRes.json();
+        if (spData[0]?.id) {
+          proposalId = spData[0].id;
+          proposalUrl = adminUrl;
+        }
+      } catch (e) {
+        console.error('Proposal save error:', e.message);
+      }
+    }
+
+    // Add proposal URL to contact custom fields
+    contactBody.customFields.find(f => f.key === 'url_propuesta').field_value = proposalUrl;
 
     const contactRes = await fetch(`${API}/contacts/upsert`, {
       method: 'POST',
@@ -173,7 +227,9 @@ export default async function handler(req, res) {
       success: true,
       contactId: contactId,
       opportunityId: oppData.opportunity?.id || null,
-      holdedId: holdedId
+      holdedId: holdedId,
+      proposalId: proposalId,
+      proposalUrl: proposalUrl
     });
 
   } catch (err) {
