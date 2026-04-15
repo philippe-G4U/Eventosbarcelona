@@ -916,6 +916,7 @@
           <label>¿Como nos has conocido?</label>
           <select id="f-conocido">
             <option value="" disabled selected>Selecciona una opcion</option>
+            <option>Web</option>
             <option>Busqueda en Google</option>
             <option>Recomendacion</option>
             <option>Redes sociales</option>
@@ -943,15 +944,6 @@
         <h2>Solicitud recibida</h2>
         <p>Nuestro equipo esta preparando tu propuesta personalizada. La recibiras en menos de 24 horas. Gracias por confiar en Eventos Barcelona.</p>
 
-        <!-- Admin notification (only visible internally, hidden in production) -->
-        <div id="admin-notification" style="display:none; margin-top: 32px; padding: 24px; background: #1a1a2e; border-radius: 12px; text-align: left;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-            <span style="background: #2ecc71; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
-            <strong style="color: #fff; font-size: 14px;">ADMIN — Propuesta auto-generada</strong>
-          </div>
-          <p style="color: #aaa; font-size: 13px; margin-bottom: 16px;">Se ha generado una propuesta basada en los requerimientos del cliente. Revisa, ajusta precios y aprueba antes de enviar.</p>
-          <a id="admin-proposal-link" href="#" target="_blank" style="display: inline-block; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">Revisar propuesta como admin</a>
-        </div>
       </div>
 
     </div>
@@ -1086,10 +1078,6 @@
         comoNosConocio: document.getElementById('f-conocido')?.value || ''
       };
 
-      // Generate proposal URL with form data for admin review
-      const proposalData = btoa(encodeURIComponent(JSON.stringify(payload)));
-      const proposalUrl = `propuesta.html?mode=auto&data=${proposalData}`;
-
       try {
         const res = await fetch('/api/lead-cliente', {
           method: 'POST',
@@ -1105,12 +1093,6 @@
       // Show success to client
       document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
       document.getElementById('success').classList.add('active');
-
-      // Show proposal link for admin (Xavi)
-      const adminLink = document.getElementById('admin-proposal-link');
-      if (adminLink) adminLink.href = proposalUrl;
-      const adminSection = document.getElementById('admin-notification');
-      if (adminSection) adminSection.style.display = 'block';
 
       for (let i = 1; i <= 5; i++) {
         const dot = document.getElementById('dot-' + i);
