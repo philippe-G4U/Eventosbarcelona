@@ -1,3 +1,35 @@
+const GHL_API = 'https://services.leadconnectorhq.com';
+const URL_PROPUESTA_VALIDADA_FIELD_ID = 'R1XtZUYECtUKmvPeKoXD';
+
+async function writeValidatedUrlToGHL(email, validatedUrl) {
+  const TOKEN = process.env.GHL_API_KEY;
+  const LOC = process.env.GHL_LOCATION_ID;
+  if (!TOKEN || !LOC || !email) return { ok: false, reason: 'missing_config_or_email' };
+
+  const HEADERS = {
+    'Authorization': `Bearer ${TOKEN}`,
+    'Version': '2021-07-28',
+    'Content-Type': 'application/json'
+  };
+
+  const searchRes = await fetch(
+    `${GHL_API}/contacts/search/duplicate?locationId=${LOC}&email=${encodeURIComponent(email)}`,
+    { headers: HEADERS }
+  );
+  const searchData = await searchRes.json();
+  const contact = searchData.contact;
+  if (!contact?.id) return { ok: false, reason: 'contact_not_found' };
+
+  const updateRes = await fetch(`${GHL_API}/contacts/${contact.id}`, {
+    method: 'PUT',
+    headers: HEADERS,
+    body: JSON.stringify({
+      customFields: [{ id: URL_PROPUESTA_VALIDADA_FIELD_ID, field_value: validatedUrl }]
+    })
+  });
+  return { ok: updateRes.ok, status: updateRes.status, contactId: contact.id };
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -12,6 +44,9 @@ export default async function handler(req, res) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     return res.status(500).json({ error: 'Supabase not configured' });
   }
+
+  const baseUrl = process.env.PROPUESTA_BASE_URL
+    || (req.headers.host ? `https://${req.headers.host}` : '');
 
   try {
     const data = req.body;
@@ -59,7 +94,14 @@ export default async function handler(req, res) {
         }
       );
       const updated = await updateRes.json();
-      return res.status(200).json({ success: true, id: data.id, proposal: updated[0] });
+
+      let ghlSync;
+      if (data.status === 'approved' && data.client?.email && baseUrl) {
+        const validatedUrl = `${baseUrl}/propuesta.html?id=${data.id}`;
+        ghlSync = await writeValidatedUrlToGHL(data.client.email, validatedUrl);
+      }
+
+      return res.status(200).json({ success: true, id: data.id, proposal: updated[0], ghlSync });
     }
 
     // Create new proposal
@@ -82,10 +124,17 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to create proposal', details: created });
     }
 
+    let ghlSync;
+    if (data.status === 'approved' && data.client?.email && baseUrl) {
+      const validatedUrl = `${baseUrl}/propuesta.html?id=${created[0].id}`;
+      ghlSync = await writeValidatedUrlToGHL(data.client.email, validatedUrl);
+    }
+
     return res.status(200).json({
       success: true,
       id: created[0].id,
-      url: `/propuesta.html?id=${created[0].id}`
+      url: `/propuesta.html?id=${created[0].id}`,
+      ghlSync
     });
 
   } catch (err) {
