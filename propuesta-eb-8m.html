@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth4U × Eventos Barcelona · Plan 8 meses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   GROWTH4U IDENTITY — CSS CUSTOM PROPERTIES
+   =========================================== */
+:root {
+    --green: #2EC4A0;
+    --green-light: #e8f9f5;
+    --green-glow: rgba(46, 196, 160, 0.15);
+    --green-border: rgba(46, 196, 160, 0.35);
+    --navy: #1a2744;
+    --navy-light: #243352;
+    --white: #ffffff;
+    --gray-50: #fafbfe;
+    --gray-100: #f7f8fc;
+    --gray-200: #eef0f6;
+    --gray-400: #9099b0;
+    --gray-700: #3d4560;
+    --red-muted: #cc4444;
+
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --title-size: clamp(1.8rem, 5vw, 3.2rem);
+    --h2-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    --h3-size: clamp(0.95rem, 2vw, 1.3rem);
+    --body-size: clamp(0.75rem, 1.3vw, 1rem);
+    --small-size: clamp(0.65rem, 1vw, 0.85rem);
+    --label-size: clamp(0.55rem, 0.8vw, 0.7rem);
+
+    --slide-padding: clamp(1.5rem, 4vw, 4rem);
+    --content-gap: clamp(1rem, 2vw, 2rem);
+    --element-gap: clamp(0.4rem, 1vw, 1rem);
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-normal: 0.6s;
+}
+
+/* ===========================================
+   BASE RESET & VIEWPORT FITTING (MANDATORY)
+   =========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    font-family: var(--font-body);
+    color: var(--gray-700);
+    background: var(--navy);
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: min(1200px, 92vw);
+    width: 100%;
+    margin: 0 auto;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+    gap: var(--content-gap);
+}
+
+/* ===========================================
+   THEMES — DARK / LIGHT / WHITE
+   =========================================== */
+.slide.dark {
+    background:
+        radial-gradient(ellipse at 80% 20%, rgba(46, 196, 160, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 90%, rgba(46, 196, 160, 0.05) 0%, transparent 50%),
+        var(--navy);
+    color: var(--white);
+}
+
+.slide.light { background: var(--gray-50); color: var(--gray-700); }
+.slide.white { background: var(--white); color: var(--gray-700); }
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    color: inherit;
+}
+.slide.dark h1, .slide.dark h2, .slide.dark h3 { color: var(--white); }
+.slide.light h1, .slide.light h2, .slide.light h3,
+.slide.white h1, .slide.white h2, .slide.white h3 { color: var(--navy); }
+
+h1 { font-size: var(--title-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); font-weight: 700; }
+
+h1 span.accent, h2 span.accent, h3 span.accent { color: var(--green); }
+
+p { font-size: var(--body-size); line-height: 1.6; }
+.slide.dark p { color: rgba(255,255,255,0.78); }
+
+/* Eyebrow label pill */
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    background: var(--green-glow);
+    color: var(--green);
+    padding: 0.45em 1em;
+    border-radius: 100px;
+    font-size: var(--label-size);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    width: fit-content;
+    border: 1px solid var(--green-border);
+}
+
+/* ===========================================
+   CARDS & COMPONENTS
+   =========================================== */
+.card {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: clamp(1rem, 2vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+}
+
+.slide.dark .card {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+}
+
+.card .card-label {
+    font-size: var(--label-size);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    font-weight: 700;
+}
+
+.card h3 { color: inherit; }
+.slide.dark .card h3 { color: var(--white); }
+
+.metric {
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+/* Comparison cards (gasto vs activo) */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+.comparison-card { padding: clamp(1rem, 2.2vw, 1.75rem); border-radius: 14px; display: flex; flex-direction: column; gap: 0.6em; }
+.comparison-card.bad {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+}
+.comparison-card.bad .card-label { color: var(--red-muted); }
+.comparison-card.good {
+    background: var(--navy);
+    color: var(--white);
+    border: 1px solid var(--green-border);
+}
+.comparison-card.good .card-label { color: var(--green); }
+.comparison-card.good h3 { color: var(--white); }
+.comparison-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4em; }
+.comparison-card ul li {
+    padding-left: 1.2em;
+    position: relative;
+    font-size: var(--body-size);
+    line-height: 1.45;
+}
+.comparison-card ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.55em;
+    width: 0.5em; height: 0.5em;
+    border-radius: 50%;
+    background: var(--green);
+}
+.comparison-card.bad ul li::before { background: var(--red-muted); }
+.comparison-card.good ul li { color: rgba(255,255,255,0.85); }
+
+/* 2x2 Pillar grid */
+.pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.8rem, 1.6vw, 1.2rem);
+}
+.pillar-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: clamp(0.9rem, 1.8vw, 1.4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+.pillar-num {
+    font-size: var(--label-size);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--green);
+}
+.pillar-card h3 { color: var(--white); font-size: clamp(0.9rem, 1.6vw, 1.15rem); }
+.pillar-card p { color: rgba(255,255,255,0.72); font-size: var(--small-size); line-height: 1.5; }
+
+/* Two-column content */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1rem, 2.5vw, 2rem);
+}
+.col-block { display: flex; flex-direction: column; gap: 0.7em; }
+.col-block h3 { font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--navy); }
+.col-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.4em; }
+.col-block ul li {
+    padding-left: 1.2em;
+    position: relative;
+    font-size: var(--body-size);
+    line-height: 1.5;
+}
+.col-block ul li::before {
+    content: "→";
+    position: absolute; left: 0; color: var(--green);
+    font-weight: 700;
+}
+
+/* Case studies */
+.case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.8rem, 1.8vw, 1.3rem);
+}
+.case-card {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+}
+.case-card .case-name {
+    font-size: var(--label-size);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    font-weight: 700;
+}
+.case-card h3 { font-size: clamp(0.95rem, 1.7vw, 1.2rem); color: var(--navy); }
+.case-metric {
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+    margin-top: 0.3em;
+}
+.case-desc { font-size: var(--small-size); color: var(--gray-700); line-height: 1.5; }
+
+/* Timeline phases */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.6rem, 1.4vw, 1rem);
+}
+.phase-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: clamp(0.9rem, 1.6vw, 1.3rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    position: relative;
+}
+.phase-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green);
+    border-radius: 14px 14px 0 0;
+}
+.phase-num {
+    font-size: var(--label-size);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+}
+.phase-card h3 { font-size: clamp(0.85rem, 1.5vw, 1.05rem); color: var(--navy); }
+.phase-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.25em; }
+.phase-card ul li {
+    font-size: clamp(0.68rem, 1vw, 0.82rem);
+    line-height: 1.4;
+    padding-left: 0.9em;
+    position: relative;
+    color: var(--gray-700);
+}
+.phase-card ul li::before {
+    content: "·";
+    position: absolute; left: 0.2em; top: -0.05em;
+    color: var(--green);
+    font-weight: 800;
+}
+
+/* Comparison table */
+.diff-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+}
+.diff-table thead th {
+    background: var(--gray-100);
+    padding: clamp(0.6rem, 1.2vw, 1rem);
+    text-align: left;
+    font-size: var(--small-size);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-400);
+}
+.diff-table thead th.good-col { color: var(--green); }
+.diff-table td {
+    padding: clamp(0.5rem, 1vw, 0.85rem) clamp(0.6rem, 1.2vw, 1rem);
+    font-size: var(--body-size);
+    border-top: 1px solid var(--gray-200);
+    line-height: 1.4;
+}
+.diff-table td:first-child { font-weight: 700; color: var(--navy); }
+.diff-table td.bad { color: var(--red-muted); }
+.diff-table td.good { color: var(--navy); font-weight: 600; }
+
+/* Quote block */
+.quote-block {
+    background: var(--gray-100);
+    border-left: 4px solid var(--green);
+    border-radius: 4px 14px 14px 4px;
+    padding: clamp(0.9rem, 2vw, 1.4rem) clamp(1.2rem, 2.5vw, 2rem);
+    font-style: italic;
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    color: var(--navy);
+    line-height: 1.5;
+}
+.slide.dark .quote-block {
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.9);
+}
+
+/* Tool cards (slide 9) */
+.tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.8rem, 1.6vw, 1.2rem);
+}
+.tool-card {
+    background: var(--navy);
+    border: 1px solid var(--green-border);
+    border-radius: 14px;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    position: relative;
+    overflow: hidden;
+}
+.tool-card::after {
+    content: "";
+    position: absolute;
+    top: -40%; right: -30%;
+    width: 60%; height: 180%;
+    background: radial-gradient(circle, rgba(46,196,160,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+.tool-card h3 { font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--white); }
+.tool-card .tool-tag {
+    font-size: var(--label-size);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--green);
+    font-weight: 700;
+}
+.tool-card p { color: rgba(255,255,255,0.78); font-size: var(--small-size); line-height: 1.5; }
+
+/* CTA button */
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    background: var(--green);
+    color: var(--navy);
+    padding: 0.9em 1.8em;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: var(--body-size);
+    text-decoration: none;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo);
+    cursor: pointer;
+    border: none;
+    width: fit-content;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(46,196,160,0.3); }
+
+.cta-row { display: flex; flex-direction: column; gap: 1.2em; align-items: center; text-align: center; }
+.cta-contact { color: rgba(255,255,255,0.65); font-size: var(--small-size); }
+
+/* Stats row (slide 2) */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.6rem, 1.4vw, 1rem);
+}
+.stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: clamp(0.9rem, 1.7vw, 1.3rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+}
+.stat-card .stat-val {
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.stat-card .stat-label {
+    font-size: var(--small-size);
+    color: var(--gray-700);
+    line-height: 1.35;
+}
+
+/* Title slide */
+.title-slide .slide-content { justify-content: center; align-items: flex-start; gap: clamp(0.8rem, 1.8vw, 1.4rem); }
+.title-slide h1 { font-size: clamp(2.4rem, 6.5vw, 4.8rem); max-width: 16ch; }
+.title-slide .subtitle { font-size: clamp(1rem, 1.8vw, 1.3rem); color: rgba(255,255,255,0.72); max-width: 48ch; }
+.title-slide .footer-pills {
+    display: flex; flex-wrap: wrap; gap: 0.5em; margin-top: 0.6em;
+}
+.title-slide .footer-pills span {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.4em 0.9em;
+    border-radius: 100px;
+    font-size: var(--small-size);
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+}
+
+/* Slide number */
+.slide-number {
+    position: absolute;
+    bottom: clamp(0.8rem, 1.5vw, 1.2rem);
+    right: clamp(0.8rem, 1.5vw, 1.2rem);
+    font-size: var(--label-size);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: inherit;
+    opacity: 0.35;
+}
+.slide.dark .slide-number { color: rgba(255,255,255,0.45); }
+
+/* ===========================================
+   PROGRESS BAR
+   =========================================== */
+.progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--green);
+    z-index: 9999;
+    transition: width 0.2s var(--ease-out-expo);
+    width: 0;
+}
+
+/* ===========================================
+   NAV DOTS
+   =========================================== */
+.nav-dots {
+    position: fixed;
+    right: clamp(0.6rem, 1.5vw, 1.2rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    z-index: 100;
+}
+.nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(128,128,128,0.35);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s var(--ease-out-expo);
+}
+.nav-dot.active { background: var(--green); transform: scale(1.4); }
+
+/* ===========================================
+   ANIMATIONS — .reveal triggered by IO
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity var(--duration-normal) var(--ease-out-expo),
+                transform var(--duration-normal) var(--ease-out-expo);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity var(--duration-normal) var(--ease-out-expo),
+                transform var(--duration-normal) var(--ease-out-expo);
+}
+.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+
+.slide.visible .reveal:nth-child(1), .slide.visible .reveal-scale:nth-child(1) { transition-delay: 0.05s; }
+.slide.visible .reveal:nth-child(2), .slide.visible .reveal-scale:nth-child(2) { transition-delay: 0.15s; }
+.slide.visible .reveal:nth-child(3), .slide.visible .reveal-scale:nth-child(3) { transition-delay: 0.25s; }
+.slide.visible .reveal:nth-child(4), .slide.visible .reveal-scale:nth-child(4) { transition-delay: 0.35s; }
+.slide.visible .reveal:nth-child(5), .slide.visible .reveal-scale:nth-child(5) { transition-delay: 0.45s; }
+.slide.visible .reveal:nth-child(6), .slide.visible .reveal-scale:nth-child(6) { transition-delay: 0.55s; }
+
+/* Children stagger within grids */
+.stats-row > *, .pillar-grid > *, .case-grid > *, .timeline > *, .tool-grid > *, .comparison-grid > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s var(--ease-out-expo), transform 0.55s var(--ease-out-expo);
+}
+.slide.visible .stats-row > *, .slide.visible .pillar-grid > *,
+.slide.visible .case-grid > *, .slide.visible .timeline > *,
+.slide.visible .tool-grid > *, .slide.visible .comparison-grid > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+.slide.visible .stats-row > *:nth-child(1), .slide.visible .pillar-grid > *:nth-child(1),
+.slide.visible .case-grid > *:nth-child(1), .slide.visible .timeline > *:nth-child(1),
+.slide.visible .tool-grid > *:nth-child(1), .slide.visible .comparison-grid > *:nth-child(1) { transition-delay: 0.2s; }
+.slide.visible .stats-row > *:nth-child(2), .slide.visible .pillar-grid > *:nth-child(2),
+.slide.visible .case-grid > *:nth-child(2), .slide.visible .timeline > *:nth-child(2),
+.slide.visible .tool-grid > *:nth-child(2), .slide.visible .comparison-grid > *:nth-child(2) { transition-delay: 0.3s; }
+.slide.visible .stats-row > *:nth-child(3), .slide.visible .pillar-grid > *:nth-child(3),
+.slide.visible .case-grid > *:nth-child(3), .slide.visible .timeline > *:nth-child(3),
+.slide.visible .tool-grid > *:nth-child(3) { transition-delay: 0.4s; }
+.slide.visible .stats-row > *:nth-child(4), .slide.visible .pillar-grid > *:nth-child(4),
+.slide.visible .timeline > *:nth-child(4), .slide.visible .tool-grid > *:nth-child(4) { transition-delay: 0.5s; }
+
+/* ===========================================
+   INLINE EDITING
+   =========================================== */
+.edit-hotzone {
+    position: fixed; top: 0; left: 0;
+    width: 80px; height: 80px;
+    z-index: 10000;
+    cursor: pointer;
+}
+.edit-toggle {
+    position: fixed;
+    top: clamp(0.6rem, 1.2vw, 1rem);
+    left: clamp(0.6rem, 1.2vw, 1rem);
+    width: clamp(38px, 4vw, 46px);
+    height: clamp(38px, 4vw, 46px);
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--navy);
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(46,196,160,0.35);
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: var(--navy); color: var(--green); border: 2px solid var(--green); }
+.edit-toggle:hover { transform: scale(1.08); }
+
+body.edit-mode [data-editable] {
+    outline: 2px dashed var(--green-border);
+    outline-offset: 4px;
+    cursor: text;
+    border-radius: 4px;
+    transition: outline-color 0.15s ease;
+}
+body.edit-mode [data-editable]:hover { outline-color: var(--green); }
+body.edit-mode [data-editable]:focus {
+    outline: 2px solid var(--green);
+    background: rgba(46,196,160,0.06);
+}
+
+.edit-hint {
+    position: fixed;
+    bottom: clamp(0.8rem, 1.5vw, 1.2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    color: var(--white);
+    padding: 0.6em 1.2em;
+    border-radius: 100px;
+    font-size: var(--small-size);
+    font-weight: 600;
+    z-index: 10002;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 1px solid var(--green-border);
+}
+.edit-hint.show { opacity: 1; }
+
+/* ===========================================
+   RESPONSIVE BREAKPOINTS
+   =========================================== */
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.9rem, 3vw, 2.2rem);
+        --content-gap: clamp(0.6rem, 1.5vw, 1.2rem);
+        --title-size: clamp(1.4rem, 4.5vw, 2.6rem);
+        --h2-size: clamp(1.1rem, 3vw, 1.8rem);
+    }
+}
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.7rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.4rem, 1.2vw, 0.9rem);
+        --title-size: clamp(1.2rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    }
+    .nav-dots { display: none; }
+}
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2vw, 1rem);
+        --title-size: clamp(1.05rem, 3.5vw, 1.6rem);
+    }
+}
+@media (max-width: 700px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .pillar-grid, .comparison-grid, .two-col, .tool-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; gap: 0.6rem; }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .title-slide h1 { font-size: clamp(1.8rem, 8vw, 3rem); }
+}
+@media (max-width: 500px) {
+    .timeline { grid-template-columns: 1fr; }
+    .diff-table td, .diff-table th { font-size: var(--small-size); }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+    html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Edit hotzone + toggle -->
+<div class="edit-hotzone" id="editHotzone" title="Modo edición"></div>
+<button class="edit-toggle" id="editToggle" title="Modo edición (E) · Ctrl+S para guardar">✏️</button>
+<div class="edit-hint" id="editHint">Modo edición activo · clic en cualquier texto · Ctrl+S para guardar</div>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+
+<!-- ===========================================
+     SLIDE 1 — TÍTULO (Dark)
+     =========================================== -->
+<section class="slide dark title-slide">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Propuesta · Abril 2026</span>
+        <h1 class="reveal" data-editable>Construye tu <span class="accent">motor de crecimiento</span></h1>
+        <p class="subtitle reveal" data-editable>Growth4U × Eventos Barcelona · Plan integrado de 8 meses para ampliar pipeline de clientes internacionales.</p>
+        <div class="footer-pills reveal">
+            <span data-editable>SEO</span>
+            <span data-editable>GEO</span>
+            <span data-editable>AEO</span>
+            <span data-editable>Partnerships</span>
+            <span data-editable>Outbound</span>
+        </div>
+    </div>
+    <div class="slide-number">01 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 2 — EL PROBLEMA (Light)
+     =========================================== -->
+<section class="slide light">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Diagnóstico</span>
+        <h2 class="reveal" data-editable>15 años de reputación. <span class="accent">Google y los LLMs aún no lo saben.</span></h2>
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-val" data-editable>7 / 29</span>
+                <span class="stat-label" data-editable>keywords posicionadas (24%). Tuset aparece en 20.</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" data-editable>22.5%</span>
+                <span class="stat-label" data-editable>tasa de recomendación IA. Menciones 40, pero solo 9 activas.</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" data-editable>0</span>
+                <span class="stat-label" data-editable>artículos publicados. CREA Group acumula 60+.</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" data-editable>19</span>
+                <span class="stat-label" data-editable>keywords EN+ES donde la competencia posiciona y EB no aparece.</span>
+            </div>
+        </div>
+        <div class="quote-block reveal" data-editable>"El mercado internacional que buscas no te encuentra en Google ni en ChatGPT cuando pregunta por agencias de eventos corporativos en Barcelona. Mientras tanto, Tuset y CREA dominan esa conversación."</div>
+    </div>
+    <div class="slide-number">02 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 3 — GASTO vs ACTIVO (White)
+     =========================================== -->
+<section class="slide white">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Economía del crecimiento</span>
+        <h2 class="reveal" data-editable>Dos formas de llenar tu <span class="accent">pipeline</span></h2>
+        <div class="comparison-grid">
+            <div class="comparison-card bad">
+                <span class="card-label" data-editable>Gasto recurrente</span>
+                <h3 data-editable>Paid + boca a boca (hoy)</h3>
+                <ul>
+                    <li data-editable>Pipeline depende del presupuesto mensual de ads</li>
+                    <li data-editable>CAC alto y creciente en mercado saturado de MICE</li>
+                    <li data-editable>Estacionalidad dura (MWC, Alimentaria, IBTM)</li>
+                    <li data-editable>Cero activos residuales: si apagas el grifo, se seca</li>
+                    <li data-editable>No te posiciona como autoridad ante comités de decisión</li>
+                </ul>
+            </div>
+            <div class="comparison-card good">
+                <span class="card-label" data-editable>Activo permanente</span>
+                <h3 data-editable>Trust Engine (propuesto)</h3>
+                <ul>
+                    <li data-editable>24+ artículos que rankean durante años</li>
+                    <li data-editable>Partnerships con venues, BCB, ICCA, MPI, SITE</li>
+                    <li data-editable>Presencia en eventoplus, clutch, sortlist, bizbash</li>
+                    <li data-editable>Outbound con secuencias alineadas a MWC/IBTM/ISE</li>
+                    <li data-editable>CAC decreciente: cada euro rinde más con el tiempo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">03 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 4 — 4 PILARES TRUST ENGINE (Dark)
+     =========================================== -->
+<section class="slide dark">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Metodología</span>
+        <h2 class="reveal" data-editable>Cuatro <span class="accent">pilares</span> conectados</h2>
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <span class="pillar-num" data-editable>Pilar 01</span>
+                <h3 data-editable>Partnerships &amp; Borrowed Trust</h3>
+                <p data-editable>Alianzas con venues premium, Barcelona Convention Bureau, ICCA, MPI, SITE y DMCs internacionales. Co-marketing, referrals cruzados y presencia en directorios oficiales del sector.</p>
+            </div>
+            <div class="pillar-card">
+                <span class="pillar-num" data-editable>Pilar 02</span>
+                <h3 data-editable>SEO + GEO + AEO</h3>
+                <p data-editable>24+ artículos ES/EN optimizados para keywords Tier 1, sección /en/ completa, schema markup (Organization, FAQ, LocalBusiness, Event) y posicionamiento en ChatGPT, Claude y Perplexity.</p>
+            </div>
+            <div class="pillar-card">
+                <span class="pillar-num" data-editable>Pilar 03</span>
+                <h3 data-editable>Brand Trust Assets</h3>
+                <p data-editable>Case studies con métricas reales, whitepaper "15 años de eventos en Barcelona" con datos propios, reviews verificadas en clutch/sortlist y perfiles completos en eventoplus.</p>
+            </div>
+            <div class="pillar-card">
+                <span class="pillar-num" data-editable>Pilar 04</span>
+                <h3 data-editable>Outbound Nicho</h3>
+                <p data-editable>Listas segmentadas de corporate event planners, multinacionales con MICE en Barcelona y agencias internacionales. Secuencias email + LinkedIn con timing MWC, IBTM World, ISE y Smart City.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">04 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 5 — APLICADO A EB (Light)
+     =========================================== -->
+<section class="slide light">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Tu situación</span>
+        <h2 class="reveal" data-editable>Por qué <span class="accent">Eventos Barcelona</span> es diferente</h2>
+        <div class="two-col">
+            <div class="col-block reveal">
+                <h3 data-editable>Por qué los eventos corporativos son distintos</h3>
+                <ul>
+                    <li data-editable>Ticket alto (€50K–€500K+), ciclo de decisión 2–6 meses</li>
+                    <li data-editable>Decisión por comité: CMO + Events Manager + Procurement</li>
+                    <li data-editable>La reputación de la agencia protege la carrera del decisor</li>
+                    <li data-editable>Clientes internacionales investigan en EN y validan con casos reales antes de pedir presupuesto</li>
+                    <li data-editable>El 65% de la decisión ocurre antes del primer contacto</li>
+                </ul>
+            </div>
+            <div class="col-block reveal">
+                <h3 data-editable>Nuestro enfoque para vosotros</h3>
+                <ul>
+                    <li data-editable>Atacar keywords Tier 1 EN que Tuset y CREA dominan hoy (conference organizer, DMC, corporate planner)</li>
+                    <li data-editable>Sección /en/ completa con 12 artículos y landings por servicio</li>
+                    <li data-editable>Whitepaper con datos propios de 15 años (máximo valor para citación IA)</li>
+                    <li data-editable>Outbound targeted a multinacionales con eventos recurrentes en BCN</li>
+                    <li data-editable>Calendario editorial alineado a MWC, IBTM, ISE y Smart City</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">05 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 6 — CASOS DE ÉXITO (White)
+     =========================================== -->
+<section class="slide white">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Resultados probados</span>
+        <h2 class="reveal" data-editable>Lo hemos <span class="accent">hecho antes</span></h2>
+        <div class="case-grid">
+            <div class="case-card">
+                <span class="case-name" data-editable>GoCardless · B2B</span>
+                <h3 data-editable>Lanzamiento desde cero en mercado nuevo</h3>
+                <span class="case-metric" data-editable>€10K MRR</span>
+                <p class="case-desc" data-editable>En 6 meses, combinando contenido + alianzas + ventas inteligentes. El playbook más cercano a EB: mercado conservador, ticket alto, confianza crítica.</p>
+            </div>
+            <div class="case-card">
+                <span class="case-name" data-editable>Bnext · Fintech</span>
+                <h3 data-editable>De cero a medio millón de usuarios</h3>
+                <span class="case-metric" data-editable>CAC €12,40</span>
+                <p class="case-desc" data-editable>0 → 500.000 usuarios en 30 meses. Blended CAC de €12,40 vs >€50 en paid. 19% de adquisición por boca a boca orgánico.</p>
+            </div>
+            <div class="case-card">
+                <span class="case-name" data-editable>Bit2Me · Optimización</span>
+                <h3 data-editable>Reducción drástica de CAC</h3>
+                <span class="case-metric" data-editable>−70% CAC</span>
+                <p class="case-desc" data-editable>Optimización del funnel existente, triplicando LTV. Mismo enfoque que aplicaríamos al pipeline actual de EB para extraer más valor.</p>
+            </div>
+        </div>
+        <div class="quote-block reveal" data-editable>"Operamos el Trust Engine en sectores donde la confianza es el cuello de botella. Eventos corporativos encaja perfecto: ticket alto, decisión por comité, reputación es moneda."</div>
+    </div>
+    <div class="slide-number">06 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 7 — TIMELINE 8 MESES (Light)
+     =========================================== -->
+<section class="slide light">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Roadmap 8 meses</span>
+        <h2 class="reveal" data-editable>De diagnóstico a <span class="accent">pipeline activo</span></h2>
+        <div class="timeline">
+            <div class="phase-card">
+                <span class="phase-num" data-editable>M1 – M2 · Fundación</span>
+                <h3 data-editable>Setup + primeros activos</h3>
+                <ul>
+                    <li data-editable>Schema markup completo</li>
+                    <li data-editable>Perfiles en eventoplus, clutch, sortlist, BCB</li>
+                    <li data-editable>Sección /en/ activa</li>
+                    <li data-editable>4 artículos (2 EN venues + 2 ES entretenimiento)</li>
+                    <li data-editable>Setup CRM + outbound + atribución</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <span class="phase-num" data-editable>M3 – M5 · Expansión</span>
+                <h3 data-editable>Volumen + partnerships activos</h3>
+                <ul>
+                    <li data-editable>12 artículos (MICE, team building, congresos)</li>
+                    <li data-editable>Acuerdos con venues premium</li>
+                    <li data-editable>Primer case study publicado</li>
+                    <li data-editable>Secuencias outbound en marcha</li>
+                    <li data-editable>Pitch a bizbash y eventmanagerblog</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <span class="phase-num" data-editable>M6 – M7 · Aceleración</span>
+                <h3 data-editable>Timing MWC / IBTM / ISE</h3>
+                <ul>
+                    <li data-editable>6 artículos pre-grandes eventos</li>
+                    <li data-editable>Whitepaper "15 años" publicado</li>
+                    <li data-editable>Pitch a hosteltur, expansion, meetingsnet</li>
+                    <li data-editable>Outbound intensivo a corporate planners</li>
+                    <li data-editable>Campaña awareness con influencers nicho</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <span class="phase-num" data-editable>M8 · Consolidación</span>
+                <h3 data-editable>Optimización + handover</h3>
+                <ul>
+                    <li data-editable>Review KPIs vs objetivos 8m</li>
+                    <li data-editable>Doblar apuestas en canales ganadores</li>
+                    <li data-editable>Documentación + transferencia al equipo</li>
+                    <li data-editable>Roadmap año 2 propuesto</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">07 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 8 — DIFERENCIAL GROWTH4U (White)
+     =========================================== -->
+<section class="slide white">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Por qué Growth4U</span>
+        <h2 class="reveal" data-editable>Agencia tradicional vs <span class="accent">Growth4U</span></h2>
+        <table class="diff-table reveal">
+            <thead>
+                <tr>
+                    <th data-editable>Aspecto</th>
+                    <th data-editable>Agencia tradicional</th>
+                    <th class="good-col" data-editable>Growth4U</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-editable>Canales</td>
+                    <td class="bad" data-editable>Monocanal (solo paid o solo SEO)</td>
+                    <td class="good" data-editable>SEO + GEO + AEO + Partnerships + Outbound</td>
+                </tr>
+                <tr>
+                    <td data-editable>Iteración</td>
+                    <td class="bad" data-editable>Reportes mensuales</td>
+                    <td class="good" data-editable>Iteración semanal con dashboard en vivo</td>
+                </tr>
+                <tr>
+                    <td data-editable>Facturación</td>
+                    <td class="bad" data-editable>Fee mensual fijo</td>
+                    <td class="good" data-editable>Retainer + variable por resultado</td>
+                </tr>
+                <tr>
+                    <td data-editable>Alcance</td>
+                    <td class="bad" data-editable>Solo ejecutan briefs</td>
+                    <td class="good" data-editable>Estrategia + ejecución + handover</td>
+                </tr>
+                <tr>
+                    <td data-editable>Herramientas</td>
+                    <td class="bad" data-editable>SaaS genérico</td>
+                    <td class="good" data-editable>Stack propio con IA (Sancho, Horus, Alarife)</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="quote-block reveal" data-editable>"No alquilamos atención. Construimos credibilidad que acumula durante años. Cuando acaban los 8 meses, los activos siguen trabajando para ti."</div>
+    </div>
+    <div class="slide-number">08 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 9 — STACK TECNOLÓGICO (Dark)
+     =========================================== -->
+<section class="slide dark">
+    <div class="slide-content">
+        <span class="label reveal" data-editable>Herramientas</span>
+        <h2 class="reveal" data-editable>La IA que <span class="accent">trabaja por ti</span></h2>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <span class="tool-tag" data-editable>Research &amp; Strategy</span>
+                <h3 data-editable>Sancho CMO</h3>
+                <p data-editable>IA que analiza tu mercado, mapea competidores, genera briefs de artículos y automatiza el onboarding de partners y creadores.</p>
+            </div>
+            <div class="tool-card">
+                <span class="tool-tag" data-editable>SEO · GEO · AEO</span>
+                <h3 data-editable>Horus</h3>
+                <p data-editable>Motor que rankea en Google y en respuestas de ChatGPT, Claude y Perplexity. Tracking de 29+ keywords y 21 prompts GEO en vivo.</p>
+            </div>
+            <div class="tool-card">
+                <span class="tool-tag" data-editable>Web &amp; Landings</span>
+                <h3 data-editable>Alarife</h3>
+                <p data-editable>Sección /en/ completa, landings por servicio (corporate events, gala dinners, team building) y directorio /venues/ con fichas optimizadas.</p>
+            </div>
+            <div class="tool-card">
+                <span class="tool-tag" data-editable>CRM &amp; Atribución</span>
+                <h3 data-editable>GHL + PostHog</h3>
+                <p data-editable>Pipeline de leads con secuencias outbound automáticas, tracking multicanal y atribución real: de primera visita a presupuesto cerrado.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">09 / 10</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 10 — CTA (Dark)
+     =========================================== -->
+<section class="slide dark">
+    <div class="slide-content">
+        <div class="cta-row">
+            <span class="label reveal" data-editable>Próximo paso</span>
+            <h1 class="reveal" data-editable>Hablemos de tu <span class="accent">plan 8 meses</span></h1>
+            <p class="subtitle reveal" data-editable>24+ artículos · 10+ perfiles directorios · 8+ backlinks sectoriales · keywords 7 → 20+ · tasa recomendación IA 22.5% → 45% · outbound activo</p>
+            <a class="cta-btn reveal" href="mailto:accounts@growth4u.io?subject=Eventos%20Barcelona%20%C2%B7%20Kickoff%20Plan%208%20meses" data-editable>Agendar reunión de kickoff →</a>
+            <p class="cta-contact reveal" data-editable>Ramiro &amp; Philippe · Growth4U · accounts@growth4u.io</p>
+        </div>
+    </div>
+    <div class="slide-number">10 / 10</div>
+</section>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   - Intersection Observer for .visible class
+   - Keyboard, touch, wheel navigation
+   - Progress bar + nav dots
+   =========================================== */
+class SlidePresentation {
+    constructor() {
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.currentSlide = 0;
+        this.isScrolling = false;
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.setupProgressBar();
+        this.setupNavDots();
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.intersectionRatio > 0.5) {
+                    entry.target.classList.add('visible');
+                    this.currentSlide = this.slides.indexOf(entry.target);
+                    this.updateProgressBar();
+                    this.updateNavDots();
+                }
+            });
+        }, { threshold: [0, 0.5, 1] });
+        this.slides.forEach(slide => observer.observe(slide));
+    }
+
+    goTo(index) {
+        if (index < 0 || index >= this.slides.length) return;
+        this.slides[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true') return;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault(); this.goTo(this.currentSlide + 1);
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault(); this.goTo(this.currentSlide - 1);
+            } else if (e.key === 'Home') {
+                e.preventDefault(); this.goTo(0);
+            } else if (e.key === 'End') {
+                e.preventDefault(); this.goTo(this.slides.length - 1);
+            }
+        });
+    }
+
+    setupTouchNav() {
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) < 50) return;
+            if (diff > 0) this.goTo(this.currentSlide + 1);
+            else this.goTo(this.currentSlide - 1);
+        }, { passive: true });
+    }
+
+    setupWheelNav() {
+        /* Native scroll-snap handles this — no custom wheel handler needed */
+    }
+
+    setupProgressBar() {
+        this.progressBar = document.getElementById('progressBar');
+        this.updateProgressBar();
+    }
+    updateProgressBar() {
+        if (!this.progressBar) return;
+        const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = pct + '%';
+    }
+
+    setupNavDots() {
+        this.navDots = document.getElementById('navDots');
+        if (!this.navDots) return;
+        this.slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'nav-dot';
+            dot.setAttribute('aria-label', `Ir al slide ${i + 1}`);
+            dot.addEventListener('click', () => this.goTo(i));
+            this.navDots.appendChild(dot);
+        });
+        this.updateNavDots();
+    }
+    updateNavDots() {
+        if (!this.navDots) return;
+        Array.from(this.navDots.children).forEach((dot, i) => {
+            dot.classList.toggle('active', i === this.currentSlide);
+        });
+    }
+}
+
+/* ===========================================
+   INLINE EDITOR — hotzone JS pattern with delay
+   =========================================== */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.editables = Array.from(document.querySelectorAll('[data-editable]'));
+        this.toggle = document.getElementById('editToggle');
+        this.hotzone = document.getElementById('editHotzone');
+        this.hint = document.getElementById('editHint');
+        this.hideTimeout = null;
+        this.loadFromStorage();
+        this.setupHotzone();
+        this.setupKeyboard();
+        this.setupClickHandlers();
+        this.setupAutosave();
+    }
+
+    setupHotzone() {
+        this.hotzone.addEventListener('mouseenter', () => {
+            clearTimeout(this.hideTimeout);
+            this.toggle.classList.add('show');
+        });
+        this.hotzone.addEventListener('mouseleave', () => {
+            this.hideTimeout = setTimeout(() => {
+                if (!this.isActive) this.toggle.classList.remove('show');
+            }, 400);
+        });
+        this.toggle.addEventListener('mouseenter', () => { clearTimeout(this.hideTimeout); });
+        this.toggle.addEventListener('mouseleave', () => {
+            this.hideTimeout = setTimeout(() => {
+                if (!this.isActive) this.toggle.classList.remove('show');
+            }, 400);
+        });
+        this.hotzone.addEventListener('click', () => this.toggleEditMode());
+        this.toggle.addEventListener('click', () => this.toggleEditMode());
+    }
+
+    setupKeyboard() {
+        document.addEventListener('keydown', (e) => {
+            const ae = document.activeElement;
+            const inField = ae && ae.getAttribute('contenteditable') === 'true';
+            if ((e.key === 'e' || e.key === 'E') && !inField && !e.ctrlKey && !e.metaKey) {
+                this.toggleEditMode();
+            }
+            if (this.isActive && (e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                this.saveToStorage();
+                this.flashHint('Cambios guardados ✓');
+            }
+        });
+    }
+
+    setupClickHandlers() {
+        this.editables.forEach(el => {
+            el.addEventListener('blur', () => {
+                if (this.isActive) this.saveToStorage();
+            });
+        });
+    }
+
+    setupAutosave() {
+        setInterval(() => { if (this.isActive) this.saveToStorage(); }, 10000);
+    }
+
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('edit-mode', this.isActive);
+        this.toggle.classList.toggle('active', this.isActive);
+        this.toggle.classList.toggle('show', this.isActive);
+        this.editables.forEach(el => {
+            el.setAttribute('contenteditable', this.isActive ? 'true' : 'false');
+        });
+        if (this.isActive) this.flashHint('Modo edición activo · clic en cualquier texto · Ctrl+S para guardar');
+        else this.flashHint('Modo edición desactivado ✓');
+    }
+
+    flashHint(msg) {
+        if (!this.hint) return;
+        this.hint.textContent = msg;
+        this.hint.classList.add('show');
+        clearTimeout(this._hintTimeout);
+        this._hintTimeout = setTimeout(() => this.hint.classList.remove('show'), 2200);
+    }
+
+    storageKey() { return 'propuesta_eb_8m_edits_v1'; }
+
+    saveToStorage() {
+        const data = {};
+        this.editables.forEach((el, i) => { data[i] = el.innerHTML; });
+        try { localStorage.setItem(this.storageKey(), JSON.stringify(data)); } catch (e) {}
+    }
+
+    loadFromStorage() {
+        try {
+            const raw = localStorage.getItem(this.storageKey());
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            this.editables.forEach((el, i) => { if (data[i] !== undefined) el.innerHTML = data[i]; });
+        } catch (e) {}
+    }
+}
+
+/* Boot */
+const presentation = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>
