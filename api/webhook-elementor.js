@@ -132,7 +132,9 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, skipped: true });
     }
 
+    const lang = (raw.lang === 'en') ? 'en' : 'es';
     const tags = ['tipo:cliente', 'origen:web-elementor', `form:${formName}`];
+    if (lang === 'en') tags.push('lang:en');
 
     // 1. Create/update contact in GHL
     const contactBody = {
@@ -144,6 +146,7 @@ export default async function handler(req, res) {
       tags: tags,
       source: `Web Elementor - ${formName}`,
       customFields: [
+        { key: 'idioma', field_value: lang },
         { key: 'fecha_evento', field_value: fecha },
         { key: 'comentarios_cliente', field_value: mensaje },
         { key: 'pagina_origen', field_value: pageUrl }

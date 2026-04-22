@@ -22,42 +22,33 @@ export default async function handler(req, res) {
   try {
     const data = req.body;
     const isUpdate = !!data._token; // Form sends _token when pre-filled
+    const lang = (data.lang === 'en') ? 'en' : 'es';
 
     // Determine contact type based on selected disciplines
     const disciplinas = data.disciplinas || [];
     const hasProveedor = disciplinas.includes('Proveedores');
-    const hasArtista = disciplinas.some(d => d !== 'Proveedores' && d !== 'Otro');
-    const tipoContacto = hasProveedor && hasArtista ? 'Artista/Proveedor'
-      : hasProveedor ? 'Proveedor' : 'Artista';
+    const tipoContacto = hasProveedor ? 'Proveedor' : 'Artista';
 
-    // Build tags
-    const tags = [
-      hasProveedor && !hasArtista ? 'tipo:proveedor' : hasProveedor ? 'tipo:artista/proveedor' : 'tipo:artista',
-      'origen:web-formulario'
-    ];
+    // Build tags (Ramiro v2 2026-04-17)
+    const tags = ['follow_up', 'origen_form'];
+    if (lang === 'en') tags.push('lang:en');
 
-    // Discipline tags
-    const catTagMap = {
-      'Danza': 'cat:danza',
-      'Musica': 'cat:musica',
-      'Circo': 'cat:circo',
-      'WOW Effect': 'cat:wow-effect',
-      'Proveedores': 'cat:proveedor'
-    };
-    if (Array.isArray(disciplinas)) {
-      disciplinas.forEach(d => {
-        if (catTagMap[d]) tags.push(catTagMap[d]);
-      });
-    }
+    // Build resumen_ia from form data
+    const resumenIa = [
+      `Categoría: ${tipoContacto}`,
+      disciplinas.length ? `Disciplinas: ${disciplinas.join(', ')}` : '',
+      data.subcategorias?.length ? `Subcategorías: ${data.subcategorias.join(', ')}` : '',
+      data.formatoShow ? `Formato: ${data.formatoShow}` : '',
+      data.nombreArtistico ? `Nombre artístico: ${data.nombreArtistico}` : '',
+      data.compania ? `Compañía: ${data.compania}` : '',
+      data.rangoCache ? `Caché: ${data.rangoCache}` : '',
+      data.numArtistas ? `Nº artistas: ${data.numArtistas}` : '',
+      data.duracionShow ? `Duración: ${data.duracionShow}` : '',
+      data.bioShow ? `Bio: ${data.bioShow}` : ''
+    ].filter(Boolean).join(' | ');
 
-    // Format tag
-    const formatTagMap = {
-      'Show de escenario': 'formato:escenario',
-      'Itinerante': 'formato:itinerante'
-    };
-    if (data.formatoShow && formatTagMap[data.formatoShow]) {
-      tags.push(formatTagMap[data.formatoShow]);
-    }
+    // Build Supabase URL for the artist
+    const supabaseUrl = SUPABASE_URL ? `${SUPABASE_URL}/rest/v1/artistas?email=eq.${encodeURIComponent(data.email || '')}` : '';
 
     // 1. Create/update contact
     const contactBody = {
@@ -68,23 +59,11 @@ export default async function handler(req, res) {
       city: data.ciudad || '',
       tags: tags,
       customFields: [
-        { key: 'tipo_contacto', field_value: tipoContacto },
-        { key: 'disciplina_artistica', field_value: (data.disciplinas || []).join(', ') },
-        { key: 'subcategorias_artista', field_value: (data.subcategorias || []).join(', ') },
-        { key: 'formato_show_artista', field_value: data.formatoShow || '' },
-        { key: 'nombre_artistico', field_value: data.nombreArtistico || '' },
-        { key: 'nombre_compania', field_value: data.compania || '' },
-        { key: 'bio_show', field_value: data.bioShow || '' },
-        { key: 'show_unico', field_value: (data.showUnico || []).join(', ') },
-        { key: 'link_video_1', field_value: data.video1 || '' },
-        { key: 'link_video_2', field_value: data.video2 || '' },
-        { key: 'link_web_rrss', field_value: data.webRrss || '' },
-        { key: 'rider_tecnico', field_value: data.riderTecnico || '' },
-        { key: 'rango_cache', field_value: data.rangoCache || '' },
-        { key: 'num_artistas_show', field_value: data.numArtistas || '' },
-        { key: 'duracion_show', field_value: data.duracionShow || '' },
-        { key: 'fotos_urls', field_value: (data.fotosUrls || []).join('\n') },
-        { key: 'shows_adicionales', field_value: data.showsAdicionales || '' },
+        { key: 'tipo', field_value: tipoContacto },
+        { key: 'origen', field_value: 'Form' },
+        { key: 'idioma', field_value: lang },
+        { key: 'resumen_ia', field_value: resumenIa },
+        { key: 'url_supabase', field_value: supabaseUrl },
         { key: 'acepto_privacidad', field_value: data.aceptoPrivacidad ? 'Si' : 'No' },
         { key: 'acepto_visibilidad', field_value: data.aceptoVisibilidad ? 'Si' : 'No' }
       ]
@@ -113,7 +92,10 @@ export default async function handler(req, res) {
         contactId: contactId,
         name: `${data.nombreArtistico || data.compania || data.nombre || tipoContacto} — ${disciplinas.join(', ')}`,
         status: 'open',
-        monetaryValue: 0
+        monetaryValue: 0,
+        customFields: [
+          { key: 'resumen_ia', field_value: resumenIa }
+        ]
       };
 
       const oppRes = await fetch(`${API}/opportunities/`, {
