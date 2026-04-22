@@ -135,7 +135,8 @@ export default async function handler(req, res) {
       try {
         // Build proposal data with auto-matched shows encoded
         const proposalData = btoa(encodeURIComponent(JSON.stringify(data)));
-        const adminUrl = `${SITE_URL}/propuesta.html?mode=auto&data=${proposalData}`;
+        const langParam = lang === 'en' ? '&lang=en' : '';
+        const adminUrl = `${SITE_URL}/propuesta.html?mode=auto&data=${proposalData}${langParam}`;
 
         // Save to Supabase
         const proposalRow = {

@@ -1531,7 +1531,7 @@
     // description, basePrice, priceNote, duration,
     // performers, videoUrl, imageUrl
     // =============================================
-    const SHOW_CATALOG = {
+    let SHOW_CATALOG = {
       'shadows-of-the-future': { name: 'Shadows of the Future', category: 'danza', subcategory: 'Tematica', description: 'Espectaculo de danza inmersivo inspirado en Blade Runner y Cyberpunk. Ideal para fiestas tematicas futuristas.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/bhuB9pCOY20', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/Captura-de-Pantalla-2025-04-06-a-las-11.40.23.png' },
       'pulsar-dancers': { name: 'Pulsar Dancers', category: 'danza', subcategory: 'Tematica', description: 'Fiesta tematica futurista con decoracion LED, shows inmersivos y tecnologia.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/oW5HMLnjs7Q', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05295-scaled.jpg' },
       'silk-road-burlesque': { name: 'Silk Road Burlesque', category: 'danza', subcategory: 'Cabaret', description: 'Espectaculo exclusivo de burlesque inspirado en la Ruta de la Seda. Show elegante y sofisticado.', basePrice: 2950, priceNote: '5 dancers + 1 stylist', videoUrl: 'https://www.youtube.com/embed/y17SOCgwDPA', imageUrl: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05418-scaled.jpg' },
@@ -1603,9 +1603,132 @@
     };
 
     // =============================================
+    // I18N — language detection + translated strings
+    // =============================================
+    const LANG = (new URLSearchParams(location.search).get('lang') === 'en') ? 'en' : 'es';
+    document.documentElement.lang = LANG;
+
+    const I18N = {
+      es: {
+        navCta: 'Solicita presupuesto',
+        conceptLabel: 'Concepto artistico',
+        statsTitle: 'Algunos datos interesantes que queremos compartir contigo.',
+        statsYears: 'Anos de experiencia',
+        statsShows: 'Espectaculos',
+        statsArtists: 'Artistas',
+        statsEvents: 'Eventos',
+        summaryLabel: 'Resumen del presupuesto',
+        summaryTotal: 'Total',
+        summaryNote1: '* IVA del 21% no incluido. Equipo tecnico (sonido, iluminacion, AV) presupuestado aparte.',
+        summaryNote2: 'Todos los paquetes incluyen vestuario, maquillaje y transporte dentro de Barcelona.',
+        marginLabel: 'Margen global aplicado',
+        marginHint: 'Ajusta el margen sobre los precios base. El cliente vera los precios finales.',
+        aboutText: 'Gracias a los <span class="highlight">15 anos de experiencia</span> en el sector de la organizacion de eventos, hemos evolucionado para encontrar el <span class="highlight">equilibrio perfecto entre produccion artistica y tecnica</span>, con el proposito de emocionar e impresionar con un unico objetivo, <span class="highlight">crear momentos memorables.</span>',
+        conditionsLabel: 'Condiciones generales',
+        conditions: [
+          'Pre-reserva valida durante 5 dias, tras los cuales la reserva podra ser liberada',
+          'No incluido: equipo de sonido e iluminacion, sistemas AV, elementos de branding, diseno grafico',
+          'El cliente debe proporcionar comida y agua para todo el equipo artistico, tecnico y de coordinacion',
+          'IVA del 21% no incluido',
+          'Cancelacion: 50% de cargo en la ultima semana, 100% en las ultimas 48 horas',
+          'Pago: 100% a la aceptacion salvo acuerdo previo con Eventos Barcelona'
+        ],
+        ctaSub: 'Acepta esta propuesta o cuentanos que necesitas para tu evento',
+        ctaAccept: 'Aceptar por WhatsApp',
+        ctaOther: 'Solicitar otro presupuesto',
+        footerTitle: 'Tu equipo de gestion de eventos',
+        roleDirector: 'Director de Eventos y Co-Fundador',
+        roleManager: 'Event Manager',
+        btnVideo: 'Ver video',
+        addedSuffix: ' (agregado)',
+        waText: (eventName, eventDate, total) => `Hola, me gustaria confirmar la propuesta para ${eventName} del ${eventDate}. Total: ${total}€`,
+        formLink: 'formulario-inteligente.html'
+      },
+      en: {
+        navCta: 'Request a quote',
+        conceptLabel: 'Artistic concept',
+        statsTitle: 'A few numbers we\'d like to share with you.',
+        statsYears: 'Years of experience',
+        statsShows: 'Shows',
+        statsArtists: 'Artists',
+        statsEvents: 'Events',
+        summaryLabel: 'Budget summary',
+        summaryTotal: 'Total',
+        summaryNote1: '* 21% VAT not included. Technical equipment (sound, lighting, AV) quoted separately.',
+        summaryNote2: 'All packages include wardrobe, makeup and transport within Barcelona.',
+        marginLabel: 'Global margin applied',
+        marginHint: 'Adjust the markup on base prices. The client sees the final prices.',
+        aboutText: 'Thanks to <span class="highlight">15 years of experience</span> in the events industry, we have evolved to find the <span class="highlight">perfect balance between artistic and technical production</span>, aiming to move and impress with a single goal: <span class="highlight">creating memorable moments.</span>',
+        conditionsLabel: 'General conditions',
+        conditions: [
+          'Pre-booking valid for 5 days, after which the reservation may be released',
+          'Not included: sound and lighting equipment, AV systems, branding elements, graphic design',
+          'The client must provide food and water for the full artistic, technical and coordination team',
+          '21% VAT not included',
+          'Cancellation: 50% charge in the last week, 100% in the last 48 hours',
+          'Payment: 100% on acceptance unless otherwise agreed with Eventos Barcelona'
+        ],
+        ctaSub: 'Accept this proposal or tell us what you need for your event',
+        ctaAccept: 'Accept via WhatsApp',
+        ctaOther: 'Request another quote',
+        footerTitle: 'Your event management team',
+        roleDirector: 'Head of Events & Co-Founder',
+        roleManager: 'Event Manager',
+        btnVideo: 'Watch video',
+        addedSuffix: ' (added)',
+        waText: (eventName, eventDate, total) => `Hi, I\'d like to confirm the proposal for ${eventName} on ${eventDate}. Total: ${total}€`,
+        formLink: 'formulario-inteligente-en.html'
+      }
+    };
+    const T = I18N[LANG];
+
+    // =============================================
     // CATEGORY CONFIG — visual themes per category
     // =============================================
-    const CATEGORY_CONFIG = {
+    const CATEGORY_CONFIG_EN = {
+      danza: {
+        label: 'Dance', theme: 'theme-danza', heroTitle: 'Dance &<br>Movement',
+        heroSub: 'Professional dance shows blending elegance, energy and emotion. Each show is designed to connect with your audience and turn your event into a memorable experience.',
+        conceptTitle: 'The language of the body',
+        conceptText: 'A curated selection of dance shows combining flawless technique with stage presence. From the passion of flamenco to the energy of hip-hop, every piece is choreographed to complement your event.',
+        ctaTitle: 'Ready to get your guests dancing?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/DSC05295-scaled.jpg'
+      },
+      musica: {
+        label: 'Music', theme: 'theme-musica', heroTitle: 'Live<br>Music',
+        heroSub: 'Artists and musicians who transform your event\'s atmosphere with unique live performances. From solo instrumentalists to full audiovisual shows.',
+        conceptTitle: 'Sound that moves',
+        conceptText: 'A sonic experience designed for every moment of your event: the welcome, dinner, the party. Each act is crafted to complement the atmosphere you want to create.',
+        ctaTitle: 'Ready to feel the music?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/04/GB3.jpg'
+      },
+      circo: {
+        label: 'Circus', theme: 'theme-circo', heroTitle: 'Circus &<br>Acrobatics',
+        heroSub: 'Contemporary circus shows that blend athleticism, art and technology. Moments of wonder your guests will never forget.',
+        conceptTitle: 'Defying gravity',
+        conceptText: 'Acrobats, jugglers and aerialists who create moments of tension, beauty and surprise. Each show is adapted to the space and format of your event.',
+        ctaTitle: 'Ready to be amazed?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/08/MG_0093.jpg'
+      },
+      wow: {
+        label: 'WOW Effect', theme: 'theme-wow', heroTitle: 'WOW<br>Effect',
+        heroSub: 'Visual and artistic experiences that defy the conventional. Shows that deliver the surprise factor and create viral moments at your event.',
+        conceptTitle: 'The never-seen-before',
+        conceptText: 'Artists and technologies that break the rules of traditional entertainment. From holograms to fire painting, every show is designed to leave a mark.',
+        ctaTitle: 'Looking for the WOW factor?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2024/03/led-dancers-eventos-barcelona-2.jpg'
+      },
+      shows: {
+        label: 'Shows', theme: 'theme-shows', heroTitle: 'Your Event,<br>Your Show',
+        heroSub: 'A personalized selection of shows across disciplines, designed specifically for your event. Every show complements the artistic concept we\'ve created for you.',
+        conceptTitle: 'Designed for you',
+        conceptText: 'We combine the best artistic disciplines to build a bespoke show programme. Each act is picked for how well it pairs with the others and its ability to move your audience.',
+        ctaTitle: 'Ready to get started?',
+        defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/Captura-de-Pantalla-2025-04-06-a-las-11.40.23.png'
+      }
+    };
+
+    const CATEGORY_CONFIG_ES = {
       danza: {
         label: 'Danza',
         theme: 'theme-danza',
@@ -1657,6 +1780,8 @@
         defaultImage: 'https://www.eventosbarcelona.com/wp-content/uploads/2025/06/Captura-de-Pantalla-2025-04-06-a-las-11.40.23.png'
       }
     };
+
+    const CATEGORY_CONFIG = (LANG === 'en') ? CATEGORY_CONFIG_EN : CATEGORY_CONFIG_ES;
 
     // =============================================
     // PROPOSAL STATE
@@ -1823,7 +1948,39 @@
     // =============================================
     // INIT
     // =============================================
-    function init() {
+    async function loadShowCatalogFromSupabase() {
+      try {
+        const SUPABASE_URL = 'https://szixutlvhtwvnyizceww.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6aXh1dGx2aHR3dm55aXpjZXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MTUyODYsImV4cCI6MjA5MDI5MTI4Nn0.OmMfeTq4Q2YwtkBY5IaCaiITdxPH-2qnvIODwMOHiz0';
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/shows?active=eq.true&select=*`, {
+          headers: { 'apikey': SUPABASE_ANON }
+        });
+        if (!res.ok) return;
+        const shows = await res.json();
+        if (!shows.length) return;
+        // Merge into SHOW_CATALOG (Supabase data takes priority)
+        shows.forEach(s => {
+          SHOW_CATALOG[s.id] = {
+            name: s.name,
+            category: s.category,
+            subcategory: s.subcategory || '',
+            description: s.description || '',
+            basePrice: s.base_price || 0,
+            priceNote: s.price_note || '',
+            videoUrl: s.video_url || '',
+            imageUrl: s.image_url || ''
+          };
+        });
+        console.log(`Loaded ${shows.length} shows from Supabase`);
+      } catch (err) {
+        console.warn('Supabase catalog load failed, using hardcoded:', err.message);
+      }
+    }
+
+    async function init() {
+      // Load full catalog from Supabase (merges with hardcoded fallback)
+      await loadShowCatalogFromSupabase();
+
       const params = new URLSearchParams(window.location.search);
       const proposalId = params.get('id') || 'demo';
       const isAdmin = params.get('admin') === '1';
@@ -1945,7 +2102,7 @@
                 <div class="block-price ${isAdmin ? 'editable' : ''}" data-price="${priceWithMargin}" data-index="${i}" ${isAdmin ? 'onclick="startPriceEdit(this, ' + i + ')"' : ''}>
                   ${priceFormatted}&euro;<small>${show.priceNote}</small>
                 </div>
-                ${show.videoUrl ? `<a href="${show.videoUrl.replace('/embed/', '/watch?v=')}" target="_blank" class="btn-dark">Ver video</a>` : ''}
+                ${show.videoUrl ? `<a href="${show.videoUrl.replace('/embed/', '/watch?v=')}" target="_blank" class="btn-dark">${T.btnVideo}</a>` : ''}
               </div>
             </div>
           </div>
@@ -1967,9 +2124,7 @@
       });
 
       // WhatsApp CTA URL
-      const waText = encodeURIComponent(
-        `Hola, me gustaria confirmar la propuesta para ${event.name} del ${event.date}. Total: ${formatPrice(total)}\u20AC`
-      );
+      const waText = encodeURIComponent(T.waText(event.name, event.date, formatPrice(total)));
       const waUrl = `https://wa.me/34653979329?text=${waText}`;
 
       // Full HTML
@@ -1982,7 +2137,7 @@
               <img src="https://www.eventosbarcelona.com/wp-content/uploads/2025/03/logo-slogan-negativo.svg" alt="Eventos Barcelona">
             </div>
             <div class="nav-right">
-              <a href="formulario-inteligente.html" class="btn-contact">Solicita presupuesto</a>
+              <a href="${T.formLink}" class="btn-contact">${T.navCta}</a>
             </div>
           </div>
           <h1 ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="event.name"' : ''}>${event.name.replace(' — ', '<br>')}</h1>
@@ -1992,7 +2147,7 @@
 
         <!-- CONCEPTO -->
         <div class="concept-section">
-          <div class="section-label">Concepto artistico</div>
+          <div class="section-label">${T.conceptLabel}</div>
           <h2 ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="concept.title"' : ''}>${concept.title}</h2>
           <p ${isAdmin ? 'class="editable-text" contenteditable="true" data-field="concept.text"' : ''}>${concept.text}</p>
         </div>
@@ -2010,40 +2165,40 @@
 
         <!-- STATS -->
         <div class="stats-section">
-          <div class="stats-title">Algunos datos interesantes que queremos compartir contigo.</div>
+          <div class="stats-title">${T.statsTitle}</div>
           <div class="stats-grid">
-            <div><div class="stat-number">15</div><div class="stat-label">Anos de experiencia</div></div>
-            <div><div class="stat-number">300</div><div class="stat-label">Espectaculos</div></div>
-            <div><div class="stat-number">500</div><div class="stat-label">Artistas</div></div>
-            <div><div class="stat-number">1,000</div><div class="stat-label">Eventos</div></div>
+            <div><div class="stat-number">15</div><div class="stat-label">${T.statsYears}</div></div>
+            <div><div class="stat-number">300</div><div class="stat-label">${T.statsShows}</div></div>
+            <div><div class="stat-number">500</div><div class="stat-label">${T.statsArtists}</div></div>
+            <div><div class="stat-number">1,000</div><div class="stat-label">${T.statsEvents}</div></div>
           </div>
         </div>
 
         <!-- RESUMEN PRESUPUESTO -->
         <div class="summary-section">
           <div class="summary-inner">
-            <div class="section-label">Resumen del presupuesto</div>
+            <div class="section-label">${T.summaryLabel}</div>
             <div style="margin-top: 24px;" id="summaryRows">
               ${summaryHTML}
               <div class="summary-total" id="summaryTotal">
-                <span>Total</span>
+                <span>${T.summaryTotal}</span>
                 <span>${formatPrice(total)}&euro;</span>
               </div>
             </div>
             <div class="summary-note">
-              * IVA del 21% no incluido. Equipo tecnico (sonido, iluminacion, AV) presupuestado aparte.<br>
-              Todos los paquetes incluyen vestuario, maquillaje y transporte dentro de Barcelona.
+              ${T.summaryNote1}<br>
+              ${T.summaryNote2}
             </div>
 
             <!-- MARGIN CONTROL (admin only) -->
             ${isAdmin ? `
             <div class="margin-control ${proposalState.priceEditMode ? 'visible' : ''}" id="marginControl">
-              <label>Margen global aplicado</label>
+              <label>${T.marginLabel}</label>
               <div class="margin-slider-row">
                 <input type="range" class="margin-slider" id="marginSlider" min="-20" max="50" value="${proposalState.globalMargin}" oninput="updateGlobalMargin(this.value)">
                 <div class="margin-value" id="marginValue">${proposalState.globalMargin}%</div>
               </div>
-              <div class="margin-hint">Ajusta el margen sobre los precios base. El cliente vera los precios finales.</div>
+              <div class="margin-hint">${T.marginHint}</div>
             </div>
             ` : ''}
           </div>
@@ -2051,40 +2206,35 @@
 
         <!-- ABOUT -->
         <div class="about-section">
-          <h2>Gracias a los <span class="highlight">15 anos de experiencia</span> en el sector de la organizacion de eventos, hemos evolucionado para encontrar el <span class="highlight">equilibrio perfecto entre produccion artistica y tecnica</span>, con el proposito de emocionar e impresionar con un unico objetivo, <span class="highlight">crear momentos memorables.</span></h2>
+          <h2>${T.aboutText}</h2>
         </div>
 
         <!-- CONDICIONES -->
         <div class="conditions-section">
-          <div class="section-label">Condiciones generales</div>
+          <div class="section-label">${T.conditionsLabel}</div>
           <ul>
-            <li>Pre-reserva valida durante 5 dias, tras los cuales la reserva podra ser liberada</li>
-            <li>No incluido: equipo de sonido e iluminacion, sistemas AV, elementos de branding, diseno grafico</li>
-            <li>El cliente debe proporcionar comida y agua para todo el equipo artistico, tecnico y de coordinacion</li>
-            <li>IVA del 21% no incluido</li>
-            <li>Cancelacion: 50% de cargo en la ultima semana, 100% en las ultimas 48 horas</li>
-            <li>Pago: 100% a la aceptacion salvo acuerdo previo con Eventos Barcelona</li>
+            ${T.conditions.map(c => `<li>${c}</li>`).join('')}
           </ul>
         </div>
 
         <!-- CTA FINAL -->
         <div class="cta-section">
           <h2>${catConfig.ctaTitle}</h2>
-          <p>Acepta esta propuesta o cuentanos que necesitas para tu evento</p>
+          <p>${T.ctaSub}</p>
           <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="${waUrl}" target="_blank" class="btn-accent">Aceptar por WhatsApp</a>
-            <a href="formulario-inteligente.html" class="btn-accent" style="background: transparent; border: 1.5px solid #fff;">Solicitar otro presupuesto</a>
+            <a href="${waUrl}" target="_blank" class="btn-accent">${T.ctaAccept}</a>
+            <a href="${T.formLink}" class="btn-accent" style="background: transparent; border: 1.5px solid #fff;">${T.ctaOther}</a>
           </div>
         </div>
 
         <!-- FOOTER -->
         <div class="footer">
           <div class="footer-team">
-            <h4>Tu equipo de gestion de eventos</h4>
+            <h4>${T.footerTitle}</h4>
             <div class="footer-roles">
-              <div class="footer-role"><strong>Xavier Rojas Pascual</strong><span>Director de Eventos y Co-Fundador</span></div>
-              <div class="footer-role"><strong>Isabelle Bonneau</strong><span>Event Manager</span></div>
-              <div class="footer-role"><strong>Naiara Ruiz</strong><span>Event Manager</span></div>
+              <div class="footer-role"><strong>Xavier Rojas Pascual</strong><span>${T.roleDirector}</span></div>
+              <div class="footer-role"><strong>Isabelle Bonneau</strong><span>${T.roleManager}</span></div>
+              <div class="footer-role"><strong>Naiara Ruiz</strong><span>${T.roleManager}</span></div>
             </div>
           </div>
           <div class="footer-contact">
