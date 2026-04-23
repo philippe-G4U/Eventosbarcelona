@@ -1958,17 +1958,19 @@
         if (!res.ok) return;
         const shows = await res.json();
         if (!shows.length) return;
-        // Merge into SHOW_CATALOG (Supabase data takes priority)
+        // Merge into SHOW_CATALOG: Supabase wins per-field only when it has a real value,
+        // otherwise keep hardcoded fallback so empty columns don't blank out images/videos.
         shows.forEach(s => {
+          const fb = SHOW_CATALOG[s.id] || {};
           SHOW_CATALOG[s.id] = {
-            name: s.name,
-            category: s.category,
-            subcategory: s.subcategory || '',
-            description: s.description || '',
-            basePrice: s.base_price || 0,
-            priceNote: s.price_note || '',
-            videoUrl: s.video_url || '',
-            imageUrl: s.image_url || ''
+            name: s.name || fb.name || '',
+            category: s.category || fb.category || '',
+            subcategory: s.subcategory || fb.subcategory || '',
+            description: s.description || fb.description || '',
+            basePrice: s.base_price || fb.basePrice || 0,
+            priceNote: s.price_note || fb.priceNote || '',
+            videoUrl: s.video_url || fb.videoUrl || '',
+            imageUrl: s.image_url || fb.imageUrl || ''
           };
         });
         console.log(`Loaded ${shows.length} shows from Supabase`);
