@@ -745,6 +745,46 @@ body.edit-mode [data-editable]:focus { outline: 2px solid var(--green); backgrou
     }
     html { scroll-behavior: auto; }
 }
+
+/* =========================================================
+   PRINT / PDF
+   ========================================================= */
+@media print {
+    @page { size: A4 landscape; margin: 0; }
+    html, body { background: var(--white); margin: 0; padding: 0; }
+    body * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .progress-bar, .edit-hotzone, .edit-toggle, .save-toast, .nav-dots, .nav-dot,
+    #editHotzone, #editToggle { display: none !important; }
+    .slide {
+        height: auto !important;
+        min-height: 100vh;
+        width: 100%;
+        page-break-after: always;
+        break-after: page;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        display: block;
+        padding: 1.5cm 2cm;
+        box-sizing: border-box;
+    }
+    .slide:last-of-type { page-break-after: auto; break-after: auto; }
+    .slide-content { max-width: 100%; padding: 0; }
+    .reveal, .stats-row > *, .pillar-grid > *, .case-grid > *, .timeline > *,
+    .tool-grid > *, .comparison-grid > *, .three-col > *, .detail-row > *,
+    .content-pillars > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    .data-table { page-break-inside: avoid; break-inside: avoid; }
+    .data-table th, .data-table td { font-size: 9pt !important; }
+    h1 { font-size: 32pt !important; }
+    h2 { font-size: 20pt !important; }
+    h3 { font-size: 13pt !important; }
+    p, li { font-size: 10pt !important; line-height: 1.4 !important; }
+    .stat-val { font-size: 22pt !important; }
+    .stat-label { font-size: 8pt !important; }
+}
 </style>
 </head>
 <body>
