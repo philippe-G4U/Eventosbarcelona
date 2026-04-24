@@ -28,8 +28,7 @@ export default async function handler(req, res) {
 
     // Partial submit: lead abandonó el form tras el paso 1 (datos de contacto)
     if (isPartial) {
-      const partialTags = ['follow_up', 'origen_form', 'info_incompleta'];
-      if (lang === 'en') partialTags.push('lang:en');
+      const partialTags = ['follow_up', 'origen_form', 'info_incompleta', `lang:${lang}`];
 
       const contactBody = {
         locationId: LOC,
@@ -93,8 +92,7 @@ export default async function handler(req, res) {
     }
 
     // Build tags (Ramiro v2 2026-04-17)
-    const tags = ['follow_up', 'origen_form', 'info_completa'];
-    if (lang === 'en') tags.push('lang:en');
+    const tags = ['follow_up', 'origen_form', 'info_completa', `lang:${lang}`];
 
     // Build resumen_ia from form data
     const resumenIa = [

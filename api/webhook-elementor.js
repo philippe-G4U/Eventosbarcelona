@@ -133,8 +133,7 @@ export default async function handler(req, res) {
     }
 
     const lang = (raw.lang === 'en') ? 'en' : 'es';
-    const tags = ['tipo:cliente', 'origen:web-elementor', `form:${formName}`];
-    if (lang === 'en') tags.push('lang:en');
+    const tags = ['tipo:cliente', 'origen:web-elementor', `form:${formName}`, `lang:${lang}`];
 
     // 1. Create/update contact in GHL
     const contactBody = {

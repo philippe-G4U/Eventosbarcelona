@@ -30,8 +30,7 @@ export default async function handler(req, res) {
     const tipoContacto = hasProveedor ? 'Proveedor' : 'Artista';
 
     // Build tags (Ramiro v2 2026-04-17)
-    const tags = ['follow_up', 'origen_form'];
-    if (lang === 'en') tags.push('lang:en');
+    const tags = ['follow_up', 'origen_form', `lang:${lang}`];
 
     // Build resumen_ia from form data
     const resumenIa = [
