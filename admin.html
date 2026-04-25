@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — Eventos Barcelona</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #e87461;
+      --dark: #111;
+      --gray: #666;
+      --light: #f7f7f5;
+      --border: #e5e5e0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.5;
+    }
+    .topbar {
+      background: var(--dark);
+      color: #fff;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar h1 { margin: 0; font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; }
+    .topbar h1 small { font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); margin-left: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tabs { display: flex; gap: 8px; }
+    .tab {
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: #fff; border-color: rgba(255,255,255,0.35); }
+    .tab.active { background: #fff; color: var(--dark); border-color: #fff; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .toolbar input, .toolbar select {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      min-width: 200px;
+    }
+    .subtabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+    .subtab {
+      background: #fff;
+      color: var(--gray);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .subtab.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .empty, .loading {
+      text-align: center;
+      padding: 80px 32px;
+      color: var(--gray);
+    }
+    .error {
+      background: #fff4f0;
+      border: 1px solid #f5b7a8;
+      color: #a33;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-img {
+      height: 160px;
+      background: #f0efec center / cover no-repeat;
+      position: relative;
+    }
+    .card-img.placeholder {
+      display: flex; align-items: center; justify-content: center;
+      color: #bbb; font-size: 32px; font-family: 'DM Serif Display', serif;
+    }
+    .card-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .card-body h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .card-body .artist { font-size: 12px; color: var(--accent); font-weight: 600; cursor: pointer; }
+    .card-body .artist:hover { text-decoration: underline; }
+    .card-body .meta {
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .card-body p {
+      font-size: 13px;
+      color: #333;
+      margin: 4px 0 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .chip {
+      background: #f0efec; color: #555;
+      padding: 2px 8px; border-radius: 999px; font-size: 11px;
+    }
+    .chip-removable {
+      background: var(--accent); color: #fff;
+      padding: 4px 10px; border-radius: 999px; font-size: 11px;
+      display: inline-flex; align-items: center; gap: 6px; cursor: default;
+    }
+    .chip-removable button {
+      background: rgba(255,255,255,0.3); border: none; color: #fff;
+      width: 16px; height: 16px; border-radius: 50%; cursor: pointer;
+      font-size: 11px; line-height: 1; padding: 0;
+    }
+    .chip-warning { background: #fff4f0; color: #a33; }
+    .card-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      background: transparent;
+      text-decoration: none;
+      color: inherit;
+      display: inline-flex; align-items: center;
+    }
+    .btn-approve { background: var(--accent); color: #fff; }
+    .btn-approve:hover { background: #d36353; }
+    .btn-archive { color: var(--gray); border-color: var(--border); }
+    .btn-archive:hover { border-color: #c44; color: #c44; }
+    .btn-video, .btn-secondary { color: var(--gray); border-color: var(--border); }
+    .btn-secondary:hover, .btn-video:hover { color: var(--dark); border-color: var(--dark); }
+    .btn-primary { background: var(--dark); color: #fff; }
+    .btn-primary:hover { background: #000; }
+    .assign-row { display: flex; gap: 8px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--border); background: #faf9f6; }
+    .assign-row label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; }
+    .assign-row .picker {
+      flex: 1; position: relative;
+    }
+    .assign-row input {
+      width: 100%; padding: 6px 10px; border-radius: 8px;
+      border: 1px solid var(--border); font-family: inherit; font-size: 12px;
+    }
+    .picker-results {
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 8px; max-height: 220px; overflow-y: auto;
+      z-index: 50; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-top: 4px;
+    }
+    .picker-results.empty { display: none; }
+    .picker-result {
+      padding: 8px 12px; cursor: pointer; font-size: 12px; border-bottom: 1px solid var(--border);
+    }
+    .picker-result:last-child { border-bottom: none; }
+    .picker-result:hover { background: var(--light); }
+    .picker-result small { color: var(--gray); display: block; font-size: 10px; }
+
+    table.proposals { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    table.proposals th, table.proposals td { text-align: left; padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+    table.proposals th { background: var(--light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); }
+    table.proposals tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+    .badge-revision { background: #fff4f0; color: var(--accent); }
+    .badge-approved { background: #ecf7e8; color: #4a8c2a; }
+
+    /* Modal/drawer */
+    .drawer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      z-index: 100; display: none;
+    }
+    .drawer-backdrop.open { display: block; }
+    .drawer {
+      position: fixed; right: 0; top: 0; bottom: 0;
+      width: min(720px, 100vw); background: #fff;
+      overflow-y: auto; transform: translateX(100%); transition: transform 0.25s;
+      z-index: 101;
+      display: flex; flex-direction: column;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header {
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+      position: sticky; top: 0; background: #fff; z-index: 1;
+    }
+    .drawer-header h2 { font-family: 'DM Serif Display', serif; font-size: 26px; margin: 0; font-weight: 400; }
+    .drawer-header small { color: var(--gray); font-size: 13px; }
+    .drawer-close {
+      background: transparent; border: none; cursor: pointer;
+      font-size: 24px; color: var(--gray); padding: 0; line-height: 1;
+    }
+    .drawer-body { padding: 24px 28px; flex: 1; }
+    .field-row { margin-bottom: 16px; }
+    .field-row label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+    .field-row .value { font-size: 14px; color: var(--dark); word-break: break-word; }
+    .field-row .value a { color: var(--accent); }
+    .drawer-section { margin-top: 28px; }
+    .drawer-section h3 { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; margin: 0 0 12px; }
+    .photos { display: flex; gap: 8px; flex-wrap: wrap; }
+    .photos img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+    .show-mini {
+      display: flex; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px;
+      align-items: center; cursor: pointer; transition: border-color 0.15s;
+    }
+    .show-mini:hover { border-color: var(--accent); }
+    .show-mini-img { width: 64px; height: 64px; border-radius: 8px; background: #f0efec center/cover no-repeat; flex-shrink: 0; }
+    .show-mini-body { flex: 1; min-width: 0; }
+    .show-mini-body h4 { margin: 0 0 4px; font-size: 14px; }
+    .show-mini-body small { color: var(--gray); font-size: 12px; }
+    .placeholder-warning {
+      background: #fff4f0; border: 1px solid #f5b7a8; color: #a33;
+      padding: 8px 12px; border-radius: 8px; font-size: 12px; margin-bottom: 12px;
+    }
+
+    .pagination { display: flex; gap: 8px; align-items: center; justify-content: center; margin: 32px 0 0; font-size: 13px; color: var(--gray); }
+    .pagination button { background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-family: inherit; cursor: pointer; }
+    .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>Eventos Barcelona <small>admin</small></h1>
+    <div class="tabs" id="main-tabs">
+      <button class="tab" data-tab="artistas">Artistas</button>
+      <button class="tab" data-tab="shows">Shows</button>
+      <button class="tab" data-tab="propuestas">Propuestas</button>
+    </div>
+  </div>
+
+  <main>
+    <div id="error" class="error" style="display:none;"></div>
+
+    <!-- TAB: ARTISTAS -->
+    <section id="tab-artistas" class="tab-panel hidden">
+      <div class="toolbar">
+        <input id="artistas-q" type="search" placeholder="Buscar por nombre, email, compañía…">
+        <select id="artistas-disciplina">
+          <option value="">Todas las disciplinas</option>
+          <option value="Danza">Danza</option>
+          <option value="Música">Música</option>
+          <option value="Circo">Circo</option>
+          <option value="WOW">WOW</option>
+          <option value="__none__">Sin disciplina</option>
+        </select>
+        <span id="artistas-summary" style="color: var(--gray); font-size: 13px;"></span>
+      </div>
+      <div id="artistas-loading" class="loading">Cargando…</div>
+      <div id="artistas-empty" class="empty hidden">No hay artistas que coincidan.</div>
+      <div id="artistas-grid" class="grid"></div>
+      <div id="artistas-pagination" class="pagination hidden">
+        <button id="artistas-prev">← Anterior</button>
+        <span id="artistas-page-info"></span>
+        <button id="artistas-next">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- TAB: SHOWS -->
+    <section id="tab-shows" class="tab-panel hidden">
+      <div class="subtabs" id="shows-subtabs">
+        <button class="subtab" data-substatus="pending_review">Pending review</button>
+        <button class="subtab" data-substatus="active">Active</button>
+        <button class="subtab" data-substatus="archived">Archived</button>
+        <button class="subtab" data-substatus="orphans">Sin artista asignado</button>
+      </div>
+      <div class="toolbar">
+        <span id="shows-filter-info" style="color: var(--gray); font-size: 13px;"></span>
+        <button id="shows-clear-filter" class="btn btn-secondary hidden">Limpiar filtro</button>
+      </div>
+      <div id="shows-loading" class="loading">Cargando…</div>
+      <div id="shows-empty" class="empty hidden">No hay shows en este estado.</div>
+      <div id="shows-grid" class="grid"></div>
+    </section>
+
+    <!-- TAB: PROPUESTAS -->
+    <section id="tab-propuestas" class="tab-panel hidden">
+      <div class="toolbar">
+        <input id="propuestas-q" type="search" placeholder="Buscar por cliente, empresa, evento…">
+        <select id="propuestas-status">
+          <option value="">Todos los estados</option>
+          <option value="revision">En revisión</option>
+          <option value="approved">Aprobadas</option>
+        </select>
+        <span id="propuestas-summary" style="color: var(--gray); font-size: 13px;"></span>
+      </div>
+      <div id="propuestas-loading" class="loading">Cargando…</div>
+      <div id="propuestas-empty" class="empty hidden">No hay propuestas.</div>
+      <div id="propuestas-table-wrap"></div>
+    </section>
+  </main>
+
+  <!-- Drawer -->
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div>
+        <h2 id="drawer-title">Detalle</h2>
+        <small id="drawer-subtitle"></small>
+      </div>
+      <button class="drawer-close" id="drawer-close">×</button>
+    </div>
+    <div class="drawer-body" id="drawer-body"></div>
+  </aside>
+
+  <script>
+    // ---------- utils ----------
+    const $ = (id) => document.getElementById(id);
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[c]));
+    }
+    function isPlaceholderEmail(e) {
+      return typeof e === 'string' && e.includes('@placeholder.eventosbarcelona.local');
+    }
+    function shortEmail(e, max = 28) {
+      if (!e) return '';
+      if (isPlaceholderEmail(e)) return '(sin email)';
+      if (e.length <= max) return e;
+      return e.slice(0, max - 1) + '…';
+    }
+    function artistaDisplayName(a) {
+      if (!a) return null;
+      return a.nombre_artistico || a.compania || a.nombre || 'sin nombre';
+    }
+    function showsCountFromNested(shows) {
+      // shows can be array of objects, or [{count: N}] in count mode
+      if (!Array.isArray(shows)) return 0;
+      if (shows.length === 1 && typeof shows[0]?.count === 'number') return shows[0].count;
+      return shows.length;
+    }
+    function debounce(fn, ms) {
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+    }
+    function showError(msg) {
+      const e = $('error');
+      e.textContent = msg;
+      e.style.display = '';
+      setTimeout(() => { e.style.display = 'none'; }, 6000);
+    }
+
+    // ---------- routing ----------
+    const VALID_TABS = ['artistas', 'shows', 'propuestas'];
+    function parseHash() {
+      const h = (location.hash || '').replace(/^#/, '');
+      if (!h) return { tab: 'artistas', sub: null, query: {} };
+      const [pathRaw, qsRaw] = h.split('?');
+      const parts = pathRaw.split('/').filter(Boolean);
+      const tab = VALID_TABS.includes(parts[0]) ? parts[0] : 'artistas';
+      const sub = parts[1] || null;
+      const query = {};
+      if (qsRaw) {
+        for (const kv of qsRaw.split('&')) {
+          const [k, v] = kv.split('=');
+          if (k) query[decodeURIComponent(k)] = decodeURIComponent(v || '');
+        }
+      }
+      return { tab, sub, query };
+    }
+    function setHash(tab, sub, query) {
+      let h = '#' + tab;
+      if (sub) h += '/' + sub;
+      if (query && Object.keys(query).length) {
+        const qs = Object.entries(query).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+        h += '?' + qs;
+      }
+      if (h !== location.hash) location.hash = h;
+    }
+
+    // ---------- state ----------
+    const state = {
+      currentTab: null,
+      artistas: { q: '', disciplina: '', limit: 50, offset: 0, total: 0, items: [] },
+      shows: { substatus: 'pending_review', artistaFilter: null, items: [] },
+      propuestas: { q: '', status: '', items: [] }
+    };
+
+    // ---------- tabs ----------
+    function activateTab(tab) {
+      if (!VALID_TABS.includes(tab)) tab = 'artistas';
+      state.currentTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      $('tab-' + tab).classList.remove('hidden');
+    }
+
+    document.querySelectorAll('#main-tabs .tab').forEach(b => {
+      b.addEventListener('click', () => setHash(b.dataset.tab, null, {}));
+    });
+
+    // ---------- ARTISTAS ----------
+    async function loadArtistas() {
+      $('artistas-loading').classList.remove('hidden');
+      $('artistas-empty').classList.add('hidden');
+      $('artistas-grid').innerHTML = '';
+      $('artistas-pagination').classList.add('hidden');
+
+      const params = new URLSearchParams();
+      if (state.artistas.q) params.set('q', state.artistas.q);
+      if (state.artistas.disciplina) params.set('disciplina', state.artistas.disciplina);
+      params.set('limit', state.artistas.limit);
+      params.set('offset', state.artistas.offset);
+
+      try {
+        const res = await fetch('/api/list-artistas?' + params.toString());
+        const data = await res.json();
+        $('artistas-loading').classList.add('hidden');
+        if (!res.ok) { showError(data.error || 'Error cargando artistas'); return; }
+
+        state.artistas.items = data.artistas || [];
+        state.artistas.total = data.total || 0;
+        $('artistas-summary').textContent = `${data.total} artistas${data.total > data.count ? ` (mostrando ${data.count})` : ''}`;
+
+        if (!state.artistas.items.length) { $('artistas-empty').classList.remove('hidden'); return; }
+        const grid = $('artistas-grid');
+        for (const a of state.artistas.items) grid.appendChild(renderArtistaCard(a));
+
+        if (data.total > state.artistas.limit) {
+          $('artistas-pagination').classList.remove('hidden');
+          const cur = Math.floor(state.artistas.offset / state.artistas.limit) + 1;
+          const tot = Math.ceil(data.total / state.artistas.limit);
+          $('artistas-page-info').textContent = `Página ${cur} / ${tot}`;
+          $('artistas-prev').disabled = state.artistas.offset === 0;
+          $('artistas-next').disabled = state.artistas.offset + state.artistas.limit >= data.total;
+        }
+      } catch (err) {
+        $('artistas-loading').classList.add('hidden');
+        showError(err.message);
+      }
+    }
+
+    function renderArtistaCard(a) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const display = artistaDisplayName(a);
+      const photo = (a.fotos_urls && a.fotos_urls[0]) || '';
+      const showsCount = showsCountFromNested(a.shows);
+      const disciplinas = Array.isArray(a.disciplinas) ? a.disciplinas : [];
+      const ph = isPlaceholderEmail(a.email);
+      card.innerHTML = `
+        <div class="card-img ${photo ? '' : 'placeholder'}" style="${photo ? `background-image:url('${escapeHtml(photo)}')` : ''}">${photo ? '' : '·'}</div>
+        <div class="card-body">
+          <h3>${escapeHtml(display)}</h3>
+          ${a.compania && a.compania !== display ? `<div class="meta"><span>${escapeHtml(a.compania)}</span></div>` : ''}
+          ${disciplinas.length ? `<div class="chips">${disciplinas.map(d => `<span class="chip">${escapeHtml(d)}</span>`).join('')}</div>` : '<div class="chips"><span class="chip" style="color:#aaa;">sin disciplina</span></div>'}
+          <div class="meta" style="margin-top:6px;">
+            <span>${showsCount} show${showsCount === 1 ? '' : 's'}</span>
+            ${a.ciudad ? `<span>· ${escapeHtml(a.ciudad)}</span>` : ''}
+          </div>
+          <div class="meta ${ph ? '' : ''}" title="${escapeHtml(a.email || '')}">
+            ${ph ? `<span class="chip chip-warning" style="font-size:10px;">email placeholder</span>` : `<span>${escapeHtml(shortEmail(a.email))}</span>`}
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" data-detail="${escapeHtml(a.id)}">Ver detalle</button>
+        </div>
+      `;
+      card.querySelector('[data-detail]').addEventListener('click', () => setHash('artistas', a.id, {}));
+      return card;
+    }
+
+    async function openArtistaDetail(id) {
+      $('drawer-title').textContent = 'Cargando…';
+      $('drawer-subtitle').textContent = '';
+      $('drawer-body').innerHTML = '<div class="loading">Cargando…</div>';
+      openDrawer();
+
+      try {
+        const r = await fetch('/api/get-artista-detail?id=' + encodeURIComponent(id));
+        const data = await r.json();
+        if (!r.ok) {
+          $('drawer-body').innerHTML = `<div class="error">${escapeHtml(data.error || 'Error')}</div>`;
+          return;
+        }
+        renderArtistaDrawer(data.artista);
+      } catch (err) {
+        $('drawer-body').innerHTML = `<div class="error">${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    function renderArtistaDrawer(a) {
+      $('drawer-title').textContent = artistaDisplayName(a);
+      $('drawer-subtitle').textContent = a.compania || '';
+      const ph = isPlaceholderEmail(a.email);
+      const disciplinas = Array.isArray(a.disciplinas) ? a.disciplinas : [];
+      const fotos = Array.isArray(a.fotos_urls) ? a.fotos_urls : [];
+      const shows = Array.isArray(a.shows) ? a.shows : [];
+
+      const showsHtml = shows.length
+        ? shows.map(s => `
+            <div class="show-mini" data-show-id="${escapeHtml(s.id)}">
+              <div class="show-mini-img" style="${s.image_url ? `background-image:url('${escapeHtml(s.image_url)}')` : ''}"></div>
+              <div class="show-mini-body">
+                <h4>${escapeHtml(s.name || s.id)}</h4>
+                <small>${escapeHtml(s.category || '—')}${s.subcategory ? ' · ' + escapeHtml(s.subcategory) : ''} · status: ${escapeHtml(s.status || '—')}</small>
+              </div>
+              <button class="btn btn-secondary">Ir al show →</button>
+            </div>
+          `).join('')
+        : '<p style="color:var(--gray); font-size:13px;">Este artista no tiene shows todavía.</p>';
+
+      $('drawer-body').innerHTML = `
+        ${ph ? '<div class="placeholder-warning">Email placeholder — este artista fue importado de GHL sin email válido. Hay que actualizarlo.</div>' : ''}
+        <div class="field-row"><label>Nombre</label><div class="value">${escapeHtml(a.nombre || '—')}</div></div>
+        <div class="field-row"><label>Nombre artístico</label><div class="value">${escapeHtml(a.nombre_artistico || '—')}</div></div>
+        <div class="field-row"><label>Compañía</label><div class="value">${escapeHtml(a.compania || '—')}</div></div>
+        <div class="field-row"><label>Email</label><div class="value">${ph ? `<span style="color:var(--gray);">${escapeHtml(a.email)}</span>` : (a.email ? `<a href="mailto:${escapeHtml(a.email)}">${escapeHtml(a.email)}</a>` : '—')}</div></div>
+        <div class="field-row"><label>Teléfono</label><div class="value">${a.telefono ? `<a href="tel:${escapeHtml(a.telefono)}">${escapeHtml(a.telefono)}</a>` : '—'}</div></div>
+        <div class="field-row"><label>Ciudad</label><div class="value">${escapeHtml(a.ciudad || '—')}</div></div>
+        <div class="field-row"><label>Disciplinas</label><div class="value">${disciplinas.length ? disciplinas.map(d => `<span class="chip">${escapeHtml(d)}</span>`).join(' ') : '—'}</div></div>
+        <div class="field-row"><label>Bio / show</label><div class="value">${escapeHtml(a.bio_show || '—')}</div></div>
+        <div class="field-row"><label>Rango caché</label><div class="value">${escapeHtml(a.rango_cache || '—')}</div></div>
+        <div class="field-row"><label>Origen</label><div class="value">${escapeHtml(a.origen || '—')}</div></div>
+        <div class="field-row"><label>Videos</label><div class="value">
+          ${a.video1 ? `<a href="${escapeHtml(a.video1)}" target="_blank" rel="noopener">video 1</a>` : ''}
+          ${a.video2 ? ` · <a href="${escapeHtml(a.video2)}" target="_blank" rel="noopener">video 2</a>` : ''}
+          ${(!a.video1 && !a.video2) ? '—' : ''}
+        </div></div>
+        ${fotos.length ? `<div class="field-row"><label>Fotos</label><div class="photos">${fotos.map(p => `<img src="${escapeHtml(p)}" alt="">`).join('')}</div></div>` : ''}
+        ${a.ghl_contact_id ? `<div class="field-row"><label>GHL contact</label><div class="value"><code style="font-size:11px;">${escapeHtml(a.ghl_contact_id)}</code></div></div>` : ''}
+        <div class="drawer-section">
+          <h3>Shows (${shows.length})</h3>
+          ${showsHtml}
+        </div>
+      `;
+      $('drawer-body').querySelectorAll('.show-mini').forEach(el => {
+        el.addEventListener('click', () => {
+          const sid = el.dataset.showId;
+          closeDrawer();
+          setHash('shows', null, { show: sid });
+        });
+      });
+    }
+
+    $('artistas-q').addEventListener('input', debounce((e) => {
+      state.artistas.q = e.target.value.trim();
+      state.artistas.offset = 0;
+      loadArtistas();
+    }, 300));
+    $('artistas-disciplina').addEventListener('change', (e) => {
+      state.artistas.disciplina = e.target.value;
+      state.artistas.offset = 0;
+      loadArtistas();
+    });
+    $('artistas-prev').addEventListener('click', () => {
+      state.artistas.offset = Math.max(0, state.artistas.offset - state.artistas.limit);
+      loadArtistas();
+    });
+    $('artistas-next').addEventListener('click', () => {
+      state.artistas.offset += state.artistas.limit;
+      loadArtistas();
+    });
+
+    // ---------- SHOWS ----------
+    let allArtistasCache = null;
+    async function loadAllArtistasForPicker() {
+      if (allArtistasCache) return allArtistasCache;
+      try {
+        const r = await fetch('/api/list-artistas?limit=200');
+        const d = await r.json();
+        if (!r.ok) return [];
+        allArtistasCache = d.artistas || [];
+        // If more than 200, fetch more pages
+        if (d.total > d.count) {
+          let offset = 200;
+          while (offset < d.total && offset < 1000) {
+            const rr = await fetch('/api/list-artistas?limit=200&offset=' + offset);
+            const dd = await rr.json();
+            if (!rr.ok || !dd.artistas?.length) break;
+            allArtistasCache.push(...dd.artistas);
+            offset += 200;
+          }
+        }
+        return allArtistasCache;
+      } catch (e) { return []; }
+    }
+
+    async function loadShows() {
+      $('shows-loading').classList.remove('hidden');
+      $('shows-empty').classList.add('hidden');
+      $('shows-grid').innerHTML = '';
+      document.querySelectorAll('#shows-subtabs .subtab').forEach(s =>
+        s.classList.toggle('active', s.dataset.substatus === state.shows.substatus));
+
+      try {
+        let url;
+        if (state.shows.substatus === 'orphans') {
+          // Use shows-pending with status=active and filter client-side for null artista
+          // Better: do active + archived and filter. Simplest: active.
+          url = '/api/shows-pending?status=active';
+        } else {
+          url = `/api/shows-pending?status=${encodeURIComponent(state.shows.substatus)}`;
+        }
+        const res = await fetch(url);
+        const data = await res.json();
+        $('shows-loading').classList.add('hidden');
+        if (!res.ok) { showError(data.error || data.hint || 'Error cargando shows'); return; }
+
+        let items = data.shows || [];
+
+        if (state.shows.substatus === 'orphans') {
+          items = items.filter(s => !s.artista_id);
+        }
+
+        // Apply artista filter from URL query
+        if (state.shows.artistaFilter) {
+          items = items.filter(s => s.artista_id === state.shows.artistaFilter);
+        }
+        // Apply show filter from URL query (single show highlight)
+        if (state.shows.showFilter) {
+          items = items.filter(s => s.id === state.shows.showFilter);
+        }
+
+        state.shows.items = items;
+
+        // Show filter info
+        const info = $('shows-filter-info');
+        const clearBtn = $('shows-clear-filter');
+        if (state.shows.artistaFilter || state.shows.showFilter) {
+          info.textContent = state.shows.artistaFilter ? `Filtrado por artista (${items.length})` : `Mostrando un único show`;
+          clearBtn.classList.remove('hidden');
+        } else {
+          info.textContent = `${items.length} show${items.length === 1 ? '' : 's'}`;
+          clearBtn.classList.add('hidden');
+        }
+
+        if (!items.length) { $('shows-empty').classList.remove('hidden'); return; }
+        const grid = $('shows-grid');
+        for (const s of items) grid.appendChild(renderShowCard(s));
+
+        // Preload artistas for picker (background)
+        loadAllArtistasForPicker();
+      } catch (err) {
+        $('shows-loading').classList.add('hidden');
+        showError(err.message);
+      }
+    }
+
+    function renderShowCard(s) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const artist = s.artista;
+      const artistName = artistaDisplayName(artist);
+
+      card.innerHTML = `
+        <div class="card-img ${s.image_url ? '' : 'placeholder'}" style="${s.image_url ? `background-image:url('${escapeHtml(s.image_url)}')` : ''}">${s.image_url ? '' : '·'}</div>
+        <div class="card-body">
+          ${artistName ? `<div class="artist" data-artista-id="${escapeHtml(artist.id)}">por ${escapeHtml(artistName)} →</div>` : '<div class="artist" style="color:#aaa; cursor:default;">sin artista asignado</div>'}
+          <h3>${escapeHtml(s.name || s.id)}</h3>
+          <div class="meta">
+            <span>${escapeHtml(s.category || '—')}${s.subcategory ? ' · ' + escapeHtml(s.subcategory) : ''}</span>
+            ${s.base_price ? `<span>${s.base_price}€ ${escapeHtml(s.price_note || '')}</span>` : ''}
+          </div>
+          <p>${escapeHtml(s.description || '')}</p>
+        </div>
+        <div class="assign-row">
+          <label>Artista:</label>
+          ${artist
+            ? `<span class="chip-removable" data-show-id="${escapeHtml(s.id)}">${escapeHtml(artistName)} <button data-unlink="${escapeHtml(s.id)}" title="Desvincular">×</button></span>`
+            : `<div class="picker">
+                 <input type="search" placeholder="Buscar artista para asignar…" data-picker-input="${escapeHtml(s.id)}">
+                 <div class="picker-results empty" data-picker-results="${escapeHtml(s.id)}"></div>
+               </div>`}
+        </div>
+        <div class="card-footer">
+          ${state.shows.substatus === 'pending_review'
+            ? `<button class="btn btn-approve" data-id="${escapeHtml(s.id)}" data-action="approve">Aprobar</button>
+               <button class="btn btn-archive" data-id="${escapeHtml(s.id)}" data-action="archive">Archivar</button>`
+            : state.shows.substatus === 'archived'
+              ? `<button class="btn btn-approve" data-id="${escapeHtml(s.id)}" data-action="approve">Restaurar</button>`
+              : `<button class="btn btn-archive" data-id="${escapeHtml(s.id)}" data-action="archive">Archivar</button>`}
+          ${s.video_url ? `<a class="btn btn-video" href="${escapeHtml(s.video_url)}" target="_blank" rel="noopener">Video</a>` : ''}
+        </div>
+      `;
+
+      // wire events
+      const artistLink = card.querySelector('[data-artista-id]');
+      if (artistLink) {
+        artistLink.addEventListener('click', () => setHash('artistas', artistLink.dataset.artistaId, {}));
+      }
+      const unlinkBtn = card.querySelector('[data-unlink]');
+      if (unlinkBtn) {
+        unlinkBtn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (!confirm('Desvincular este artista del show?')) return;
+          await linkShow(s.id, null);
+        });
+      }
+      const pickerInput = card.querySelector('[data-picker-input]');
+      if (pickerInput) wirePicker(card, s);
+
+      card.querySelectorAll('[data-action]').forEach(b => {
+        b.addEventListener('click', () => reviewShow(b.dataset.id, b.dataset.action));
+      });
+
+      return card;
+    }
+
+    function wirePicker(card, show) {
+      const input = card.querySelector('[data-picker-input]');
+      const results = card.querySelector('[data-picker-results]');
+      const onInput = debounce(async () => {
+        const q = input.value.trim().toLowerCase();
+        if (!q) { results.classList.add('empty'); results.innerHTML = ''; return; }
+        const all = await loadAllArtistasForPicker();
+        const matches = all.filter(a => {
+          const hay = [a.nombre, a.nombre_artistico, a.compania, a.email].map(x => (x || '').toLowerCase()).join(' ');
+          return hay.includes(q);
+        }).slice(0, 12);
+        if (!matches.length) {
+          results.classList.remove('empty');
+          results.innerHTML = '<div class="picker-result" style="color:var(--gray);">Sin resultados</div>';
+          return;
+        }
+        results.classList.remove('empty');
+        results.innerHTML = matches.map(a => `
+          <div class="picker-result" data-pick="${escapeHtml(a.id)}">
+            ${escapeHtml(artistaDisplayName(a))}
+            <small>${escapeHtml(a.compania || '')}${a.email && !isPlaceholderEmail(a.email) ? ' · ' + escapeHtml(shortEmail(a.email, 40)) : ''}</small>
+          </div>
+        `).join('');
+        results.querySelectorAll('[data-pick]').forEach(el => {
+          el.addEventListener('click', async () => {
+            results.classList.add('empty');
+            await linkShow(show.id, el.dataset.pick);
+          });
+        });
+      }, 200);
+      input.addEventListener('input', onInput);
+      input.addEventListener('blur', () => setTimeout(() => results.classList.add('empty'), 200));
+      input.addEventListener('focus', () => { if (input.value) onInput(); });
+    }
+
+    async function linkShow(showId, artistaId) {
+      try {
+        const r = await fetch('/api/link-show-to-artista', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ showId, artistaId })
+        });
+        const d = await r.json();
+        if (!r.ok) { showError(d.error || 'Error vinculando'); return; }
+        loadShows();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    async function reviewShow(id, action) {
+      try {
+        const r = await fetch('/api/review-show', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, action })
+        });
+        const d = await r.json();
+        if (!r.ok) { showError(d.error || 'Error'); return; }
+        loadShows();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    document.querySelectorAll('#shows-subtabs .subtab').forEach(b => {
+      b.addEventListener('click', () => {
+        state.shows.substatus = b.dataset.substatus;
+        state.shows.artistaFilter = null;
+        state.shows.showFilter = null;
+        setHash('shows', b.dataset.substatus, {});
+      });
+    });
+    $('shows-clear-filter').addEventListener('click', () => {
+      state.shows.artistaFilter = null;
+      state.shows.showFilter = null;
+      setHash('shows', state.shows.substatus, {});
+    });
+
+    // ---------- PROPUESTAS ----------
+    async function loadPropuestas() {
+      $('propuestas-loading').classList.remove('hidden');
+      $('propuestas-empty').classList.add('hidden');
+      $('propuestas-table-wrap').innerHTML = '';
+
+      const params = new URLSearchParams();
+      if (state.propuestas.q) params.set('q', state.propuestas.q);
+      if (state.propuestas.status) params.set('status', state.propuestas.status);
+      params.set('limit', '100');
+
+      try {
+        const res = await fetch('/api/list-proposals?' + params.toString());
+        const data = await res.json();
+        $('propuestas-loading').classList.add('hidden');
+        if (!res.ok) { showError(data.error || 'Error'); return; }
+
+        state.propuestas.items = data.proposals || [];
+        $('propuestas-summary').textContent = `${data.total} propuestas`;
+        if (!state.propuestas.items.length) { $('propuestas-empty').classList.remove('hidden'); return; }
+
+        const rows = state.propuestas.items.map(p => {
+          const showsArr = Array.isArray(p.shows) ? p.shows : [];
+          const created = p.created_at ? new Date(p.created_at).toLocaleDateString('es-ES') : '—';
+          const evDate = p.event_date ? new Date(p.event_date).toLocaleDateString('es-ES') : '';
+          const badge = p.status === 'approved' ? 'badge-approved' : 'badge-revision';
+          return `
+            <tr data-pid="${escapeHtml(p.id)}">
+              <td>${escapeHtml(created)}</td>
+              <td>
+                <strong>${escapeHtml(p.client_name || '—')}</strong>
+                ${p.client_company ? `<br><small style="color:var(--gray);">${escapeHtml(p.client_company)}</small>` : ''}
+              </td>
+              <td>
+                ${escapeHtml(p.event_name || p.event_type || '—')}
+                ${evDate ? `<br><small style="color:var(--gray);">${escapeHtml(evDate)}</small>` : ''}
+              </td>
+              <td>${showsArr.length}</td>
+              <td><span class="badge ${badge}">${escapeHtml(p.status || '—')}</span></td>
+              <td style="white-space:nowrap;">
+                <a class="btn btn-primary" href="/propuesta.html?id=${encodeURIComponent(p.id)}&admin=1" target="_blank">Abrir</a>
+                <button class="btn btn-secondary" data-copy="${escapeHtml(p.id)}">Copiar URL</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        $('propuestas-table-wrap').innerHTML = `
+          <table class="proposals">
+            <thead>
+              <tr><th>Fecha</th><th>Cliente</th><th>Evento</th><th>Shows</th><th>Status</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+
+        $('propuestas-table-wrap').querySelectorAll('[data-copy]').forEach(b => {
+          b.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const url = `${location.origin}/propuesta.html?id=${b.dataset.copy}`;
+            try { await navigator.clipboard.writeText(url); b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar URL', 1500); }
+            catch { prompt('Copia la URL:', url); }
+          });
+        });
+      } catch (err) {
+        $('propuestas-loading').classList.add('hidden');
+        showError(err.message);
+      }
+    }
+
+    $('propuestas-q').addEventListener('input', debounce((e) => {
+      state.propuestas.q = e.target.value.trim();
+      loadPropuestas();
+    }, 300));
+    $('propuestas-status').addEventListener('change', (e) => {
+      state.propuestas.status = e.target.value;
+      loadPropuestas();
+    });
+
+    // ---------- DRAWER ----------
+    function openDrawer() {
+      $('drawer').classList.add('open');
+      $('drawer-backdrop').classList.add('open');
+    }
+    function closeDrawer() {
+      $('drawer').classList.remove('open');
+      $('drawer-backdrop').classList.remove('open');
+      // remove sub from hash if present in artistas
+      if (state.currentTab === 'artistas') setHash('artistas', null, {});
+    }
+    $('drawer-close').addEventListener('click', closeDrawer);
+    $('drawer-backdrop').addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+
+    // ---------- HASH ROUTER ----------
+    async function applyHash() {
+      const { tab, sub, query } = parseHash();
+      activateTab(tab);
+
+      if (tab === 'artistas') {
+        if (state.artistas.items.length === 0 || state.currentTab !== 'artistas-loaded') {
+          await loadArtistas();
+        }
+        if (sub) openArtistaDetail(sub);
+        else closeDrawer();
+      } else if (tab === 'shows') {
+        const allowed = ['pending_review', 'active', 'archived', 'orphans'];
+        const sub2 = allowed.includes(sub) ? sub : state.shows.substatus;
+        state.shows.substatus = sub2;
+        state.shows.artistaFilter = query.artista || null;
+        state.shows.showFilter = query.show || null;
+        loadShows();
+      } else if (tab === 'propuestas') {
+        loadPropuestas();
+      }
+    }
+
+    window.addEventListener('hashchange', applyHash);
+    applyHash();
+  </script>
+</body>
+</html>

@@ -3,257 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin shows — Eventos Barcelona</title>
+  <title>Admin — Eventos Barcelona</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --accent: #e87461;
-      --dark: #111;
-      --gray: #666;
-      --light: #f7f7f5;
-      --border: #e5e5e0;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: var(--light);
-      color: var(--dark);
-      line-height: 1.5;
-    }
-    .topbar {
-      background: var(--dark);
-      color: #fff;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .topbar h1 { margin: 0; font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; }
-    .tabs { display: flex; gap: 8px; }
-    .tab {
-      background: transparent;
-      color: rgba(255,255,255,0.6);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab:hover { color: #fff; border-color: rgba(255,255,255,0.35); }
-    .tab.active { background: #fff; color: var(--dark); border-color: #fff; }
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 32px;
-    }
-    .empty, .loading {
-      text-align: center;
-      padding: 80px 32px;
-      color: var(--gray);
-    }
-    .error {
-      background: #fff4f0;
-      border: 1px solid #f5b7a8;
-      color: #a33;
-      padding: 16px 20px;
-      border-radius: 12px;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .card-img {
-      height: 180px;
-      background: #f0efec center / cover no-repeat;
-    }
-    .card-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
-    .card-body h3 { margin: 0; font-size: 17px; font-weight: 600; }
-    .card-body .artist {
-      font-size: 13px;
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .card-body .meta {
-      font-size: 12px;
-      color: var(--gray);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .card-body p {
-      font-size: 13px;
-      color: #333;
-      margin: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .card-footer {
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.15s;
-    }
-    .btn-approve { background: var(--accent); color: #fff; }
-    .btn-approve:hover { background: #d36353; }
-    .btn-archive { background: transparent; color: var(--gray); border-color: var(--border); }
-    .btn-archive:hover { border-color: #c44; color: #c44; }
-    .btn-video { background: transparent; color: var(--gray); border-color: var(--border); text-decoration: none; display: inline-flex; align-items: center; }
-    .btn-video:hover { color: var(--dark); border-color: var(--dark); }
-  </style>
+  <link rel="canonical" href="/admin.html">
+  <script>
+    // Backwards-compat alias: admin-shows.html → admin.html#shows
+    // Preserve hash if user already navigated within the new app via this URL.
+    (function () {
+      var h = location.hash || '';
+      var target = '/admin.html';
+      if (h && /^#(artistas|shows|propuestas)/.test(h)) {
+        target += h;
+      } else {
+        target += '#shows';
+      }
+      location.replace(target);
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/admin.html#shows">
+  </noscript>
 </head>
 <body>
-  <div class="topbar">
-    <h1>Shows pending review</h1>
-    <div class="tabs">
-      <button class="tab active" data-status="pending_review">Pending (<span id="count-pending">–</span>)</button>
-      <button class="tab" data-status="active">Active</button>
-      <button class="tab" data-status="archived">Archived</button>
-    </div>
-  </div>
-
-  <main>
-    <div id="error" class="error" style="display:none;"></div>
-    <div id="loading" class="loading">Cargando…</div>
-    <div id="empty" class="empty" style="display:none;">No hay shows en este estado.</div>
-    <div id="grid" class="grid"></div>
-  </main>
-
-  <script>
-    const grid = document.getElementById('grid');
-    const loading = document.getElementById('loading');
-    const emptyEl = document.getElementById('empty');
-    const errorEl = document.getElementById('error');
-    const tabs = document.querySelectorAll('.tab');
-
-    let currentStatus = 'pending_review';
-
-    async function load(status) {
-      currentStatus = status;
-      tabs.forEach(t => t.classList.toggle('active', t.dataset.status === status));
-      loading.style.display = '';
-      emptyEl.style.display = 'none';
-      errorEl.style.display = 'none';
-      grid.innerHTML = '';
-
-      try {
-        const res = await fetch(`/api/shows-pending?status=${encodeURIComponent(status)}`);
-        const data = await res.json();
-        loading.style.display = 'none';
-
-        if (!res.ok) {
-          errorEl.textContent = data.error + (data.hint ? ` — ${data.hint}` : '');
-          errorEl.style.display = '';
-          return;
-        }
-
-        if (status === 'pending_review') {
-          document.getElementById('count-pending').textContent = data.count;
-        }
-
-        if (!data.shows || !data.shows.length) {
-          emptyEl.style.display = '';
-          return;
-        }
-
-        for (const s of data.shows) {
-          grid.appendChild(renderCard(s));
-        }
-      } catch (err) {
-        loading.style.display = 'none';
-        errorEl.textContent = err.message;
-        errorEl.style.display = '';
-      }
-    }
-
-    function renderCard(s) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const artistName = s.artista
-        ? (s.artista.nombre_artistico || s.artista.compania || s.artista.nombre || 'sin nombre')
-        : null;
-      card.innerHTML = `
-        <div class="card-img" style="${s.image_url ? `background-image: url('${s.image_url}')` : ''}"></div>
-        <div class="card-body">
-          ${artistName ? `<div class="artist">por ${escapeHtml(artistName)}</div>` : ''}
-          <h3>${escapeHtml(s.name || s.id)}</h3>
-          <div class="meta">
-            <span>${escapeHtml(s.category || '—')}${s.subcategory ? ' · ' + escapeHtml(s.subcategory) : ''}</span>
-            ${s.base_price ? `<span>${s.base_price}€ ${escapeHtml(s.price_note || '')}</span>` : ''}
-          </div>
-          <p>${escapeHtml(s.description || '')}</p>
-        </div>
-        <div class="card-footer">
-          ${currentStatus === 'pending_review'
-            ? `<button class="btn btn-approve" data-id="${s.id}" data-action="approve">Aprobar</button>
-               <button class="btn btn-archive" data-id="${s.id}" data-action="archive">Archivar</button>`
-            : currentStatus === 'active'
-              ? `<button class="btn btn-archive" data-id="${s.id}" data-action="archive">Archivar</button>`
-              : `<button class="btn btn-approve" data-id="${s.id}" data-action="approve">Restaurar</button>`}
-          ${s.video_url ? `<a class="btn btn-video" href="${s.video_url}" target="_blank" rel="noopener">Video</a>` : ''}
-        </div>
-      `;
-      return card;
-    }
-
-    async function review(id, action) {
-      const res = await fetch('/api/review-show', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, action })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        alert('Error: ' + (data.error || 'unknown'));
-        return;
-      }
-      load(currentStatus);
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, c => ({
-        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-      }[c]));
-    }
-
-    grid.addEventListener('click', e => {
-      const btn = e.target.closest('[data-action]');
-      if (!btn) return;
-      review(btn.dataset.id, btn.dataset.action);
-    });
-
-    tabs.forEach(t => t.addEventListener('click', () => load(t.dataset.status)));
-
-    load(currentStatus);
-  </script>
+  <p style="font-family: -apple-system, sans-serif; padding: 32px;">
+    Redirigiendo a <a href="/admin.html#shows">/admin.html</a>…
+  </p>
 </body>
 </html>
