@@ -10,7 +10,8 @@ export default async function handler(req, res) {
   const TOKEN = process.env.GHL_API_KEY;
   const LOC = process.env.GHL_LOCATION_ID;
   const PIPELINE = process.env.GHL_PIPELINE_CLIENTES;
-  const STAGE = process.env.GHL_STAGE_NEW_LEAD;
+  const STAGE_NEW = process.env.GHL_STAGE_NEW_LEAD;
+  const STAGE_MISSING = process.env.GHL_STAGE_MISSING_INFO || STAGE_NEW;
   const HEADERS = {
     'Authorization': `Bearer ${TOKEN}`,
     'Version': '2021-07-28',
@@ -133,7 +134,14 @@ export default async function handler(req, res) {
     }
 
     const lang = (raw.lang === 'en') ? 'en' : 'es';
+    // Los forms que vienen por eb-form.js (contacto-web / artista-web) son una
+    // captura inicial: el usuario es redirigido a formulario-inteligente.html
+    // o formulario-artistas.html para completar. Si abandona ahí, queremos que
+    // el opp quede en MISSING_INFO hasta que cierre el formulario largo
+    // (lead-cliente.js / lead-artista.js lo mueven a NEW_LEAD al completar).
+    const isPartialCapture = /^(contacto-web|artista-web)$/i.test(formName);
     const tags = ['tipo:cliente', 'origen:web-elementor', `form:${formName}`, `lang:${lang}`];
+    if (isPartialCapture) tags.push('info_incompleta');
 
     // 1. Create/update contact in GHL
     const contactBody = {
@@ -168,13 +176,15 @@ export default async function handler(req, res) {
 
     const contactId = contactData.contact.id;
 
-    // 2. Create opportunity
+    // 2. Create opportunity — MISSING_INFO para capturas parciales, NEW_LEAD para submits full
     const oppBody = {
       locationId: LOC,
       pipelineId: PIPELINE,
-      pipelineStageId: STAGE,
+      pipelineStageId: isPartialCapture ? STAGE_MISSING : STAGE_NEW,
       contactId: contactId,
-      name: `${nombre || 'Lead'} — ${formName}`,
+      name: isPartialCapture
+        ? `${nombre || 'Lead'} — Info incompleta`
+        : `${nombre || 'Lead'} — ${formName}`,
       status: 'open',
       monetaryValue: 0
     };
